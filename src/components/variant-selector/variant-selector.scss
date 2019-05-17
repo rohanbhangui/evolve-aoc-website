@@ -1,0 +1,13 @@
+.variant {
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	border-radius: 32px;
+	margin: 0 6px;
+	border: 3px solid white;
+	box-shadow: 0 0 0 1px white;
+
+	&.active {
+		box-shadow: 0 0 0 1px black;
+	}
+}
