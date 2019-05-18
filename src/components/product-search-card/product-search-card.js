@@ -31,7 +31,7 @@ export class ProductCard extends React.Component {
     return (
       <div className="ProductCard">
         <img src={ product.variants && product.variants.find(variant => variant.variantId === this.state.selectedVariantId).image} />
-        <h1>{product.name} &mdash; { product.variants.find(variant => variant.variantId === this.state.selectedVariantId).color.string }</h1>
+        <h5>{product.name} &mdash; { product.variants && product.variants.find(variant => variant.variantId === this.state.selectedVariantId).color.string }</h5>
         <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler}></VariantSelector>
       </div>
     )

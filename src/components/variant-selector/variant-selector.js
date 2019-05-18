@@ -12,9 +12,9 @@ export class VariantSelector extends React.Component {
 
     return (
       <div>
-        { variants.map((variant, index) =>
+        { variants && variants.map((variant, index) =>
           <div className={`variant ${ variant.variantId === selectedVariantId ? 'active' : ''}`} key={ index } onClick={ selectedVariantHandler(variant.variantId) } style={{backgroundColor: variant.color.value}}>
-
+          
           </div>
         )}
       </div>

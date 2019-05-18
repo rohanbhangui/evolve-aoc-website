@@ -3,8 +3,9 @@ import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
 import { ProductCard } from '../product-search-card/product-search-card';
+import { TopBar } from '../top-bar/top-bar';
 
-import logo from '../../assets/images/logo.svg';
+
 import './app.scss';
 
 firebase.initializeApp({
@@ -30,25 +31,17 @@ class App extends React.Component {
 
     let component = this;
 
-    products.get().then(function(querySnapshot) {
-
-        
-        // console.log("DEBUG", querySnapshot.docs);
+    products.get().then(function(querySnapshot) {   
         let products = querySnapshot.docs.map( (item, index) => item.data()).sort((a,b) => (a.productId > b.productId) ? 1 : ((b.productId > a.productId) ? -1 : 0));
 
         component.setState({
           products,
           selectedVariantIndex: 0
         });
-
-        // console.log("DEBUG", products);
     });
-
-
   }
 
   addData(e) {
-    debugger;
 
     db.collection("products").add({
       name: 'Hoodie 1',
@@ -61,7 +54,7 @@ class App extends React.Component {
       variants: [
         {
           variantId: '00001',
-          image: 'https://via.placeholder.com/350/FF0000/000000',
+          image: 'https://via.placeholder.com/450/FF0000/000000',
           color: {
             string: 'red',
             value: '#ff0000'
@@ -69,7 +62,7 @@ class App extends React.Component {
         },
         {
           variantId: '00002',
-          image: 'https://via.placeholder.com/350/00FF00/000000',
+          image: 'https://via.placeholder.com/450/00FF00/000000',
           color: {
             string: 'green',
             value: '#00ff00'
@@ -77,7 +70,7 @@ class App extends React.Component {
         },
         {
           variantId: '00003',
-          image: 'https://via.placeholder.com/350/0000FF/000000',
+          image: 'https://via.placeholder.com/450/0000FF/000000',
           color: {
             string: 'blue',
             value: '#0000ff'
@@ -97,7 +90,7 @@ class App extends React.Component {
       variants: [
         {
           variantId: '00001',
-          image: 'https://via.placeholder.com/350/FF0000/000000',
+          image: 'https://via.placeholder.com/450/FF0000/000000',
           color: {
             string: 'red',
             value: '#ff0000'
@@ -105,7 +98,7 @@ class App extends React.Component {
         },
         {
           variantId: '00002',
-          image: 'https://via.placeholder.com/350/00FF00/000000',
+          image: 'https://via.placeholder.com/450/00FF00/000000',
           color: {
             string: 'green',
             value: '#00ff00'
@@ -113,7 +106,7 @@ class App extends React.Component {
         },
         {
           variantId: '00003',
-          image: 'https://via.placeholder.com/350/0000FF/000000',
+          image: 'https://via.placeholder.com/450/0000FF/000000',
           color: {
             string: 'blue',
             value: '#0000ff'
@@ -133,7 +126,7 @@ class App extends React.Component {
       variants: [
         {
           variantId: '00001',
-          image: 'https://via.placeholder.com/350/FF0000/000000',
+          image: 'https://via.placeholder.com/450/FF0000/000000',
           color: {
             string: 'red',
             value: '#ff0000'
@@ -141,7 +134,7 @@ class App extends React.Component {
         },
         {
           variantId: '00002',
-          image: 'https://via.placeholder.com/350/00FF00/000000',
+          image: 'https://via.placeholder.com/450/00FF00/000000',
           color: {
             string: 'green',
             value: '#00ff00'
@@ -149,10 +142,82 @@ class App extends React.Component {
         },
         {
           variantId: '00003',
-          image: 'https://via.placeholder.com/350/0000FF/000000',
+          image: 'https://via.placeholder.com/450/0000FF/000000',
           color: {
             string: 'blue',
             value: '#0000ff'
+          }
+        }
+      ]
+    });
+
+    db.collection("products").add({
+      name: 'Shirt 1',
+      productId: '00004',
+      categories: {
+        1: 'Unisex',
+        2: 'Tops',
+        3: 'Shirts'
+      },
+      variants: [
+        {
+          variantId: '00001',
+          image: 'https://via.placeholder.com/450/FC0FC0/000000',
+          color: {
+            string: 'color 1',
+            value: '#fc0fc0'
+          }
+        },
+        {
+          variantId: '00002',
+          image: 'https://via.placeholder.com/450/00FFD8/000000',
+          color: {
+            string: 'color 2',
+            value: '#00ffd8'
+          }
+        },
+        {
+          variantId: '00003',
+          image: 'https://via.placeholder.com/450/FFCC00/000000',
+          color: {
+            string: 'color 3',
+            value: '#ffcc00'
+          }
+        }
+      ]
+    });
+
+    db.collection("products").add({
+      name: 'Shirt 2',
+      productId: '00005',
+      categories: {
+        1: 'Unisex',
+        2: 'Tops',
+        3: 'Shirts'
+      },
+      variants: [
+        {
+          variantId: '00001',
+          image: 'https://via.placeholder.com/450/FC0FC0/000000',
+          color: {
+            string: 'color 1',
+            value: '#fc0fc0'
+          }
+        },
+        {
+          variantId: '00002',
+          image: 'https://via.placeholder.com/450/00FFD8/000000',
+          color: {
+            string: 'color 2',
+            value: '#00ffd8'
+          }
+        },
+        {
+          variantId: '00003',
+          image: 'https://via.placeholder.com/450/FFCC00/000000',
+          color: {
+            string: 'color 3',
+            value: '#ffcc00'
           }
         }
       ]
@@ -162,33 +227,17 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        
-        { /*
-
-        for adding data <button className="addData" onClick={ this.addData }>add data</button> 
-        <section id="header">
-          <div className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
-          </div>
-        </section> */}
+        <header>
+          <TopBar></TopBar>
+        </header>
         <section id="items">
-          { this.state && this.state.products.map((product, i) =>
-            <div className="item" key={i}>
-              <ProductCard product={product}></ProductCard>
-            </div>
-
-          )}
+          <div id="product-container">
+            { this.state && this.state.products && Object.keys(this.state.products[0]).length !== 0 && this.state.products.map((product, i) =>
+              <div className="item" key={i}>
+                <ProductCard product={product}></ProductCard>
+              </div>
+            )}
+          </div>
         </section>
       </div>
     );

@@ -41,7 +41,7 @@ module.exports = {
               sourceMap: true,
               sourceMapContents: true
             }
-          }
+          },
         ]
       }
     ]

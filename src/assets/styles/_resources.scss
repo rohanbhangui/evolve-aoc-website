@@ -1,0 +1,237 @@
+//for all files | TODO: make it available for multiple
+
+@import url("https://use.typekit.net/ret0qqx.css");
+
+//Variables
+$color-primary: #944EC2;
+
+$color-success: #4caf50;
+
+//Media queries
+$x-small: 320px;
+$small: 480px;
+$medium: 640px;
+$large: 768px;
+$x-large: 1024px;
+$xx-large: 1200px;
+
+//Footer Height
+$footer-height: 46px;
+
+$font-primary: 'aktiv-grotesk', Nimbus Sans, 'nimbus-sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-secondary: $font-primary;
+
+
+@mixin x-small {
+  @media (min-width: #{$x-small}) {
+    @content;
+  }
+}
+
+@mixin small {
+  @media (min-width: #{$small}) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @media (min-width: #{$medium}) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media (min-width: #{$large}) {
+    @content;
+  }
+}
+
+@mixin x-large {
+  @media (min-width: #{$x-large}) {
+    @content;
+  }
+}
+
+@mixin xx-large {
+  @media (min-width: #{$xx-large}) {
+    @content;
+  }
+}
+
+//Common Styles
+.button, button {
+	text-decoration: none;
+	padding: 15px 30px;
+	text-transform: uppercase;
+	font-family: $font-secondary;
+	font-size: 13px;
+	letter-spacing: 1px;
+	cursor: pointer;
+	text-align: center;
+
+	&.primary {
+		background: $color-primary;
+		border: 2px solid $color-primary;
+		color: #fff;
+	}
+
+	&.secondary {
+		border: 2px solid $color-primary;
+		color: $color-primary;
+		background: none;
+	}
+
+	&.alt-primary {
+		border: 2px solid #fff;
+		background: #fff;
+		color: #000;
+
+		// &:hover {
+		// 	background: $color-primary;
+		// 	border: 2px solid $color-primary;
+		// 	color: #fff;
+		// }
+	}
+
+	&.alt-secondary {
+		border: 2px solid #fff;
+		color: white;
+		background: none;
+
+		// &:hover {
+		// 	background: #fff;
+		// 	color: $color-primary;
+		// }
+	}
+
+	&:active {
+		position: relative;
+		top: 1px;
+	}
+}
+
+
+.badge {
+	background: #1d1d1d;
+	color: white;
+	font-family: $font-primary;
+	display: inline-block;
+	padding: 10px 15px;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.33);
+}
+
+
+.h1, h1 {
+	font-size: 82px;
+	letter-spacing: -3px;
+	font-weight: 500;
+	margin: 0;
+
+	@include xx-large {
+		font-size: 128px;
+		letter-spacing: -6.8px;
+	}
+}
+
+.h2, h2 {
+	font-size: 60px;
+	letter-spacing: -2px;
+	font-weight: 500;
+	margin: 0;
+
+	@include xx-large {
+		font-size: 100px;
+		letter-spacing: -3.8px;
+	}
+}
+
+.h3, h3 {
+	font-size: 35px;
+	font-weight: 600;
+	letter-spacing: -0.66px;
+	margin: 0 0 30px;
+
+
+	@include xx-large {
+		font-size: 57.5px;
+		letter-spacing: -3.05px;
+	}
+}
+
+.h4, h4 {
+	font-size: 21px;
+	letter-spacing: -0.33px;
+	font-weight: 400;
+
+	@include xx-large {
+		font-size: 35.5px;
+		letter-spacing: -0.66px;
+	}
+}
+
+.h5, h5 {
+	font-size: 18px;
+	letter-spacing: -0.33px;
+	font-weight: 400;
+
+	// @include xx-large {
+	// 	font-size: 35.5px;
+	// 	letter-spacing: -0.66px;
+	// }
+}
+
+.social-link {
+	&, &:hover, &:active, &:visited {
+		color: black;
+	}
+
+	.fab {
+		font-size: 31px;
+		margin: 0 3px;
+
+		@include small {
+			margin: 0 6px;
+		}
+	}
+}
+
+//Section style
+
+.inverted {
+	background: black;
+	color: white;
+
+	.social-link {
+		&, &:hover, &:active, &:visited {
+			color: white;
+		}
+	}
+}
+
+::selection {
+  background: #ccc;
+}
+::-moz-selection {
+  background: #ccc;
+}
+
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-primary;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}

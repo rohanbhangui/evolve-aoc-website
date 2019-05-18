@@ -1,9 +1,11 @@
+$variant-circle-size: 2rem;
+
 .variant {
-	width: 32px;
-	height: 32px;
+	width: $variant-circle-size;
+	height: $variant-circle-size;
 	display: inline-block;
-	border-radius: 32px;
-	margin: 0 6px;
+	border-radius: $variant-circle-size;
+	margin: 0 0.25rem;
 	border: 3px solid white;
 	box-shadow: 0 0 0 1px white;
 
