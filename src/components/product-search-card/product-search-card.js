@@ -18,8 +18,6 @@ export class ProductCard extends React.Component {
 
   selectedVariantHandler(id) {
     return (e) => {
-
-      console.log("VARIANT", id);
       this.setState({
         selectedVariantId: id
       });
