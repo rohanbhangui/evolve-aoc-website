@@ -3,7 +3,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
 import { ProductCard } from '../product-search-card/product-search-card';
-import { TopBar } from '../top-bar/top-bar';
+import TopBar from '../top-bar/top-bar';
 
 
 import './app.scss';

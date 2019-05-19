@@ -1,0 +1,1 @@
+export const getCartState = store => store.cart
