@@ -21,12 +21,19 @@ class TopBar extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
         </div>
         <div id="cart">
-          <i className="fa fa-shopping-cart"></i>
+          <span className={`shopping-cart-icon-container fa-stack fa-2x has-badge ${ cart.length === 0 ? 'display-none' : ''}`} data-count={ cart.length > 0 ? cart.map(item => item.qty).reduce((acc, cur) => acc + cur) : 0 }>
+            <i className="p3 fa fa-shopping-cart fa-stack-1x xfa-inverse" data-count="4b"></i>
+          </span>
           <div id="cart-list">
-            Cart is Empty
+            { cart.length <= 0 &&
+              <div>Cart is Empty</div>
+            }
 
             { cart && cart.map((item, i) =>
-              <div>{ item.product }_{ item.variant }: { item.qty } </div>
+              <div className="cart-item" key={i} data-id={ item.id } data-variant={ item.variant }>
+                <div>{ item.name } - { item.color } </div>
+                <div><strong>Qty:</strong> {item.qty}</div>
+              </div>
             )}
           </div>
         </div>

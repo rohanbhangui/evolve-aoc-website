@@ -11,20 +11,20 @@ class AddToCart extends React.Component {
     this.addToCart = this.addToCart.bind(this);
   }
 
-  addToCart(product, variant, qty) {
+  addToCart(payload, qty) {
     return (e) => {
       e.preventDefault();
 
-      this.props.addToCart(product,variant, qty)
+      this.props.addToCart(payload, qty)
     }
   }
 
   render() {
 
-    const { text, productId, variantId } = this.props;
+    const { text, payload } = this.props;
 
     return (
-      <button onClick={ this.addToCart(productId, variantId, 1) }>{ text }</button>
+      <button onClick={ this.addToCart(payload, 1) }>{ text }</button>
     )
   }
 }

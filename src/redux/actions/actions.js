@@ -20,8 +20,8 @@ export const ADD_TO_CART = 'ADD_TO_CART'
  * action creators
  */
 
-export function addToCart(product, variant, qty) {
-  return { type: ADD_TO_CART, product, variant, qty }
+export function addToCart(payload, qty) {
+  return { type: ADD_TO_CART, payload, qty }
 }
 
 // export function toggleTodo(index) {

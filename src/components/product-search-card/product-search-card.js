@@ -27,14 +27,24 @@ export class ProductCard extends React.Component {
   }
 
   render() {
-    let { product } = this.props;
+    const { product } = this.props;
+
+    const selectedVariantInfo = product.variants.find(variant => variant.variantId === this.state.selectedVariantId);
+
+    const productCartPayload = {
+      name: product.name,
+      image: selectedVariantInfo.image,
+      id: product.productId,
+      variant: this.state.selectedVariantId,
+      color: selectedVariantInfo.color.string
+    }
 
     return (
       <div className="ProductCard">
-        <img src={ product.variants && product.variants.find(variant => variant.variantId === this.state.selectedVariantId).image} />
-        <h5>{product.name} &mdash; { product.variants && product.variants.find(variant => variant.variantId === this.state.selectedVariantId).color.string }</h5>
+        <img src={ product.variants && selectedVariantInfo.image} />
+        <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string }</h5>
         <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler}></VariantSelector>
-        <AddToCart productId={ product.productId } variantId={ this.state.selectedVariantId } text="Add To Cart"></AddToCart>
+        <AddToCart payload={productCartPayload} text="Add To Cart"></AddToCart>
       </div>
     )
   }

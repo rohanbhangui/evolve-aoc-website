@@ -25,12 +25,39 @@ header {
 				}
 			}
 
-			i.fa-shopping-cart {
-				font-size: 1.25rem;
-				left: 50%;
-				position: relative;
-				top: 50%;
-				transform: translateY(-50%) translateX(-50%);
+			// i.fa-shopping-cart {
+			// 	font-size: 1.25rem;
+			// 	left: 50%;
+			// 	position: relative;
+			// 	top: 50%;
+			// 	transform: translateY(-50%) translateX(-50%);
+			// }
+
+			.shopping-cart-icon-container {
+				width: 1rem;
+				height: 1rem;
+
+				&[data-count]:after{
+					position:absolute;
+					left: 120%;
+					top: -32%;
+					content: attr(data-count);
+					font-size:40%;
+					padding:.2em;
+					border-radius: 7px;
+					line-height:1em;
+					color: white;
+					background:rgba(255,0,0,.85);
+					text-align:center;
+					min-width: 1em;
+					//font-weight:bold;
+				}
+
+				&.display-none {
+					&[data-count]:after {
+						opacity: 0;
+					}
+				}
 			}
 
 			#cart-list {
