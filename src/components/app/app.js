@@ -55,6 +55,7 @@ class App extends React.Component {
         {
           variantId: '00001',
           image: 'https://via.placeholder.com/450/FF0000/000000',
+          price: "39.99",
           color: {
             string: 'red',
             value: '#ff0000'
@@ -63,6 +64,7 @@ class App extends React.Component {
         {
           variantId: '00002',
           image: 'https://via.placeholder.com/450/00FF00/000000',
+          price: "38.99",
           color: {
             string: 'green',
             value: '#00ff00'
@@ -71,6 +73,7 @@ class App extends React.Component {
         {
           variantId: '00003',
           image: 'https://via.placeholder.com/450/0000FF/000000',
+          price: "37.99",
           color: {
             string: 'blue',
             value: '#0000ff'
@@ -91,6 +94,7 @@ class App extends React.Component {
         {
           variantId: '00001',
           image: 'https://via.placeholder.com/450/FF0000/000000',
+          price: "39.99",
           color: {
             string: 'red',
             value: '#ff0000'
@@ -99,6 +103,7 @@ class App extends React.Component {
         {
           variantId: '00002',
           image: 'https://via.placeholder.com/450/00FF00/000000',
+          price: "38.99",
           color: {
             string: 'green',
             value: '#00ff00'
@@ -107,6 +112,7 @@ class App extends React.Component {
         {
           variantId: '00003',
           image: 'https://via.placeholder.com/450/0000FF/000000',
+          price: "37.99",
           color: {
             string: 'blue',
             value: '#0000ff'
@@ -127,6 +133,7 @@ class App extends React.Component {
         {
           variantId: '00001',
           image: 'https://via.placeholder.com/450/FF0000/000000',
+          price: "39.99",
           color: {
             string: 'red',
             value: '#ff0000'
@@ -135,6 +142,7 @@ class App extends React.Component {
         {
           variantId: '00002',
           image: 'https://via.placeholder.com/450/00FF00/000000',
+          price: "38.99",
           color: {
             string: 'green',
             value: '#00ff00'
@@ -143,6 +151,7 @@ class App extends React.Component {
         {
           variantId: '00003',
           image: 'https://via.placeholder.com/450/0000FF/000000',
+          price: "37.99",
           color: {
             string: 'blue',
             value: '#0000ff'
@@ -163,6 +172,7 @@ class App extends React.Component {
         {
           variantId: '00001',
           image: 'https://via.placeholder.com/450/FC0FC0/000000',
+          price: "12.99",
           color: {
             string: 'color 1',
             value: '#fc0fc0'
@@ -171,6 +181,7 @@ class App extends React.Component {
         {
           variantId: '00002',
           image: 'https://via.placeholder.com/450/00FFD8/000000',
+          price: "13.99",
           color: {
             string: 'color 2',
             value: '#00ffd8'
@@ -179,6 +190,7 @@ class App extends React.Component {
         {
           variantId: '00003',
           image: 'https://via.placeholder.com/450/FFCC00/000000',
+          price: "14.99",
           color: {
             string: 'color 3',
             value: '#ffcc00'
@@ -199,6 +211,7 @@ class App extends React.Component {
         {
           variantId: '00001',
           image: 'https://via.placeholder.com/450/FC0FC0/000000',
+          price: "12.99",
           color: {
             string: 'color 1',
             value: '#fc0fc0'
@@ -207,6 +220,7 @@ class App extends React.Component {
         {
           variantId: '00002',
           image: 'https://via.placeholder.com/450/00FFD8/000000',
+          price: "13.99",
           color: {
             string: 'color 2',
             value: '#00ffd8'
@@ -215,6 +229,7 @@ class App extends React.Component {
         {
           variantId: '00003',
           image: 'https://via.placeholder.com/450/FFCC00/000000',
+          price: "14.99",
           color: {
             string: 'color 3',
             value: '#ffcc00'
