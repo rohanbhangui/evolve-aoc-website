@@ -3,10 +3,6 @@ import React from 'react';
 import './variant-selector.scss';
 
 export class VariantSelector extends React.Component {
-	constructor(props) {
-    super(props);
-  }
-
   render() {
     let { variants, selectedVariantHandler, selectedVariantId } = this.props;
 

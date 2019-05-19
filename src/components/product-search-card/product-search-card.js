@@ -39,7 +39,7 @@ export class ProductCard extends React.Component {
 
     return (
       <div className="ProductCard">
-        <img src={ product.variants && selectedVariantInfo.image} />
+        <img src={ product.variants && selectedVariantInfo.image} alt={`${product.name}-{selectedVariantInfo.color.string}`} />
         <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string }</h5>
         <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler}></VariantSelector>
         <AddToCart payload={productCartPayload} text="Add To Cart"></AddToCart>
