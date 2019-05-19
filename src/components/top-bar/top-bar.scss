@@ -23,6 +23,23 @@ header {
 				#cart-list {
 					display: inline-block;
 				}
+
+				&:before {
+					display: block;
+				}
+			}
+
+			&:before {
+				display: none;
+				content: '';
+				position: absolute;
+				top: 5px;
+				right: 1.9rem;
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 0 0 30px 200px;
+				border-color: transparent transparent transparent transparent;
 			}
 
 			.shopping-cart-icon-container {
@@ -58,23 +75,23 @@ header {
 				top: 100%;
 				position: absolute;
 				box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.33);
-				padding: 1.5rem 1.2rem;
+				padding: 0 1.2rem;
 				width: 25rem;
 				max-height: 31.25rem;
 				overflow: auto;
 
-				&:before {
-					content: '';
-					position: absolute;
+				#cart-header {
+					background: white;
+					position: sticky;
 					top: 0;
-					right: 1.9rem;
-					transform: translateY(-100%);
-					display: block;
-					width: 0;
-					height: 0;
-					border-style: solid;
-					border-width: 0 0 30px 200px;
-					border-color: transparent transparent transparent transparent;
+					padding-top: 1.5rem;
+				}
+
+				#cart-footer {
+					background: white;
+					position: sticky;
+					bottom: 0;
+					padding-bottom: 1.5rem;
 				}
 
 				#cart-title {
@@ -88,28 +105,31 @@ header {
 					padding: 0.25rem 0;
 				}
 
-				.cart-item {
-					display: flex;
-					flex-direction: row;
-					padding: 0.50rem 0 0.25rem;
+				#cart-items {
 
-					&.border-top {
-						border-top: 1px solid #ccc;
-					}
+					.cart-item {
+						display: flex;
+						flex-direction: row;
+						padding: 0.50rem 0 0.25rem;
 
-					.item-image {
-						width: 100px;
-
-						img {
-							width: 100%;
-							height: auto;
+						&.border-top {
+							border-top: 1px solid #ccc;
 						}
-					}
 
-					.item-content {
-						padding-left: 1rem;
-						flex: 1 0 auto;
-						text-align: left;
+						.item-image {
+							width: 100px;
+
+							img {
+								width: 100%;
+								height: auto;
+							}
+						}
+
+						.item-content {
+							padding-left: 1rem;
+							flex: 1 0 auto;
+							text-align: left;
+						}
 					}
 				}
 
