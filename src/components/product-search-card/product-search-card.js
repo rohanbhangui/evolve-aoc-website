@@ -44,8 +44,7 @@ export class ProductCard extends React.Component {
         <Link to={{
           pathname: `/product-details/${product.name.toLowerCase().replace(" ", "-")}-${product.variants && selectedVariantInfo.color.string.toLowerCase().replace(" ", "-")}-${product.productId}-${this.state.selectedVariantId}`,
           state: {
-            product,
-            selectedVariantInfo
+            product
           }
         }}>
           <img src={ product.variants && selectedVariantInfo.image} alt={`${product.name}-{selectedVariantInfo.color.string}`} />
@@ -54,7 +53,7 @@ export class ProductCard extends React.Component {
           <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string }</h5>
           <h5>${selectedVariantInfo.price}</h5>
         </div>
-        <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler}></VariantSelector>
+        <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
         <AddToCart payload={productCartPayload} text="Add To Cart"></AddToCart>
       </div>
     )

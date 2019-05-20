@@ -7,7 +7,7 @@ export class VariantSelector extends React.Component {
     let { variants, selectedVariantHandler, selectedVariantId } = this.props;
 
     return (
-      <div>
+      <div id="variants">
         { variants && variants.map((variant, index) =>
           <div className={`variant ${ variant.variantId === selectedVariantId ? 'active' : ''}`} key={ index } onClick={ selectedVariantHandler(variant.variantId) } style={{backgroundColor: variant.color.value}}>
           

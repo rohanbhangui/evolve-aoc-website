@@ -3,7 +3,6 @@ import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
 import { ProductCard } from '../product-search-card/product-search-card';
-import TopBar from '../top-bar/top-bar';
 
 
 import './catalog.scss';
@@ -241,10 +240,7 @@ class Catalog extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <header>
-          <TopBar></TopBar>
-        </header>
+      <div className="Catalog">
         <section id="items">
           <div id="product-container">
             { this.state && this.state.products && Object.keys(this.state.products[0]).length !== 0 && this.state.products.map((product, i) =>

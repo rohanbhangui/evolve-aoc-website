@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import evolveApp from './redux/reducers/reducers';
 
-import Root from './components/root/root';
+import App from './components/app/app';
 import './index.scss';
 
 const store = window.store = createStore(
@@ -12,4 +12,4 @@ const store = window.store = createStore(
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-render(<Root store={store} />, document.getElementById('root'))
+render(<App store={store} />, document.getElementById('root'))
