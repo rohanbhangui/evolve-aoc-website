@@ -11,4 +11,17 @@
 			flex: 2 0 auto;
 		}
 	}
+
+	.flex-container {
+		display: flex;
+		justify-content: space-between;
+
+		.flex-item {
+			flex: 1 0 auto;
+
+			&:last-child {
+				text-align: right;
+			}
+		}
+	}
 }

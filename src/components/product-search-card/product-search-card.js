@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './product-search-card.scss';
 
 import { VariantSelector } from '../variant-selector/variant-selector';
+import { SizeSelector } from '../size-selector/size-selector';
 import AddToCart from '../add-to-cart/add-to-cart';
 
 export class ProductCard extends React.Component {
@@ -54,6 +55,7 @@ export class ProductCard extends React.Component {
           <h5>${selectedVariantInfo.price}</h5>
         </div>
         <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
+        <SizeSelector></SizeSelector>
         <AddToCart payload={productCartPayload} text="Add To Cart"></AddToCart>
       </div>
     )

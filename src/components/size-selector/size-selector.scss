@@ -1,0 +1,29 @@
+.size-selector {
+	label {
+
+		input {
+			opacity: 0;
+			position: absolute;
+			pointer-events: none;
+
+			&:checked {
+				+ span {
+					background: blue;
+				}
+			}
+		}
+
+		$bar-height: 2rem;
+
+		span {
+		    line-height: $bar-height;
+		    display: inline-block;
+		    width: 3rem;
+		    height: $bar-height;
+		    background: red;
+		    text-align: center;
+		    margin: 0 0.25rem;
+		    border-radius: 0.3rem;
+		}
+	}
+}
