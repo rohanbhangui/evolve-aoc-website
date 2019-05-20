@@ -1,20 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.scss';
-import App from './components/app/app';
-
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import evolveApp from './redux/reducers/reducers';
+
+import Root from './components/root/root';
+import './index.scss';
 
 const store = window.store = createStore(
 	evolveApp,
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-ReactDOM.render(
-	<Provider store={store}>
-    	<App />
- 	</Provider>,
- 	document.getElementById('root')
-);
+render(<Root store={store} />, document.getElementById('root'))

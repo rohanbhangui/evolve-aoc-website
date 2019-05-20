@@ -1,11 +1,26 @@
 import React from 'react';
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 
 import logo from '../../assets/images/logo.svg';
 
 import './top-bar.scss';
 
 class TopBar extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.totalCart = this.totalCart.bind(this);
+  }
+
+  totalCart(cart) {
+
+    const total = cart.map(item => item.qty*item.price).reduce((acc, cur) => acc + cur);
+
+    return total;
+  }
+
   render() {
 
     const { cart } = this.props;
@@ -13,7 +28,10 @@ class TopBar extends React.Component {
     return (
       <div className="header-container">
         <div id="logo">
-          <img src={logo} className="App-logo" alt="logo" />
+          <Link to="/">
+            <img src={logo} className="App-logo" alt="logo" />
+          </Link>
+          { /* <Link to="/product-details">ProductDetails</Link> */ }
         </div>
         <div id="cart">
           <span className={`shopping-cart-icon-container fa-stack fa-2x has-badge ${ cart.length === 0 ? 'display-none' : ''}`} data-count={ cart.length > 0 ? cart.map(item => item.qty).reduce((acc, cur) => acc + cur) : 0 }>
@@ -35,7 +53,7 @@ class TopBar extends React.Component {
                     <div>{ item.name } - { item.color } </div>
                   </div>
                   <div className="item-price">
-                    <div>{ item.qty } &times; { item.price || "$0.00" }</div>
+                    <div>{ item.qty } &times; { `$${item.price}` || "$0.00" }</div>
                   </div>
                 </div>
               )}
@@ -43,7 +61,7 @@ class TopBar extends React.Component {
 
             <div id="cart-footer">
               { cart.length > 0 &&
-                <button id="checkout-button">Checkout | { "$00.00"}</button>
+                <button id="checkout-button">Checkout | ${this.totalCart(cart)}</button>
               }
             </div>
           </div>
