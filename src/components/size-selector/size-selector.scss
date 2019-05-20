@@ -8,7 +8,8 @@
 
 			&:checked {
 				+ span {
-					background: blue;
+					background: black;
+					color: white;
 				}
 			}
 		}
@@ -20,7 +21,8 @@
 		    display: inline-block;
 		    width: 3rem;
 		    height: $bar-height;
-		    background: red;
+		    background: white;
+		    border: 1px solid #000;
 		    text-align: center;
 		    margin: 0 0.25rem;
 		    border-radius: 0.3rem;

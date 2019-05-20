@@ -8,13 +8,13 @@ function cart(state = [], action) {
   switch (action.type) {
     case ADD_TO_CART:
 
-      const { name, variant, color, id, image, price } = action.payload;
+      const { name, variant, color, id, image, price, size } = action.payload;
       const { qty } = action;
       
       let newItem = true;
 
       const updatedState = state.map(item => {
-        if(item.id === id && item.variant === variant) {
+        if(item.id === id && item.variant === variant && item.size === size) {
           newItem = false;
           return {
             id,
@@ -23,6 +23,7 @@ function cart(state = [], action) {
             color,
             image,
             price,
+            size,
             qty: item.qty + 1
           }
         }
@@ -40,6 +41,7 @@ function cart(state = [], action) {
             color,
             image,
             price,
+            size,
             qty
           }
         ]

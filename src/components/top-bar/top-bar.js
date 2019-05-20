@@ -50,7 +50,7 @@ class TopBar extends React.Component {
                 <div className={`cart-item ${ i > 0 ? 'border-top' : ''}`} key={i} data-id={ item.id } data-variant={ item.variant }>
                   <div className="item-image"> <img src={ item.image } alt={ `${ item.name } - ${ item.color }`} /></div>
                   <div className="item-content">
-                    <div>{ item.name } - { item.color } </div>
+                    <div>{ item.name } - { item.color } ({item.size})</div>
                   </div>
                   <div className="item-price">
                     <div>{ item.qty } &times; { `$${item.price}` || "$0.00" }</div>

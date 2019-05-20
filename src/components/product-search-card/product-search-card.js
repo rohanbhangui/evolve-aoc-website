@@ -12,16 +12,26 @@ export class ProductCard extends React.Component {
     super(props);
 
     this.state = {
-      selectedVariantId: '00001'
+      selectedVariantId: '00001',
+      selectedSize: 'S'
     }
 
     this.selectedVariantHandler = this.selectedVariantHandler.bind(this);
+    this.selectedSizeHandler = this.selectedSizeHandler.bind(this);
   }
 
   selectedVariantHandler(id) {
     return (e) => {
       this.setState({
         selectedVariantId: id
+      });
+    }
+  }
+
+  selectedSizeHandler(size) {
+    return (e) => {
+      this.setState({
+        selectedSize: size
       });
     }
   }
@@ -37,7 +47,8 @@ export class ProductCard extends React.Component {
       id: product.productId,
       variant: this.state.selectedVariantId,
       color: selectedVariantInfo.color.string,
-      price: selectedVariantInfo.price
+      price: selectedVariantInfo.price,
+      size: this.state.selectedSize
     }
 
     return (
@@ -51,11 +62,11 @@ export class ProductCard extends React.Component {
           <img src={ product.variants && selectedVariantInfo.image} alt={`${product.name}-{selectedVariantInfo.color.string}`} />
         </Link>
         <div id="product-info">
-          <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string }</h5>
+          <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string } { this.state.selectedSize ? `(${this.state.selectedSize})` : `` }</h5>
           <h5>${selectedVariantInfo.price}</h5>
         </div>
         <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
-        <SizeSelector></SizeSelector>
+        <SizeSelector selectedSize={ this.state.selectedSize } selectedSizeHandler={ this.selectedSizeHandler }></SizeSelector>
         <AddToCart payload={productCartPayload} text="Add To Cart"></AddToCart>
       </div>
     )
