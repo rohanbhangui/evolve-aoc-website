@@ -15,7 +15,10 @@ class AddToCart extends React.Component {
     return (e) => {
       e.preventDefault();
 
-      this.props.addToCart(payload, qty)
+      const { addToCart } = this.props;
+
+      //this is from redux
+      addToCart(payload, qty);
     }
   }
 
@@ -24,7 +27,9 @@ class AddToCart extends React.Component {
     const { text, payload } = this.props;
 
     return (
-      <button onClick={ this.addToCart(payload, 1) }>{ text }</button>
+      <div id="AddToCart">
+        <button onClick={ this.addToCart(payload, 1) }>{ text }</button>
+      </div>
     )
   }
 }

@@ -1,7 +1,7 @@
 #variants {
 	$variant-circle-size: 2rem;
 
-	padding: 0 0.65rem;
+	padding: 0 0.8rem;
 
 	.variant {
 		width: $variant-circle-size;
@@ -15,5 +15,10 @@
 		&.active {
 			box-shadow: 0 0 0 1px black;
 		}
+	}
+
+	h6 {
+		margin-bottom: 0.6rem;
+		margin-top: 0.8rem;
 	}
 }

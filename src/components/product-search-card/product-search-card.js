@@ -13,7 +13,7 @@ export class ProductCard extends React.Component {
 
     this.state = {
       selectedVariantId: '00001',
-      selectedSize: 'S'
+      selectedSize: 'L'
     }
 
     this.selectedVariantHandler = this.selectedVariantHandler.bind(this);
@@ -54,7 +54,7 @@ export class ProductCard extends React.Component {
     return (
       <div className="ProductCard">
         <Link to={{
-          pathname: `/product-details/${product.name.toLowerCase().replace(" ", "-")}-${product.variants && selectedVariantInfo.color.string.toLowerCase().replace(" ", "-")}-${product.productId}-${this.state.selectedVariantId}`,
+          pathname: `/product-details/${product.name.toLowerCase().replace(" ", "-")}-${product.productId}`,
           state: {
             product
           }
@@ -66,7 +66,7 @@ export class ProductCard extends React.Component {
           <h5>${selectedVariantInfo.price}</h5>
         </div>
         <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
-        <SizeSelector selectedSize={ this.state.selectedSize } selectedSizeHandler={ this.selectedSizeHandler }></SizeSelector>
+        <SizeSelector selectedSize={ this.state.selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId}></SizeSelector>
         <AddToCart payload={productCartPayload} text="Add To Cart"></AddToCart>
       </div>
     )

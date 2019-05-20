@@ -3,6 +3,7 @@ import React from 'react';
 import './product-details.scss';
 
 import { VariantSelector } from '../variant-selector/variant-selector';
+import { SizeSelector } from '../size-selector/size-selector';
 import AddToCart from '../add-to-cart/add-to-cart';
 
 export default class ProductDetails extends React.Component {
@@ -10,10 +11,12 @@ export default class ProductDetails extends React.Component {
     super(props);
 
     this.state = {
-      selectedVariantId: '00001'
+      selectedVariantId: '00001',
+      selectedSize: 'L'
     }
 
     this.selectedVariantHandler = this.selectedVariantHandler.bind(this);
+    this.selectedSizeHandler = this.selectedSizeHandler.bind(this);
   }
 
   selectedVariantHandler(id) {
@@ -23,6 +26,15 @@ export default class ProductDetails extends React.Component {
       });
     }
   }
+
+  selectedSizeHandler(size) {
+    return (e) => {
+      this.setState({
+        selectedSize: size
+      });
+    }
+  }
+
   render() {
     const { product } = this.props.location.state;
 
@@ -34,7 +46,8 @@ export default class ProductDetails extends React.Component {
       id: product.productId,
       variant: this.state.selectedVariantId,
       color: selectedVariantInfo.color.string,
-      price: selectedVariantInfo.price
+      price: selectedVariantInfo.price,
+      size: this.state.selectedSize
     }
     
     return (
@@ -48,6 +61,7 @@ export default class ProductDetails extends React.Component {
               <h3>{ product.name }</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, vitae, eius. Aspernatur pariatur eveniet voluptatibus quia accusamus ipsam itaque similique amet, reprehenderit magni veritatis exercitationem omnis porro ipsum tenetur eius!</p>
               <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler}></VariantSelector>
+              <SizeSelector selectedSize={ this.state.selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId}></SizeSelector>
               <AddToCart payload={productCartPayload} text="Add To Cart"></AddToCart>
             </div>
           </div>

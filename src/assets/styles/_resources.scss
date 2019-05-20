@@ -181,6 +181,17 @@ $font-secondary: $font-primary;
 	// }
 }
 
+.h6, h6 {
+	font-size: 14px;
+	font-weight: bold;
+	letter-spacing: -0.33px;
+
+	// @include xx-large {
+	// 	font-size: 35.5px;
+	// 	letter-spacing: -0.66px;
+	// }
+}
+
 .social-link {
 	&, &:hover, &:active, &:visited {
 		color: black;
