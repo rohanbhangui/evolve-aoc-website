@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import logo from '../../assets/images/logo.svg';
 
@@ -18,7 +18,7 @@ class TopBar extends React.Component {
 
     const total = cart.map(item => item.qty*item.price).reduce((acc, cur) => acc + cur);
 
-    return total;
+    return total.toFixed(2);
   }
 
   render() {
@@ -31,7 +31,11 @@ class TopBar extends React.Component {
           <Link to="/">
             <img src={logo} className="App-logo" alt="logo" />
           </Link>
-          { /* <Link to="/product-details">ProductDetails</Link> */ }
+        </div>
+        <div id="main-links">
+          <NavLink to="/catalog" activeClassName="selected">Catalog</NavLink>
+          <NavLink to="/about" activeClassName="selected">About</NavLink>
+          <NavLink to="/contact" activeClassName="selected">Contact</NavLink>
         </div>
         <div id="cart">
           <span className={`shopping-cart-icon-container fa-stack fa-2x has-badge ${ cart.length === 0 ? 'display-none' : ''}`} data-count={ cart.length > 0 ? cart.map(item => item.qty).reduce((acc, cur) => acc + cur) : 0 }>

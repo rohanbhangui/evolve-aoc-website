@@ -17,6 +17,7 @@ class App extends React.Component {
             <TopBar></TopBar>
           </header>
           <Route exact path="/" component={Catalog} />
+          <Route path="/catalog" component={Catalog} />
           <Route path="/product-details" component={ProductDetails} />
         </Router>
       </Provider>

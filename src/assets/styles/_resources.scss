@@ -1,62 +1,4 @@
-//for all files | TODO: make it available for multiple
-
-@import url("https://use.typekit.net/ret0qqx.css");
-
-//Variables
-$color-primary: #944EC2;
-
-$color-success: #4caf50;
-
-//Media queries
-$x-small: 320px;
-$small: 480px;
-$medium: 640px;
-$large: 768px;
-$x-large: 1024px;
-$xx-large: 1200px;
-
-//Footer Height
-$footer-height: 46px;
-
-$font-primary: 'aktiv-grotesk', Nimbus Sans, 'nimbus-sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$font-secondary: $font-primary;
-
-
-@mixin x-small {
-  @media (min-width: #{$x-small}) {
-    @content;
-  }
-}
-
-@mixin small {
-  @media (min-width: #{$small}) {
-    @content;
-  }
-}
-
-@mixin medium {
-  @media (min-width: #{$medium}) {
-    @content;
-  }
-}
-
-@mixin large {
-  @media (min-width: #{$large}) {
-    @content;
-  }
-}
-
-@mixin x-large {
-  @media (min-width: #{$x-large}) {
-    @content;
-  }
-}
-
-@mixin xx-large {
-  @media (min-width: #{$xx-large}) {
-    @content;
-  }
-}
+@import '_variables';
 
 //Common Styles
 .button, button {
@@ -150,7 +92,7 @@ $font-secondary: $font-primary;
 	font-size: 35px;
 	font-weight: 600;
 	letter-spacing: -0.66px;
-	margin: 0 0 30px;
+	margin: 0 0 15px;
 
 
 	@include xx-large {

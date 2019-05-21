@@ -240,7 +240,10 @@ class Catalog extends React.Component {
 
   render() {
     return (
-      <div className="Catalog">
+      <div id="Catalog">
+        <section id="catalog-hero">
+          <h2>Catalog</h2>
+        </section>
         <section id="items">
           <div id="product-container">
             { this.state && this.state.products && Object.keys(this.state.products[0]).length !== 0 && this.state.products.map((product, i) =>

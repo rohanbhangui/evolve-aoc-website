@@ -60,11 +60,11 @@ export class ProductCard extends React.Component {
           }
         }}>
           <img src={ product.variants && selectedVariantInfo.image} alt={`${product.name}-{selectedVariantInfo.color.string}`} />
+          <div id="product-info">
+            <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string } { this.state.selectedSize ? `(${this.state.selectedSize})` : `` }</h5>
+            <h5>${selectedVariantInfo.price}</h5>
+          </div>
         </Link>
-        <div id="product-info">
-          <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string } { this.state.selectedSize ? `(${this.state.selectedSize})` : `` }</h5>
-          <h5>${selectedVariantInfo.price}</h5>
-        </div>
         <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
         <SizeSelector selectedSize={ this.state.selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId}></SizeSelector>
         <AddToCart payload={productCartPayload} text="Add To Cart"></AddToCart>
