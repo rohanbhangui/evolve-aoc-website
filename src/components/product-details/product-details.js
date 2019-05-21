@@ -12,11 +12,12 @@ export default class ProductDetails extends React.Component {
 
     this.state = {
       selectedVariantId: '00001',
-      selectedSize: 'L'
+      selectedSize: ''
     }
 
     this.selectedVariantHandler = this.selectedVariantHandler.bind(this);
     this.selectedSizeHandler = this.selectedSizeHandler.bind(this);
+    this.sizeRequiredHandler = this.sizeRequiredHandler.bind(this);
   }
 
   selectedVariantHandler(id) {
@@ -30,9 +31,16 @@ export default class ProductDetails extends React.Component {
   selectedSizeHandler(size) {
     return (e) => {
       this.setState({
-        selectedSize: size
+        selectedSize: size,
+        sizeRequiredError: false
       });
     }
+  }
+
+  sizeRequiredHandler(isError) {
+    this.setState({
+      sizeRequiredError: isError
+    });
   }
 
   render() {
@@ -60,8 +68,8 @@ export default class ProductDetails extends React.Component {
             <div id="flex-content">
               <h3>{ product.name }</h3>
               <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler}></VariantSelector>
-              <SizeSelector selectedSize={ this.state.selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId}></SizeSelector>
-              <AddToCart payload={productCartPayload} text="Add To Cart"></AddToCart>
+              <SizeSelector selectedSize={ this.state.selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId} sizeRequiredError={ this.state.sizeRequiredError }></SizeSelector>
+              <AddToCart payload={productCartPayload} isSizeSelected={!!this.state.selectedSize} sizeRequiredHandler={this.sizeRequiredHandler}></AddToCart>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, vitae, eius. Aspernatur pariatur eveniet voluptatibus quia accusamus ipsam itaque similique amet, reprehenderit magni veritatis exercitationem omnis porro ipsum tenetur eius!</p>
             </div>
           </div>

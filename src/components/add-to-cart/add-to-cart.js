@@ -15,20 +15,25 @@ class AddToCart extends React.Component {
     return (e) => {
       e.preventDefault();
 
-      const { addToCart } = this.props;
+      const { addToCart, isSizeSelected, sizeRequiredHandler } = this.props;
 
-      //this is from redux
-      addToCart(payload, qty);
+      if(isSizeSelected) {
+        //this is from redux
+        addToCart(payload, qty);
+      }
+      else {
+        sizeRequiredHandler(true);
+      }
     }
   }
 
   render() {
 
-    const { text, payload } = this.props;
+    const { payload } = this.props;
 
     return (
       <div id="AddToCart">
-        <button onClick={ this.addToCart(payload, 1) }>{ text }</button>
+        <button onClick={ this.addToCart(payload, 1) }>Add To Cart</button>
       </div>
     )
   }

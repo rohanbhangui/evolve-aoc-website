@@ -13,11 +13,13 @@ export class ProductCard extends React.Component {
 
     this.state = {
       selectedVariantId: '00001',
-      selectedSize: 'L'
+      selectedSize: '',
+      sizeRequiredError: false,
     }
 
     this.selectedVariantHandler = this.selectedVariantHandler.bind(this);
     this.selectedSizeHandler = this.selectedSizeHandler.bind(this);
+    this.sizeRequiredHandler = this.sizeRequiredHandler.bind(this);
   }
 
   selectedVariantHandler(id) {
@@ -31,7 +33,8 @@ export class ProductCard extends React.Component {
   selectedSizeHandler(size) {
     return (e) => {
       this.setState({
-        selectedSize: size
+        selectedSize: size,
+        sizeRequiredError: false
       });
     }
   }
@@ -66,8 +69,8 @@ export class ProductCard extends React.Component {
           </div>
         </Link>
         <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
-        <SizeSelector selectedSize={ this.state.selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId}></SizeSelector>
-        <AddToCart payload={productCartPayload} text="Add To Cart"></AddToCart>
+        <SizeSelector selectedSize={ this.state.selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId} sizeRequiredError={ this.state.sizeRequiredError }></SizeSelector>
+        <AddToCart payload={productCartPayload} isSizeSelected={!!this.state.selectedSize} sizeRequiredHandler={this.sizeRequiredHandler}></AddToCart>
       </div>
     )
   }
