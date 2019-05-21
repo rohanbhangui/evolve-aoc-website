@@ -131,6 +131,11 @@ header {
 					#checkout-button {
 						display: block;
 						width: 100%;
+						border: 1px solid #000;
+						font-weight: bold;
+						border-radius: 0.25rem;
+						background: black;
+						color: white;
 					}
 				}
 
