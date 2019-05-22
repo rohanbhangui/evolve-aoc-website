@@ -5,7 +5,7 @@ import 'firebase/firestore';
 
 import groupBy from 'lodash.groupby';
 
-import { ProductCard } from '../product-search-card/product-search-card';
+import { ProductCard } from '../../components/product-search-card/product-search-card';
 
 
 import './catalog.scss';
@@ -28,6 +28,8 @@ class Catalog extends React.Component {
     window.addData = this.addData;
   }
   componentDidMount() {
+
+    window.scrollTo(0,0);
 
     const products = db.collection("products");
 

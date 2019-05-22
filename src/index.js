@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import evolveApp from './redux/reducers/reducers';
 
-import App from './components/app/app';
+import App from './pages/app/app';
 import './index.scss';
 
 const store = window.store = createStore(

@@ -2,9 +2,9 @@ import React from 'react';
 
 import './product-details.scss';
 
-import { VariantSelector } from '../variant-selector/variant-selector';
-import { SizeSelector } from '../size-selector/size-selector';
-import AddToCart from '../add-to-cart/add-to-cart';
+import { VariantSelector } from '../../components/variant-selector/variant-selector';
+import { SizeSelector } from '../../components/size-selector/size-selector';
+import AddToCart from '../../components/add-to-cart/add-to-cart';
 
 export default class ProductDetails extends React.Component {
 	constructor(props) {
