@@ -20,6 +20,14 @@
     max-width: 85.375rem;
     margin: 6rem auto 0;
 
+    #grouping-container {
+      display: block;
+
+      h3 {
+        padding: 0 1rem;
+      }
+    }
+
     #product-container {
       display: flex;
       flex-flow: row wrap;

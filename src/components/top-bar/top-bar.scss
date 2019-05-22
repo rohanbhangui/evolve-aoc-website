@@ -85,10 +85,11 @@ header {
 					right: -20%;
 					top: 0%;
 					content: attr(data-count);
-					font-size:40%;
-					padding:.2em;
+					font-size: 0.7rem;
+					padding: .2em;
 					border-radius: 7px;
-					line-height:1em;
+					line-height: 0.8rem;
+					font-weight: bold;
 					color: white;
 					background:rgba(255,0,0,.85);
 					text-align:center;

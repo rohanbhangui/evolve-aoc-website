@@ -2,6 +2,8 @@ import React from 'react';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
+import groupBy from 'lodash.groupby';
+
 import { ProductCard } from '../product-search-card/product-search-card';
 
 
@@ -33,12 +35,17 @@ class Catalog extends React.Component {
     products.get().then(function(querySnapshot) {   
         let products = querySnapshot.docs.map( (item, index) => item.data()).sort((a,b) => (a.productId > b.productId) ? 1 : ((b.productId > a.productId) ? -1 : 0));
 
+        products = groupBy(products, (item) => {
+          return item.categories[Object.keys(item.categories).length]
+        });
+
         component.setState({
           products,
           selectedVariantIndex: 0
         });
     });
   }
+
 
   addData(e) {
 
@@ -245,10 +252,17 @@ class Catalog extends React.Component {
           <h2>Catalog</h2>
         </section>
         <section id="items">
-          <div id="product-container">
-            { this.state && this.state.products && Object.keys(this.state.products[0]).length !== 0 && this.state.products.map((product, i) =>
-              <div className="item" key={i}>
-                <ProductCard product={product}></ProductCard>
+          <div id="grouping-container">
+            { this.state && this.state.products && Object.keys(this.state.products).map((grouping, j) =>
+              <div className="grouping">
+                <h3>{ grouping }</h3>
+                <div id="product-container">
+                  { this.state.products[grouping].map((product, i) =>
+                    <div className="item" key={i}>
+                      <ProductCard product={product}></ProductCard>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
