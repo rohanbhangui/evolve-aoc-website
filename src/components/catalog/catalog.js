@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
@@ -44,6 +45,16 @@ class Catalog extends React.Component {
           selectedVariantIndex: 0
         });
     });
+  }
+
+  componentDidUpdate() {
+    let hash = this.props.location.hash.replace('#', '');
+    if (hash) {
+        let node = ReactDOM.findDOMNode(this.refs[hash]);
+        if (node) {
+            node.scrollIntoView();
+        }
+    }
   }
 
 
@@ -255,8 +266,9 @@ class Catalog extends React.Component {
           <div id="grouping-container">
             { this.state && this.state.products && Object.keys(this.state.products).map((grouping, j) =>
               <div className="grouping">
-                <h3>{ grouping }</h3>
+                <h4><a href={`#${grouping.replace(" ", "-")}`}>{ grouping }</a></h4>
                 <div id="product-container">
+                  <div id={`${grouping}`} ref={`${grouping}`} className="anchor-link-marker"></div>
                   { this.state.products[grouping].map((product, i) =>
                     <div className="item" key={i}>
                       <ProductCard product={product}></ProductCard>

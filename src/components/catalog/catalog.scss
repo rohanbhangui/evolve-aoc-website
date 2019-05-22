@@ -23,13 +23,22 @@
     #grouping-container {
       display: block;
 
-      h3 {
-        padding: 0 1rem;
+      h4 {
+        padding: 0 1.2rem;
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+        display: inline-block;
+
+        a {
+          color: black;
+          text-decoration: none;
+        }
       }
     }
 
     #product-container {
       display: flex;
+      position: relative;
       flex-flow: row wrap;
       justify-content: space-around;
       padding: 0 .3125rem;
@@ -43,10 +52,17 @@
         }
       }
 
+      .anchor-link-marker {
+        position: absolute;
+        height: 2px;
+        width: 2px;
+        top: -12.5rem;
+      }
+
       .item {
         flex: 1 0 auto;
         padding: .3125rem;
-        margin-bottom: 4rem;
+        margin-bottom: 5rem;
       }
     }
   }
