@@ -9,7 +9,7 @@ class Footer extends React.Component {
 
   render() {
     return (
-      <div id="AddToCart">
+      <div id="Footer">
         footer
       </div>
     )
