@@ -4,6 +4,7 @@
 	h6 {
 		margin-bottom: 0.6rem;
 		margin-top: 0.8rem;
+		transition: all ease 0.3s;
 
 		&.error-active {
 			color: red;
@@ -16,12 +17,14 @@
 	}
 
 	.label-group {
-		border: 1px solid transparent;
 		display: inline-block;
 		border-radius: 0.3rem;
 
 		&.error-active {
-			border: 1px solid #ff0000;
+			input + span {
+				border: 1px solid red;
+				color: red;
+			}
 		}
 
 		label {
@@ -64,6 +67,7 @@
 			    text-align: center;
 			    margin: 0 0.25rem;
 			    border-radius: 0.25rem;
+			    transition: all ease 0.3s;
 			}
 		}
 	}

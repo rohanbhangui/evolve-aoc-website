@@ -22,7 +22,7 @@ class AddToCart extends React.Component {
         addToCart(payload, qty);
       }
       else {
-        sizeRequiredHandler(true);
+        sizeRequiredHandler();
       }
     }
   }

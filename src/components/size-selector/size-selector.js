@@ -7,8 +7,6 @@ export class SizeSelector extends React.Component {
 
     const { selectedSizeHandler, selectedSize, id, sizeRequiredError } = this.props;
 
-    console.log("DEBUG", id, sizeRequiredError);
-
     return (
       <div className="size-selector">
         <h6 className={`${ sizeRequiredError ? 'error-active' : ''}`}>Select Size<sup>*</sup></h6>

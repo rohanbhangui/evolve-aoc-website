@@ -2,18 +2,22 @@ import { combineReducers } from 'redux';
 
 import {
   ADD_TO_CART,
+  REMOVE_FROM_CART
 } from '../actions/actions';
 
 function cart(state = [], action) {
+  let variant, id, size;
+
   switch (action.type) {
     case ADD_TO_CART:
 
-      const { name, variant, color, id, image, price, size } = action.payload;
+      let { name, color, image, price } = action.payload;
+      ({ variant, id, size } = action.payload);
       const { qty } = action;
       
       let newItem = true;
 
-      const updatedState = state.map(item => {
+      let updatedState = state.map(item => {
         if(item.id === id && item.variant === variant && item.size === size) {
           newItem = false;
           return {
@@ -48,6 +52,12 @@ function cart(state = [], action) {
       }
 
       return updatedState;
+
+    case REMOVE_FROM_CART:
+      // let { prodid = id, prodvariant = variant, prodsize = size } = action.payload;
+      ({ variant, id, size } = action.payload);
+
+      return state.filter(item => item.id !== id || item.variant !== variant || item.size !== size);
     default:
       return state
   }

@@ -37,10 +37,16 @@ export default class ProductDetails extends React.Component {
     }
   }
 
-  sizeRequiredHandler(isError) {
+  sizeRequiredHandler() {
     this.setState({
-      sizeRequiredError: isError
+      sizeRequiredError: true
     });
+
+    setTimeout(() => {
+      this.setState({
+        sizeRequiredError: false
+      });
+    }, 2000);
   }
 
   render() {

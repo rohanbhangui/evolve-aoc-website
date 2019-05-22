@@ -39,6 +39,18 @@ export class ProductCard extends React.Component {
     }
   }
 
+  sizeRequiredHandler() {
+    this.setState({
+      sizeRequiredError: true
+    });
+
+    setTimeout(() => {
+      this.setState({
+        sizeRequiredError: false
+      });
+    }, 2000);
+  }
+
   render() {
     const { product } = this.props;
 

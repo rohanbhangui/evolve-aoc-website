@@ -2,7 +2,8 @@
  * action types
  */
 
-export const ADD_TO_CART = 'ADD_TO_CART'
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 // export const TOGGLE_TODO = 'TOGGLE_TODO'
 // export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 
@@ -22,6 +23,10 @@ export const ADD_TO_CART = 'ADD_TO_CART'
 
 export function addToCart(payload, qty) {
   return { type: ADD_TO_CART, payload, qty }
+}
+
+export function removeFromCart(payload) {
+  return { type: REMOVE_FROM_CART, payload }
 }
 
 // export function toggleTodo(index) {

@@ -174,7 +174,60 @@ header {
 							padding-left: 1rem;
 							flex: 1 0 auto;
 							text-align: left;
+
+							.vertical-flex-container {
+								display: flex;
+								flex-direction: column;
+								height: 100%;
+								padding-bottom: 0.25rem;
+
+								> .flex-item {
+									&:first-child {
+										flex: 1 0 auto;
+									}
+								}
+
+								.horizontal-flex-container {
+									display: flex;
+									flex-direction: row;
+
+									> .flex-item {
+										&:first-child {
+											flex: 1 0 auto;
+										}
+									}
+								}
+							}
+
+							.item-remove {
+								flex: 1 1 auto;
+								text-align: right;
+								padding-right: 0.25rem;
+
+								button {
+									padding: 0;
+									text-transform: capitalize;
+									background: none;
+									border: none;
+									outline: none;
+									letter-spacing: 0;
+									color: #007AFF;
+
+									&:hover {
+										text-decoration: underline;
+										color: #007AFF;
+									}
+
+									&:active {
+										text-decoration: underline;
+										color: darken(#007AFF, 20%);
+										top: 0;
+									}
+								}
+							}
 						}
+
+						
 					}
 				}
 			}

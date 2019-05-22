@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
+import { removeFromCart } from '../../redux/actions/actions';
 import { Link, NavLink } from 'react-router-dom';
 
 import logo from '../../assets/images/logo.svg';
@@ -12,6 +13,7 @@ class TopBar extends React.Component {
     super(props);
 
     this.totalCart = this.totalCart.bind(this);
+    this.removeItem = this.removeItem.bind(this);
   }
 
   totalCart(cart) {
@@ -19,6 +21,15 @@ class TopBar extends React.Component {
     const total = cart.map(item => item.qty*item.price).reduce((acc, cur) => acc + cur);
 
     return total.toFixed(2);
+  }
+
+  removeItem(payload) {
+
+    const { removeFromCart } = this.props;
+    
+    return (e) => {
+      removeFromCart(payload);
+    }
   }
 
   render() {
@@ -54,10 +65,23 @@ class TopBar extends React.Component {
                 <div className={`cart-item ${ i > 0 ? 'border-top' : ''}`} key={i} data-id={ item.id } data-variant={ item.variant }>
                   <div className="item-image"> <img src={ item.image } alt={ `${ item.name } - ${ item.color }`} /></div>
                   <div className="item-content">
-                    <div>{ item.name } - { item.color } ({item.size})</div>
-                  </div>
-                  <div className="item-price">
-                    <div>{ item.qty } &times; { `$${item.price}` || "$0.00" }</div>
+                    <div className="vertical-flex-container">
+                      <div className="flex-item">
+                        <div className="horizontal-flex-container">
+                          <div className="flex-item">
+                            <div>{ item.name } - { item.color } ({item.size})</div>
+                          </div>
+                          <div className="flex-item">
+                            <div>{ item.qty } &times; { `$${item.price}` || "$0.00" }</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex-item">
+                        <div className="item-remove">
+                          <button className="link" onClick={ this.removeItem({ id: item.id, variant: item.variant, size: item.size})}>Remove</button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
@@ -82,5 +106,5 @@ const mapStateToProps = state => {
   return { cart };
 };
 
-export default connect(mapStateToProps)(TopBar);
+export default connect(mapStateToProps, { removeFromCart })(TopBar);
 
