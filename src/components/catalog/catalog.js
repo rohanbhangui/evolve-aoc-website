@@ -57,7 +57,6 @@ class Catalog extends React.Component {
     }
   }
 
-
   addData(e) {
 
     db.collection("products").add({
@@ -268,7 +267,7 @@ class Catalog extends React.Component {
               <div className="grouping">
                 <h4><a href={`#${grouping.replace(" ", "-")}`}>{ grouping }</a></h4>
                 <div id="product-container">
-                  <div id={`${grouping}`} ref={`${grouping}`} className="anchor-link-marker"></div>
+                  <div id={`${grouping.replace(" ", "-")}`} ref={`${grouping.replace(" ", "-")}`} className="anchor-link-marker"></div>
                   { this.state.products[grouping].map((product, i) =>
                     <div className="item" key={i}>
                       <ProductCard product={product}></ProductCard>

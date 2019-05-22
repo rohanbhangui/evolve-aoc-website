@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Catalog from '../catalog/catalog';
 import ProductDetails from '../product-details/product-details';
 import TopBar from '../top-bar/top-bar';
+import Footer from '../footer/footer';
 
 class App extends React.Component {
 	render() {
@@ -19,6 +20,9 @@ class App extends React.Component {
           <Route exact path="/" component={Catalog} />
           <Route path="/catalog" component={Catalog} />
           <Route path="/product-details" component={ProductDetails} />
+          <footer>
+            <Footer></Footer>
+          </footer>
         </Router>
       </Provider>
     )
