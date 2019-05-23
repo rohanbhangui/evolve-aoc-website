@@ -1,0 +1,44 @@
+#Contact {
+	width: 100%;
+	max-width: 75rem;
+	margin: 4rem auto;
+	display: block;
+
+	h3 {
+		text-align: center;
+		margin: 6rem 0 2rem;
+	}
+
+	a {
+		color: black;
+	}
+
+	.flex-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		// border: 1px solid #ff0000;
+
+		.flex-item {
+			flex: 1 0 auto;
+			// border: 1px solid #00ff00;
+
+			.text-container {
+				text-align: center;
+
+				h4 {
+					margin: 2rem 0 0.75rem;
+					font-weight: 500;
+				}
+
+				.social {
+					margin: 0 0.6rem;
+					i {
+						font-size: 1.8rem;
+						color: black;
+					}
+				}
+			}
+		}
+	}
+}
