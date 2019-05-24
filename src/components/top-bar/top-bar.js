@@ -14,6 +14,7 @@ class TopBar extends React.Component {
 
     this.totalCart = this.totalCart.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.totalQuantity = this.totalQuantity.bind(this);
   }
 
   totalCart(cart) {
@@ -21,6 +22,10 @@ class TopBar extends React.Component {
     const total = cart.map(item => item.qty*item.price).reduce((acc, cur) => acc + cur);
 
     return total.toFixed(2);
+  }
+
+  totalQuantity(cart) {
+    return cart.map(item => item.qty).reduce((acc, cur) => acc + cur);
   }
 
   removeItem(payload) {
@@ -49,7 +54,7 @@ class TopBar extends React.Component {
           <NavLink to="/contact" activeClassName="selected">Contact</NavLink>
         </div>
         <div id="cart">
-          <span className={`shopping-cart-icon-container fa-stack fa-2x has-badge ${ cart.length === 0 ? 'display-none' : ''}`} data-count={ cart.length > 0 ? cart.map(item => item.qty).reduce((acc, cur) => acc + cur) : 0 }>
+          <span className={`shopping-cart-icon-container fa-stack fa-2x has-badge ${ cart.length === 0 ? 'display-none' : ''}`} data-count={ cart.length > 0 ? this.totalQuantity(cart) : 0 }>
             <i className="p3 fa fa-shopping-cart fa-stack-1x xfa-inverse" data-count="4b"></i>
           </span>
           <div id="cart-list">
