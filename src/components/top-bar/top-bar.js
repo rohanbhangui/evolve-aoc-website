@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { removeFromCart } from '../../redux/actions/actions';
+
 import { Link, NavLink } from 'react-router-dom';
 
 import logo from '../../assets/images/logo.svg';
-
 import './top-bar.scss';
 
 class TopBar extends React.Component {

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import ScrollToTop from '../../components/scrollToTop/scrollToTop';
+
 import Catalog from '../catalog/catalog';
 import Contact from '../contact/contact';
 import ProductDetails from '../product-details/product-details';
 import TopBar from '../../components/top-bar/top-bar';
 import Footer from '../../components/footer/footer';
+
+import ScrollToTop from '../../components/scrollToTop/scrollToTop';
 
 class App extends React.Component {
 	render() {

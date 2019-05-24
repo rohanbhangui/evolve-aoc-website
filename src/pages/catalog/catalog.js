@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import groupBy from 'lodash.groupby';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
-import groupBy from 'lodash.groupby';
-
 import { ProductCard } from '../../components/product-search-card/product-search-card';
-
-
 import './catalog.scss';
 
 firebase.initializeApp({
@@ -35,7 +32,7 @@ class Catalog extends React.Component {
 
     let component = this;
 
-    products.get().then(function(querySnapshot) {   
+    products.get().then( querySnapshot => {   
         let products = querySnapshot.docs.map( (item, index) => item.data()).sort((a,b) => (a.productId > b.productId) ? 1 : ((b.productId > a.productId) ? -1 : 0));
 
         products = groupBy(products, (item) => {

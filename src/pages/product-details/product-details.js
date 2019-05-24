@@ -1,10 +1,10 @@
 import React from 'react';
 
-import './product-details.scss';
-
 import { VariantSelector } from '../../components/variant-selector/variant-selector';
 import { SizeSelector } from '../../components/size-selector/size-selector';
 import AddToCart from '../../components/add-to-cart/add-to-cart';
+
+import './product-details.scss';
 
 export default class ProductDetails extends React.Component {
 	constructor(props) {
