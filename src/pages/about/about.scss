@@ -1,11 +1,12 @@
-#Contact {
+#About {
 	
 	display: block;
 
 	.hero {
 		height: 37.25rem;
-		background: #000 url('../../assets/images/contact-hero.jpg');
+		background: #000 url('../../assets/images/about-hero.jpg');
 		background-size: cover;
+		background-position: center center;
 
 		.hero-content {
 			position: relative;
@@ -29,20 +30,47 @@
 	}
 
 	.flex-container {
-		width: 100%;
-		max-width: 75rem;
-		margin: 4rem auto 6rem;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-evenly;
-		// border: 1px solid #ff0000;
 
-		.flex-item {
-			flex: 1 0 auto;
-			// border: 1px solid #00ff00;
+		h4 {
+			font-weight: 500;
+		}
+
+		&#section-1 {
+			width: 100%;
+			max-width: 60rem;
+			margin: 6rem auto 6rem;
+
+			.flex-item {
+				margin: 0.5rem;
+
+				&:first-child {
+					flex: 1 0 auto;
+					margin-right: 2rem;
+				}
+			}
+		}
+
+		&#section-2 {
+			align-items: center;
+			
 
 			.text-container {
-				text-align: center;
+				margin-right: 6rem;
+			}
+
+			img {
+				max-width: 28.75rem;
+			}
+		}
+
+		.flex-item {
+			flex: 1 1 auto;
+
+			.text-container {
+				// text-align: center;
 
 				h4 {
 					margin: 2rem 0 0.75rem;

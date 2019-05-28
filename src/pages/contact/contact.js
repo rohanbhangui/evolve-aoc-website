@@ -5,24 +5,6 @@ import './contact.scss';
 class Contact extends React.Component {
 	constructor(props) {
     super(props);
-
-    this.addToCart = this.addToCart.bind(this);
-  }
-
-  addToCart(payload, qty) {
-    return (e) => {
-      e.preventDefault();
-
-      const { addToCart, isSizeSelected, sizeRequiredHandler } = this.props;
-
-      if(isSizeSelected) {
-        //this is from redux
-        addToCart(payload, qty);
-      }
-      else {
-        sizeRequiredHandler();
-      }
-    }
   }
 
   render() {
@@ -31,7 +13,12 @@ class Contact extends React.Component {
 
     return (
       <div id="Contact">
-        <h3>Have questions? Comments?<br/>Let us know!</h3>
+        <div className="hero">
+          <div className="hero-content">
+            <h4>Have questions? Comments?</h4>
+            <h2>Let us know!</h2>
+          </div>
+        </div>
         <div className="flex-container">
           <div className="flex-item">
             <div className="text-container">
