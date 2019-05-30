@@ -24,6 +24,7 @@ class Catalog extends React.Component {
 
     window.addData = this.addData;
   }
+
   componentDidMount() {
 
     window.scrollTo(0,0);
@@ -44,6 +45,10 @@ class Catalog extends React.Component {
           selectedVariantIndex: 0
         });
     });
+
+    fetch(`/catalog?id=00001&sku=00001`)
+          .then(res => res.json())
+          .then(json => console.log("DEBUG", json));
   }
 
   componentDidUpdate() {

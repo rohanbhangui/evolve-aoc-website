@@ -50,7 +50,7 @@ export class ProductCard extends React.Component {
       });
     }, 2000);
   }
-
+  
   render() {
     const { product } = this.props;
 
