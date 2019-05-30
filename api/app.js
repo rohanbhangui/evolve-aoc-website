@@ -21,8 +21,7 @@ app.get('/catalog', (req, res) => {
 
   var body = new SquareConnect.SearchCatalogObjectsRequest();
 
-  body.object_types=['ITEM_VARIATION', "ITEM"];
-  body.include_related_objects = true;
+  body.object_types=['ITEM_VARIATION'];
   body.query = {
     prefix_query: {
       attribute_name: 'sku',
@@ -42,15 +41,12 @@ app.get('/catalog', (req, res) => {
 
 
 app.get('/inventory', (req, res) => {
+  var body = new SquareConnect.BatchRetrieveInventoryCountsRequest();
 
-  var opts = { 
-    'locationIds': "", // String | The [Location](#type-location) IDs to look up as a comma-separated list. An empty list queries all locations.
-    'cursor': "" // String | A pagination cursor returned by a previous call to this endpoint. Provide this to retrieve the next set of results for the original query.  See [Pagination](/basics/api101/pagination) for more information.
-  };
+  body.object_types=['ITEM_VARIATION'];
+  body.catalog_object_ids = req.query.objIds.split(",");
 
-  console.log("DEBUG:", req.query.objIds)
-
-  inventoryApiInstance.retrieveInventoryCount(`#${req.query.objIds`, opts).then(function(data) {
+  inventoryApiInstance.batchRetrieveInventoryCounts(JSON.stringify(body)).then(function(data) {
     console.log(data);
     res.send(data);
   }, function(error) {
