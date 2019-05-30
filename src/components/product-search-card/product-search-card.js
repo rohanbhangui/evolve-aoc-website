@@ -51,16 +51,21 @@ export class ProductCard extends React.Component {
     }, 2000);
   }
 
-  componentsDidMount() {
+  componentDidMount() {
 
     const { product } = this.props;
     const { selectedVariantId } = this.state;
 
-    debugger;
+    let variants = [];
 
     fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`)
           .then(res => res.json())
-          .then(json => console.log("DEBUG", json));
+          .then(json => variants = json);
+
+    // let inventory = [];
+    // fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`)
+    //       .then(res => res.json())
+    //       .then(json => variants = json);
 
 
   }
