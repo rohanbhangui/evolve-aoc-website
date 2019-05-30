@@ -73,8 +73,6 @@ export class ProductCard extends React.Component {
   retrieveInventory(selectedVariantId) {
     const { product } = this.props;
 
-    let variantString = "";
-
     let inventoryGetter = fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`).then(function(response) {
       return response.json(); // pass the data as promise to next then block
     }).then(data => {
@@ -89,10 +87,8 @@ export class ProductCard extends React.Component {
       this.setState({
         catalogObjs
       });
-
-      variantString = data.map(item => item.id).join(",");
     
-      return fetch(`/inventory?objIds=${variantString}`);
+      return fetch(`/inventory?objIds=${data.map(item => item.id).join(",")}`);
     })
     .then(response => {
       return response.json();
@@ -100,7 +96,7 @@ export class ProductCard extends React.Component {
     .catch(error => {
     });
 
-    inventoryGetter.then(inventory =>  {
+    inventoryGetter.then(inventory => {
       let inventorySimple;
       let inventoryCounts = {
         s: 0,
@@ -171,7 +167,7 @@ export class ProductCard extends React.Component {
             product
           }
         }}>
-          <img src={ product.variants && selectedVariantInfo.image} alt={`${product.name}-{selectedVariantInfo.color.string}`} />
+          <img src={ product.variants && selectedVariantInfo.image} alt={`${product.name}-${selectedVariantInfo.color.string}`} />
           <div id="product-info">
             <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string } { selectedSize ? `(${selectedSize})` : `` }</h5>
             <h5>{ selectedSize ? `$${selectedVariantInfo.price}` : ' — ' }</h5>
