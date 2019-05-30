@@ -74,7 +74,8 @@ export class ProductCard extends React.Component {
       let catalogObjs = data.map(item => {
         return {
           variantApiId: item.id,
-          sku: item.item_variation_data.sku
+          size: item.item_variation_data.sku.split("_")[2],
+          qty: undefined
         }
       })
 
@@ -95,12 +96,37 @@ export class ProductCard extends React.Component {
 
     // I'm using the result variable to show that you can continue to extend the chain from the returned promise
     result.then(inventory =>  {
+      let inventorySimple;
       let inventoryCounts;
 
       if(inventory) {
-        inventoryCounts = inventory.map(item => {
+        inventorySimple = inventory.map(item => {
          return { variantApiId: item.catalog_object_id, qty: item.quantity };
         });
+
+        //TODO: SIMPLIFY THIS
+
+        // combine arrays of catalog and inventory
+        let arr3 = [];
+
+        this.state.catalogObjs.forEach((itm, i) => {
+          arr3.push(Object.assign({}, itm, inventorySimple[i]));
+        });
+
+        //pull the avlues into an array
+        inventoryCounts = arr3.map(item => {
+          let obj = {};
+          if(item.size === "2xl") {
+            obj["xxl"] = item.qty;
+          }
+          else {
+            obj[item.size] = item.qty;
+          }
+          return obj;
+        });
+
+        //combine array into a single object
+        inventoryCounts = Object.assign({}, ...inventoryCounts);
 
         this.setState({
           inventoryCounts
@@ -142,7 +168,7 @@ export class ProductCard extends React.Component {
           </div>
         </Link>
         <VariantSelector variants={product.variants} selectedVariantId={ selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
-        <SizeSelector selectedSize={ selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId} sizeRequiredError={ sizeRequiredError }></SizeSelector>
+        <SizeSelector selectedSize={ selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId} sizeRequiredError={ sizeRequiredError } inventoryCounts={inventoryCounts}></SizeSelector>
         <AddToCart payload={productCartPayload} isSizeSelected={!!selectedSize} sizeRequiredHandler={this.sizeRequiredHandler}></AddToCart>
       </div>
     )
