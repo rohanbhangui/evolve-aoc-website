@@ -7,6 +7,9 @@ import { VariantSelector } from '../variant-selector/variant-selector';
 import { SizeSelector } from '../size-selector/size-selector';
 import AddToCart from '../add-to-cart/add-to-cart';
 
+let controller;
+let signal;
+
 export class ProductCard extends React.Component {
 	constructor(props) {
     super(props);
@@ -71,9 +74,22 @@ export class ProductCard extends React.Component {
   }
 
   retrieveInventory(selectedVariantId) {
+
+    if (controller !== undefined) {
+      // Cancel the previous request
+      controller.abort();
+    }
+
+    // Feature detect
+    if ("AbortController" in window) {
+      controller = new AbortController;
+      signal = controller.signal;
+    }
+
+
     const { product } = this.props;
 
-    let inventoryGetter = fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`).then(function(response) {
+    let inventoryGetter = fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`, {signal}).then(function(response) {
       return response.json(); // pass the data as promise to next then block
     }).then(data => {
       let catalogObjs = data.map(item => {
@@ -88,7 +104,7 @@ export class ProductCard extends React.Component {
         catalogObjs
       });
     
-      return fetch(`/inventory?objIds=${data.map(item => item.id).join(",")}`);
+      return fetch(`/inventory?objIds=${data.map(item => item.id).join(",")}`, {signal});
     })
     .then(response => {
       return response.json();
