@@ -31,7 +31,7 @@ app.get('/catalog', (req, res) => {
 
   catalogApiInstance.searchCatalogObjects(JSON.stringify(body)).then(function(data) {
     // console.log('API called successfully. Returned data: ' + data);
-    res.send(data);
+    res.send(data.objects);
   }, function(error) {
     console.error(error);
   });
@@ -48,7 +48,7 @@ app.get('/inventory', (req, res) => {
 
   inventoryApiInstance.batchRetrieveInventoryCounts(JSON.stringify(body)).then(function(data) {
     console.log(data);
-    res.send(data);
+    res.send(data.counts);
   }, function(error) {
     console.error(error);
   });

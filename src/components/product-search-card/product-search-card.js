@@ -15,6 +15,14 @@ export class ProductCard extends React.Component {
       selectedVariantId: '00001',
       selectedSize: '',
       sizeRequiredError: false,
+      inventoryCounts: {
+        s: null,
+        m: null,
+        l: null,
+        xl: null,
+        xxl: null
+      },
+      catalogObjs: []
     }
 
     this.selectedVariantHandler = this.selectedVariantHandler.bind(this);
@@ -56,23 +64,54 @@ export class ProductCard extends React.Component {
     const { product } = this.props;
     const { selectedVariantId } = this.state;
 
-    let variants = [];
+    // console.log(product.productId, selectedVariantId)
 
-    fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`)
-          .then(res => res.json())
-          .then(json => variants = json);
+    let variantString = "";
 
-    // let inventory = [];
-    // fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`)
-    //       .then(res => res.json())
-    //       .then(json => variants = json);
+    var result = fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`).then(function(response) {
+      return response.json(); // pass the data as promise to next then block
+    }).then(data => {
+      let catalogObjs = data.map(item => {
+        return {
+          variantApiId: item.id,
+          sku: item.item_variation_data.sku
+        }
+      })
 
+      this.setState({
+        catalogObjs
+      });
 
+      variantString = data.map(item => item.id).join(",");
+    
+      return fetch(`/inventory?objIds=${variantString}`);
+    })
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+      // console.log('Request failed', error)
+    });
+
+    // I'm using the result variable to show that you can continue to extend the chain from the returned promise
+    result.then(inventory =>  {
+      let inventoryCounts;
+
+      if(inventory) {
+        inventoryCounts = inventory.map(item => {
+         return { variantApiId: item.catalog_object_id, qty: item.quantity };
+        });
+
+        this.setState({
+          inventoryCounts
+        });
+      }
+    })
   }
 
   render() {
     const { product } = this.props;
-    const { selectedSize, selectedVariantId, sizeRequiredError } = this.state;
+    const { selectedSize, selectedVariantId, sizeRequiredError, inventoryCounts, catalogObjs } = this.state;
 
     const selectedVariantInfo = product.variants.find(variant => variant.variantId === selectedVariantId);
 
@@ -85,6 +124,8 @@ export class ProductCard extends React.Component {
       price: selectedVariantInfo.price,
       size: selectedSize
     }
+
+    console.log("DEBUG 2", product.name, inventoryCounts, catalogObjs);
 
     return (
       <div className="ProductCard">
