@@ -24,7 +24,7 @@ app.get('/catalog', (req, res) => {
   body.query = {
     prefix_query: {
       attribute_name: 'sku',
-      attribute_prefix: `${req.query.id}`
+      attribute_prefix: `${req.query.id}_${req.query.variant}`
     }
   }
 
