@@ -36,7 +36,8 @@ export class ProductCard extends React.Component {
       this.retrieveInventory(id);
 
       this.setState({
-        selectedVariantId: id
+        selectedVariantId: id,
+        selectedSize: ''
       });
     }
   }
@@ -72,11 +73,9 @@ export class ProductCard extends React.Component {
   retrieveInventory(selectedVariantId) {
     const { product } = this.props;
 
-    // console.log(product.productId, selectedVariantId)
-
     let variantString = "";
 
-    var result = fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`).then(function(response) {
+    let inventoryGetter = fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`).then(function(response) {
       return response.json(); // pass the data as promise to next then block
     }).then(data => {
       let catalogObjs = data.map(item => {
@@ -91,8 +90,6 @@ export class ProductCard extends React.Component {
         catalogObjs
       });
 
-      console.log("CATALOG", product.name, this.state.catalogObjs);
-
       variantString = data.map(item => item.id).join(",");
     
       return fetch(`/inventory?objIds=${variantString}`);
@@ -101,11 +98,9 @@ export class ProductCard extends React.Component {
       return response.json();
     })
     .catch(error => {
-      // console.log('Request failed', error)
     });
 
-    // I'm using the result variable to show that you can continue to extend the chain from the returned promise
-    result.then(inventory =>  {
+    inventoryGetter.then(inventory =>  {
       let inventorySimple;
       let inventoryCounts = {
         s: 0,
@@ -114,8 +109,6 @@ export class ProductCard extends React.Component {
         xl: 0,
         xxl: 0
       }
-
-      console.log("INVENTORY", product.name, inventory);
 
       if(inventory) {
         inventorySimple = inventory.map(item => {
@@ -156,7 +149,7 @@ export class ProductCard extends React.Component {
 
   render() {
     const { product } = this.props;
-    const { selectedSize, selectedVariantId, sizeRequiredError, inventoryCounts, catalogObjs } = this.state;
+    const { selectedSize, selectedVariantId, sizeRequiredError, inventoryCounts } = this.state;
 
     const selectedVariantInfo = product.variants.find(variant => variant.variantId === selectedVariantId);
 
@@ -181,7 +174,7 @@ export class ProductCard extends React.Component {
           <img src={ product.variants && selectedVariantInfo.image} alt={`${product.name}-{selectedVariantInfo.color.string}`} />
           <div id="product-info">
             <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string } { selectedSize ? `(${selectedSize})` : `` }</h5>
-            <h5>${selectedVariantInfo.price}</h5>
+            <h5>{ selectedSize ? `$${selectedVariantInfo.price}` : ' — ' }</h5>
           </div>
         </Link>
         <VariantSelector variants={product.variants} selectedVariantId={ selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
