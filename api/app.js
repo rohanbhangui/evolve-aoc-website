@@ -14,7 +14,7 @@ const defaultClient = SquareConnect.ApiClient.instance;
 var oauth2 = defaultClient.authentications['oauth2'];
 oauth2.accessToken = process.env.ACCESS_TOKEN;
 
-var apiInstance = new SquareConnect.CatalogApi();
+var catalogApiInstance = new SquareConnect.CatalogApi();
 
 app.get('/catalog', (req, res) => {
 
@@ -24,13 +24,11 @@ app.get('/catalog', (req, res) => {
   body.query = {
     prefix_query: {
       attribute_name: 'sku',
-      attribute_prefix: `${req.query.id}_${req.query.variant}`
+      attribute_prefix: `${req.query.id}`
     }
   }
 
-  apiInstance.searchCatalogObjects(JSON.stringify(body)).then(function(data) {
-
-
+  catalogApiInstance.searchCatalogObjects(JSON.stringify(body)).then(function(data) {
     // console.log('API called successfully. Returned data: ' + data);
     res.send(data.objects);
   }, function(error) {
