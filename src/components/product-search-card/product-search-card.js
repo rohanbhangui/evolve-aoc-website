@@ -16,11 +16,11 @@ export class ProductCard extends React.Component {
       selectedSize: '',
       sizeRequiredError: false,
       inventoryCounts: {
-        s: null,
-        m: null,
-        l: null,
-        xl: null,
-        xxl: null
+        s: 0,
+        m: 0,
+        l: 0,
+        xl: 0,
+        xxl: 0
       },
       catalogObjs: []
     }
@@ -28,10 +28,13 @@ export class ProductCard extends React.Component {
     this.selectedVariantHandler = this.selectedVariantHandler.bind(this);
     this.selectedSizeHandler = this.selectedSizeHandler.bind(this);
     this.sizeRequiredHandler = this.sizeRequiredHandler.bind(this);
+    this.retrieveInventory = this.retrieveInventory.bind(this);
   }
 
   selectedVariantHandler(id) {
     return (e) => {
+      this.retrieveInventory(id);
+
       this.setState({
         selectedVariantId: id
       });
@@ -61,8 +64,13 @@ export class ProductCard extends React.Component {
 
   componentDidMount() {
 
-    const { product } = this.props;
     const { selectedVariantId } = this.state;
+
+    this.retrieveInventory(selectedVariantId);
+  }
+
+  retrieveInventory(selectedVariantId) {
+    const { product } = this.props;
 
     // console.log(product.productId, selectedVariantId)
 
@@ -75,13 +83,15 @@ export class ProductCard extends React.Component {
         return {
           variantApiId: item.id,
           size: item.item_variation_data.sku.split("_")[2],
-          qty: undefined
+          qty: 0
         }
       })
 
       this.setState({
         catalogObjs
       });
+
+      console.log("CATALOG", product.name, this.state.catalogObjs);
 
       variantString = data.map(item => item.id).join(",");
     
@@ -97,7 +107,15 @@ export class ProductCard extends React.Component {
     // I'm using the result variable to show that you can continue to extend the chain from the returned promise
     result.then(inventory =>  {
       let inventorySimple;
-      let inventoryCounts;
+      let inventoryCounts = {
+        s: 0,
+        m: 0,
+        l: 0,
+        xl: 0,
+        xxl: 0
+      }
+
+      console.log("INVENTORY", product.name, inventory);
 
       if(inventory) {
         inventorySimple = inventory.map(item => {
@@ -114,25 +132,26 @@ export class ProductCard extends React.Component {
         });
 
         //pull the avlues into an array
-        inventoryCounts = arr3.map(item => {
+        let inventoryCountsArr = arr3.map(item => {
           let obj = {};
           if(item.size === "2xl") {
             obj["xxl"] = item.qty;
           }
           else {
-            obj[item.size] = item.qty;
+            obj[item.size] = parseInt(item.qty);
           }
           return obj;
         });
 
         //combine array into a single object
-        inventoryCounts = Object.assign({}, ...inventoryCounts);
-
-        this.setState({
-          inventoryCounts
-        });
+        inventoryCounts = Object.assign({}, ...inventoryCountsArr);
       }
-    })
+
+
+      this.setState({
+        inventoryCounts
+      });
+    });
   }
 
   render() {
@@ -150,8 +169,6 @@ export class ProductCard extends React.Component {
       price: selectedVariantInfo.price,
       size: selectedSize
     }
-
-    console.log("DEBUG 2", product.name, inventoryCounts, catalogObjs);
 
     return (
       <div className="ProductCard">
