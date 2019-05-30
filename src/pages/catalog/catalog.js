@@ -46,7 +46,7 @@ class Catalog extends React.Component {
         });
     });
 
-    fetch(`/catalog?id=00001&sku=00001`)
+    fetch(`/catalog?id=00001&variant=00001`)
           .then(res => res.json())
           .then(json => console.log("DEBUG", json));
   }
