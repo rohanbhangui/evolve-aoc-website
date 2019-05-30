@@ -69,7 +69,7 @@ export default class ProductDetails extends React.Component {
         <section id="details">
           <div className="flex-container">
             <div id="flex-image">
-              <img src={ selectedVariantInfo.image } />
+              <img src={ selectedVariantInfo.image } alt={ `${product.name}`} />
             </div>
             <div id="flex-content">
               <h3>{ product.name }</h3>

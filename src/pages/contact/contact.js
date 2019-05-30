@@ -3,13 +3,8 @@ import React from 'react';
 import './contact.scss';
 
 class Contact extends React.Component {
-	constructor(props) {
-    super(props);
-  }
 
   render() {
-
-    const { payload } = this.props;
 
     return (
       <div id="Contact">
@@ -35,9 +30,9 @@ class Contact extends React.Component {
           <div className="flex-item">
             <div className="text-container">
               <h4>Social</h4>
-              <a className="social" href="#"><i className="fab fa-twitter"></i></a>
-              <a className="social" href="#"><i className="fab fa-instagram"></i></a>
-              <a className="social" href="#"><i className="fab fa-facebook"></i></a>
+              <a className="social" href="https://google.com"><i className="fab fa-twitter"></i></a>
+              <a className="social" href="https://google.com"><i className="fab fa-instagram"></i></a>
+              <a className="social" href="https://google.com"><i className="fab fa-facebook"></i></a>
             </div>
           </div>
         </div>

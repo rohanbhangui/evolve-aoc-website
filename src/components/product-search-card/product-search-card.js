@@ -50,20 +50,35 @@ export class ProductCard extends React.Component {
       });
     }, 2000);
   }
-  
+
+  componentsDidMount() {
+
+    const { product } = this.props;
+    const { selectedVariantId } = this.state;
+
+    debugger;
+
+    fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`)
+          .then(res => res.json())
+          .then(json => console.log("DEBUG", json));
+
+
+  }
+
   render() {
     const { product } = this.props;
+    const { selectedSize, selectedVariantId, sizeRequiredError } = this.state;
 
-    const selectedVariantInfo = product.variants.find(variant => variant.variantId === this.state.selectedVariantId);
+    const selectedVariantInfo = product.variants.find(variant => variant.variantId === selectedVariantId);
 
     const productCartPayload = {
       name: product.name,
       image: selectedVariantInfo.image,
       id: product.productId,
-      variant: this.state.selectedVariantId,
+      variant: selectedVariantId,
       color: selectedVariantInfo.color.string,
       price: selectedVariantInfo.price,
-      size: this.state.selectedSize
+      size: selectedSize
     }
 
     return (
@@ -76,13 +91,13 @@ export class ProductCard extends React.Component {
         }}>
           <img src={ product.variants && selectedVariantInfo.image} alt={`${product.name}-{selectedVariantInfo.color.string}`} />
           <div id="product-info">
-            <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string } { this.state.selectedSize ? `(${this.state.selectedSize})` : `` }</h5>
+            <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string } { selectedSize ? `(${selectedSize})` : `` }</h5>
             <h5>${selectedVariantInfo.price}</h5>
           </div>
         </Link>
-        <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
-        <SizeSelector selectedSize={ this.state.selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId} sizeRequiredError={ this.state.sizeRequiredError }></SizeSelector>
-        <AddToCart payload={productCartPayload} isSizeSelected={!!this.state.selectedSize} sizeRequiredHandler={this.sizeRequiredHandler}></AddToCart>
+        <VariantSelector variants={product.variants} selectedVariantId={ selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
+        <SizeSelector selectedSize={ selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId} sizeRequiredError={ sizeRequiredError }></SizeSelector>
+        <AddToCart payload={productCartPayload} isSizeSelected={!!selectedSize} sizeRequiredHandler={this.sizeRequiredHandler}></AddToCart>
       </div>
     )
   }

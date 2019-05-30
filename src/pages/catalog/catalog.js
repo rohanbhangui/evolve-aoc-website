@@ -45,10 +45,6 @@ class Catalog extends React.Component {
           selectedVariantIndex: 0
         });
     });
-
-    fetch(`/catalog?id=00001&variant=00001`)
-          .then(res => res.json())
-          .then(json => console.log("DEBUG", json));
   }
 
   componentDidUpdate() {
@@ -268,7 +264,7 @@ class Catalog extends React.Component {
         <section id="items">
           <div id="grouping-container">
             { this.state && this.state.products && Object.keys(this.state.products).map((grouping, j) =>
-              <div className="grouping">
+              <div className="grouping" key={j}>
                 <h4><a href={`#${grouping.replace(" ", "-")}`}>{ grouping }</a></h4>
                 <div id="product-container">
                   <div id={`${grouping.replace(" ", "-")}`} ref={`${grouping.replace(" ", "-")}`} className="anchor-link-marker"></div>
