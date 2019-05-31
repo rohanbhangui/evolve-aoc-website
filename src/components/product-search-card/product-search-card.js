@@ -95,7 +95,7 @@ export class ProductCard extends React.Component {
       let catalogObjs = data.map(item => {
         return {
           variantApiId: item.id,
-          size: item.item_variation_data.sku.split("_")[2],
+          size: item.item_variation_data.sku.split("_")[item.item_variation_data.sku.split("_").length - 1],
           qty: 0
         }
       })
@@ -130,14 +130,14 @@ export class ProductCard extends React.Component {
         //TODO: SIMPLIFY THIS
 
         // combine arrays of catalog and inventory
-        let arr3 = [];
+        let combined = [];
 
         this.state.catalogObjs.forEach((itm, i) => {
-          arr3.push(Object.assign({}, itm, inventorySimple[i]));
+          combined.push(Object.assign({}, itm, inventorySimple[i]));
         });
 
         //pull the avlues into an array
-        let inventoryCountsArr = arr3.map(item => {
+        let inventoryCountsArr = combined.map(item => {
           let obj = {};
           obj[item.size] = parseInt(item.qty);
           
