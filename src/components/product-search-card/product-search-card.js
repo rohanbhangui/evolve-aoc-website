@@ -36,21 +36,25 @@ export class ProductCard extends React.Component {
 
   selectedVariantHandler(id) {
     return (e) => {
-      this.retrieveInventory(id);
+      if(id !== this.state.selectedVariantId) {
+        this.retrieveInventory(id);
 
-      this.setState({
-        selectedVariantId: id,
-        selectedSize: ''
-      });
+        this.setState({
+          selectedVariantId: id,
+          selectedSize: ''
+        });
+      }
     }
   }
 
   selectedSizeHandler(size) {
     return (e) => {
-      this.setState({
-        selectedSize: size,
-        sizeRequiredError: false
-      });
+      if(size !== this.state.selectedSize) {
+        this.setState({
+          selectedSize: size,
+          sizeRequiredError: false
+        });
+      }
     }
   }
 

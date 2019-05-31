@@ -35,19 +35,25 @@ export default class ProductDetails extends React.Component {
 
   selectedVariantHandler(id) {
     return (e) => {
-      this.setState({
-        selectedVariantId: id,
-        selectedSize: ''
-      });
+      if(id !== this.state.selectedVariantId) {
+        this.retrieveInventory(id);
+
+        this.setState({
+          selectedVariantId: id,
+          selectedSize: ''
+        });
+      }
     }
   }
 
   selectedSizeHandler(size) {
     return (e) => {
-      this.setState({
-        selectedSize: size,
-        sizeRequiredError: false
-      });
+      if(size !== this.state.selectedSize) {
+        this.setState({
+          selectedSize: size,
+          sizeRequiredError: false
+        });
+      }
     }
   }
 
