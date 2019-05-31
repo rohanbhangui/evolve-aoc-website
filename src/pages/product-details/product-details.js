@@ -85,7 +85,7 @@ export default class ProductDetails extends React.Component {
 
     // Feature detect
     if ("AbortController" in window) {
-      controller = new AbortController;
+      controller = new AbortController();
       signal = controller.signal;
     }
 
