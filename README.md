@@ -70,3 +70,10 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
+
+### Generate .env file
+
+This project currently requires a `.env` file with the following values:
+	
+`SERVER_PORT`
+`ACCESS_TOKEN`
