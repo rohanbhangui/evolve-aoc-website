@@ -7,6 +7,9 @@ import { VariantSelector } from '../variant-selector/variant-selector';
 import { SizeSelector } from '../size-selector/size-selector';
 import AddToCart from '../add-to-cart/add-to-cart';
 
+let controller;
+let signal;
+
 export class ProductCard extends React.Component {
 	constructor(props) {
     super(props);
@@ -15,27 +18,43 @@ export class ProductCard extends React.Component {
       selectedVariantId: '00001',
       selectedSize: '',
       sizeRequiredError: false,
+      inventoryCounts: {
+        s: 0,
+        m: 0,
+        l: 0,
+        xl: 0,
+        xxl: 0
+      },
+      catalogObjs: []
     }
 
     this.selectedVariantHandler = this.selectedVariantHandler.bind(this);
     this.selectedSizeHandler = this.selectedSizeHandler.bind(this);
     this.sizeRequiredHandler = this.sizeRequiredHandler.bind(this);
+    this.retrieveInventory = this.retrieveInventory.bind(this);
   }
 
   selectedVariantHandler(id) {
     return (e) => {
-      this.setState({
-        selectedVariantId: id
-      });
+      if(id !== this.state.selectedVariantId) {
+        this.retrieveInventory(id);
+
+        this.setState({
+          selectedVariantId: id,
+          selectedSize: ''
+        });
+      }
     }
   }
 
   selectedSizeHandler(size) {
     return (e) => {
-      this.setState({
-        selectedSize: size,
-        sizeRequiredError: false
-      });
+      if(size !== this.state.selectedSize) {
+        this.setState({
+          selectedSize: size,
+          sizeRequiredError: false
+        });
+      }
     }
   }
 
@@ -51,19 +70,109 @@ export class ProductCard extends React.Component {
     }, 2000);
   }
 
-  render() {
+  componentDidMount() {
+
+    const { selectedVariantId } = this.state;
+
+    this.retrieveInventory(selectedVariantId);
+  }
+
+  retrieveInventory(selectedVariantId) {
+
+    if (controller !== undefined) {
+      // Cancel the previous request
+      controller.abort();
+    }
+
+    // Feature detect
+    if ("AbortController" in window) {
+      controller = new AbortController;
+      signal = controller.signal;
+    }
+
+
     const { product } = this.props;
 
-    const selectedVariantInfo = product.variants.find(variant => variant.variantId === this.state.selectedVariantId);
+    let inventoryGetter = fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`, {signal}).then(function(response) {
+      return response.json(); // pass the data as promise to next then block
+    }).then(data => {
+      let catalogObjs = data.map(item => {
+        return {
+          variantApiId: item.id,
+          size: item.item_variation_data.sku.split("_")[item.item_variation_data.sku.split("_").length - 1],
+          qty: 0
+        }
+      })
+
+      this.setState({
+        catalogObjs
+      });
+    
+      return fetch(`/inventory?objIds=${data.map(item => item.id).join(",")}`, {signal});
+    })
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+    });
+
+    inventoryGetter.then(inventory => {
+      let inventorySimple;
+      let inventoryCounts = {
+        s: 0,
+        m: 0,
+        l: 0,
+        xl: 0,
+        xxl: 0
+      }
+
+      if(inventory) {
+        inventorySimple = inventory.map(item => {
+         return { variantApiId: item.catalog_object_id, qty: item.quantity };
+        });
+
+        //TODO: SIMPLIFY THIS
+
+        // combine arrays of catalog and inventory
+        let combined = [];
+
+        this.state.catalogObjs.forEach((itm, i) => {
+          combined.push(Object.assign({}, itm, inventorySimple[i]));
+        });
+
+        //pull the avlues into an array
+        let inventoryCountsArr = combined.map(item => {
+          let obj = {};
+          obj[item.size] = parseInt(item.qty);
+          
+          return obj;
+        });
+
+        //combine array into a single object
+        inventoryCounts = Object.assign({}, ...inventoryCountsArr);
+      }
+
+
+      this.setState({
+        inventoryCounts
+      });
+    });
+  }
+
+  render() {
+    const { product } = this.props;
+    const { selectedSize, selectedVariantId, sizeRequiredError, inventoryCounts } = this.state;
+
+    const selectedVariantInfo = product.variants.find(variant => variant.variantId === selectedVariantId);
 
     const productCartPayload = {
       name: product.name,
       image: selectedVariantInfo.image,
       id: product.productId,
-      variant: this.state.selectedVariantId,
+      variant: selectedVariantId,
       color: selectedVariantInfo.color.string,
       price: selectedVariantInfo.price,
-      size: this.state.selectedSize
+      size: selectedSize
     }
 
     return (
@@ -74,15 +183,15 @@ export class ProductCard extends React.Component {
             product
           }
         }}>
-          <img src={ product.variants && selectedVariantInfo.image} alt={`${product.name}-{selectedVariantInfo.color.string}`} />
+          <img src={ product.variants && selectedVariantInfo.image} alt={`${product.name}-${selectedVariantInfo.color.string}`} />
           <div id="product-info">
-            <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string } { this.state.selectedSize ? `(${this.state.selectedSize})` : `` }</h5>
-            <h5>${selectedVariantInfo.price}</h5>
+            <h5>{product.name} &mdash; { product.variants && selectedVariantInfo.color.string } { selectedSize ? `(${selectedSize})` : `` }</h5>
+            <h5>{ selectedSize ? `$${selectedVariantInfo.price}` : ' — ' }</h5>
           </div>
         </Link>
-        <VariantSelector variants={product.variants} selectedVariantId={ this.state.selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
-        <SizeSelector selectedSize={ this.state.selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId} sizeRequiredError={ this.state.sizeRequiredError }></SizeSelector>
-        <AddToCart payload={productCartPayload} isSizeSelected={!!this.state.selectedSize} sizeRequiredHandler={this.sizeRequiredHandler}></AddToCart>
+        <VariantSelector variants={product.variants} selectedVariantId={ selectedVariantId } selectedVariantHandler={ this.selectedVariantHandler }></VariantSelector>
+        <SizeSelector selectedSize={ selectedSize } selectedSizeHandler={ this.selectedSizeHandler } id={product.productId} sizeRequiredError={ sizeRequiredError } inventoryCounts={inventoryCounts}></SizeSelector>
+        <AddToCart payload={productCartPayload} isSizeSelected={!!selectedSize} sizeRequiredHandler={this.sizeRequiredHandler}></AddToCart>
       </div>
     )
   }

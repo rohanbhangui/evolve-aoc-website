@@ -4,9 +4,6 @@ import './about.scss';
 import About1 from '../../assets/images/about-1.jpg';
 
 class Contact extends React.Component {
-	constructor(props) {
-    super(props);
-  }
 
   render() {
 

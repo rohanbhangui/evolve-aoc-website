@@ -24,6 +24,7 @@ class Catalog extends React.Component {
 
     window.addData = this.addData;
   }
+
   componentDidMount() {
 
     window.scrollTo(0,0);
@@ -263,7 +264,7 @@ class Catalog extends React.Component {
         <section id="items">
           <div id="grouping-container">
             { this.state && this.state.products && Object.keys(this.state.products).map((grouping, j) =>
-              <div className="grouping">
+              <div className="grouping" key={j}>
                 <h4><a href={`#${grouping.replace(" ", "-")}`}>{ grouping }</a></h4>
                 <div id="product-container">
                   <div id={`${grouping.replace(" ", "-")}`} ref={`${grouping.replace(" ", "-")}`} className="anchor-link-marker"></div>
