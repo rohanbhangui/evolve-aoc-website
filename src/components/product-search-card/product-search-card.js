@@ -139,12 +139,8 @@ export class ProductCard extends React.Component {
         //pull the avlues into an array
         let inventoryCountsArr = arr3.map(item => {
           let obj = {};
-          if(item.size === "2xl") {
-            obj["xxl"] = item.qty;
-          }
-          else {
-            obj[item.size] = parseInt(item.qty);
-          }
+          obj[item.size] = parseInt(item.qty);
+          
           return obj;
         });
 
