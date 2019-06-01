@@ -20,10 +20,9 @@ class App extends React.Component {
       <Provider store={store}>
         <Router>
           <ScrollToTop>
-            <Switch>
-              <Route path="/checkout" />
-              <Route path="/" component={TopBar} />
-            </Switch>
+            <header>
+              <TopBar></TopBar>
+            </header>
             <Route exact path="/" component={Catalog} />
             <Route exact path="/catalog" component={Catalog} />
             <Route path="/contact" component={Contact} />
