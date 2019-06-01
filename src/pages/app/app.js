@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Catalog from '../catalog/catalog';
 import Contact from '../contact/contact';
@@ -20,9 +20,10 @@ class App extends React.Component {
       <Provider store={store}>
         <Router>
           <ScrollToTop>
-            <header>
-              <TopBar></TopBar>
-            </header>
+            <Switch>
+              <Route path="/checkout" />
+              <Route path="/" component={TopBar} />
+            </Switch>
             <Route exact path="/" component={Catalog} />
             <Route exact path="/catalog" component={Catalog} />
             <Route path="/contact" component={Contact} />

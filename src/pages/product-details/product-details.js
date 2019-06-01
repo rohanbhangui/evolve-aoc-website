@@ -73,20 +73,22 @@ export default class ProductDetails extends React.Component {
 
     const { selectedVariantId } = this.state;
 
-    this.retrieveInventory(selectedVariantId);
+    this.retrieveInventory(selectedVariantId, true);
   }
 
-  retrieveInventory(selectedVariantId) {
+  retrieveInventory(selectedVariantId, onMount=false) {
 
-    if (controller !== undefined) {
-      // Cancel the previous request
-      controller.abort();
-    }
+    if(!onMount) {
+      if (controller !== undefined) {
+        // Cancel the previous request
+        controller.abort();
+      }
 
-    // Feature detect
-    if ("AbortController" in window) {
-      controller = new AbortController();
-      signal = controller.signal;
+      // Feature detect
+      if ("AbortController" in window) {
+        controller = new AbortController;
+        signal = controller.signal;
+      }
     }
 
     const { product } = this.props.location.state;
