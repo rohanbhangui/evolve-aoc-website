@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 require('dotenv').config();
 const port = process.env.SERVER_PORT;
 
@@ -10,6 +11,8 @@ const defaultClient = SquareConnect.ApiClient.instance;
 const oauth2 = defaultClient.authentications['oauth2'];
 
 oauth2.accessToken = process.env.ACCESS_TOKEN;
+
+app.use(cors());
 
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
