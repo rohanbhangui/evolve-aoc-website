@@ -73,25 +73,29 @@ export default class ProductDetails extends React.Component {
 
     const { selectedVariantId } = this.state;
 
-    this.retrieveInventory(selectedVariantId);
+    this.retrieveInventory(selectedVariantId, true);
   }
 
-  retrieveInventory(selectedVariantId) {
+  retrieveInventory(selectedVariantId, onMount=false) {
 
-    if (controller !== undefined) {
-      // Cancel the previous request
-      controller.abort();
+    if(!onMount) {
+      if (controller !== undefined) {
+        // Cancel the previous request
+        controller.abort();
+      }
+
+      // Feature detect
+      if ("AbortController" in window) {
+        controller = new AbortController;
+        signal = controller.signal;
+      }
     }
 
-    // Feature detect
-    if ("AbortController" in window) {
-      controller = new AbortController();
-      signal = controller.signal;
-    }
 
     const { product } = this.props.location.state;
 
-    let inventoryGetter = fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`, {signal}).then(function(response) {
+    let inventoryGetter = fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`, {signal})
+    .then(response => {
       return response.json(); // pass the data as promise to next then block
     }).then(data => {
       let catalogObjs = data.map(item => {
@@ -125,23 +129,16 @@ export default class ProductDetails extends React.Component {
       }
 
       if(inventory) {
-        inventorySimple = inventory.map(item => {
-         return { variantApiId: item.catalog_object_id, qty: item.quantity };
-        });
 
-        //TODO: SIMPLIFY THIS
-
-        // combine arrays of catalog and inventory
-        let combined = [];
-
-        this.state.catalogObjs.forEach((itm, i) => {
-          combined.push(Object.assign({}, itm, inventorySimple[i]));
-        });
+        inventorySimple = inventory.reduce((obj, item) => {
+           obj[item.catalog_object_id] = item.quantity;
+           return obj
+         }, {})
 
         //pull the avlues into an array
-        let inventoryCountsArr = combined.map(item => {
+        let inventoryCountsArr = this.state.catalogObjs.map(item => {
           let obj = {};
-          obj[item.size] = parseInt(item.qty);
+          obj[item.size] = parseInt(inventorySimple[item.variantApiId]) || 0;
           
           return obj;
         });
@@ -150,13 +147,12 @@ export default class ProductDetails extends React.Component {
         inventoryCounts = Object.assign({}, ...inventoryCountsArr);
       }
 
-
       this.setState({
         inventoryCounts
       });
     });
   }
-
+  
   render() {
     const { product } = this.props.location.state;
 

@@ -45,6 +45,24 @@ class Catalog extends React.Component {
           selectedVariantIndex: 0
         });
     });
+
+    // fetch('/oauth2/authorize?client_id=sq0idp-RwG9JYiCzKz34m5SvC5hqA&scope=ITEMS_READ%20INVENTORY_READ%20INVENTORY_WRITE&session=true')
+    // .then(function(response) {
+    //   return response.json();
+    // })
+    // .then(function(myJson) {
+    //   console.log(myJson);
+    // });
+
+    fetch('/access')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      console.log(myJson);
+    });
+    
+    
   }
 
   componentDidUpdate() {

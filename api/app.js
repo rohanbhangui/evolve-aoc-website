@@ -1,18 +1,21 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 require('dotenv').config();
 const port = process.env.SERVER_PORT;
-
-// console.log that your server is up and running
-app.listen(port, () => console.log(`Listening on port ${port}`));
 
 // create a GET route
 const SquareConnect = require('square-connect');
 const defaultClient = SquareConnect.ApiClient.instance;
-
 // Configure OAuth2 access token for authorization: oauth2
-var oauth2 = defaultClient.authentications['oauth2'];
+const oauth2 = defaultClient.authentications['oauth2'];
+
 oauth2.accessToken = process.env.ACCESS_TOKEN;
+
+app.use(cors());
+
+// console.log that your server is up and running
+app.listen(port, () => console.log(`Listening on port ${port}`));
 
 var catalogApiInstance = new SquareConnect.CatalogApi();
 var inventoryApiInstance = new SquareConnect.InventoryApi();
@@ -35,10 +38,7 @@ app.get('/catalog', (req, res) => {
   }, function(error) {
     console.error(error);
   });
-
-
 });
-
 
 app.get('/inventory', (req, res) => {
   var body = new SquareConnect.BatchRetrieveInventoryCountsRequest();
@@ -52,6 +52,27 @@ app.get('/inventory', (req, res) => {
   }, function(error) {
     console.error(error);
   });
-})
+});
+
+app.get('/access', (req, res) => {
+
+  var tokenApiInstance = new SquareConnect.OAuthApi();
+
+  var body = new SquareConnect.ObtainTokenRequest(); // ObtainTokenRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
+
+  body = {
+    client_id: process.env.CLIENT_ID,
+    client_secret: process.env.CLIENT_SECRET,
+    grant_type: 'authorization_code',
+    code: process.env.GUEST_USER_AUTHORIZATION_CODE
+  }
+
+  tokenApiInstance.obtainToken(body).then(function(data) {
+    console.log(data);
+    res.send(data);
+  }, function(error) {
+    console.error(error);
+  });
+});
 
 
