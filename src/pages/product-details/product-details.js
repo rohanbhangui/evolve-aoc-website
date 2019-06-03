@@ -95,9 +95,8 @@ export default class ProductDetails extends React.Component {
     const { product } = this.props.location.state;
 
     let inventoryGetter = fetch(`/catalog?id=${product.productId}&variant=${selectedVariantId}`, {signal})
-    .then(response => {
-      return response.json(); // pass the data as promise to next then block
-    }).then(data => {
+    .then(response => response.json())
+    .then(data => {
       let catalogObjs = data.map(item => {
         return {
           variantApiId: item.id,
@@ -112,9 +111,7 @@ export default class ProductDetails extends React.Component {
     
       return fetch(`/inventory?objIds=${data.map(item => item.id).join(",")}`, {signal});
     })
-    .then(response => {
-      return response.json();
-    })
+    .then(response => response.json())
     .catch(error => {
     });
 
