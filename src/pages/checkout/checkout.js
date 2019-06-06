@@ -1,18 +1,22 @@
 import React from 'react';
 
-import './contact.scss';
+import './checkout.scss';
 
-class Contact extends React.Component {
+class Checkout extends React.Component {
 
   render() {
 
     return (
       <div id="Checkout">
-        
+        <div id="paginator">
+        	<div className="pagination">Shipping Details</div>
+        	<div className="pagination">Payment Details</div>
+        	<div className="pagination">Final Confirmation</div>
+        </div>
       </div>
     )
   }
 }
 
 
-export default Contact;
+export default Checkout;

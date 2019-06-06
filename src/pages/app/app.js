@@ -8,6 +8,7 @@ import About from '../about/about';
 import ProductDetails from '../product-details/product-details';
 import TopBar from '../../components/top-bar/top-bar';
 import Footer from '../../components/footer/footer';
+import Checkout from '../checkout/checkout';
 
 import ScrollToTop from '../../components/scrollToTop/scrollToTop';
 
@@ -28,6 +29,7 @@ class App extends React.Component {
             <Route path="/contact" component={Contact} />
             <Route path="/about" component={About} />
             <Route path="/product-details" component={ProductDetails} />
+            <Route path="/checkout" component={Checkout} />
             <footer>
               <Footer></Footer>
             </footer>
