@@ -64,6 +64,10 @@
         padding: .3125rem;
         margin-bottom: 5rem;
         width: 100%;
+
+        @include small {
+          width: auto;
+        }
       }
     }
   }
