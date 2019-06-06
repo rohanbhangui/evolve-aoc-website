@@ -29,7 +29,7 @@ class App extends React.Component {
             <Route path="/contact" component={Contact} />
             <Route path="/about" component={About} />
             <Route path="/product-details" component={ProductDetails} />
-            <Route path="/checkout" component={Checkout} />
+            <Route path="/checkout/:step" component={Checkout} />
             <footer>
               <Footer></Footer>
             </footer>

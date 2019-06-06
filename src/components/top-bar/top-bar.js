@@ -92,9 +92,9 @@ class TopBar extends React.Component {
               )}
             </div>
 
-            <div id="cart-footer">
+            <div id="cart-footer" className={ cart.length === 0 ? 'empty' : ''}>
               { cart.length > 0 &&
-                <Link to="/checkout" class="button" id="checkout-button">Checkout | ${this.totalCart(cart)}</Link>
+                <Link to="/checkout/billing" className="button" id="checkout-button">Checkout | ${this.totalCart(cart)}</Link>
               }
             </div>
           </div>

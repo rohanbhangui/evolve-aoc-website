@@ -1,0 +1,42 @@
+@import '../../assets/styles/_variables.scss';
+
+#Checkout {
+	margin: 6rem 0;
+
+	#paginator {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		max-width: 1080px;
+		width: 100%;
+		margin: 0 auto;
+
+		.pagination {
+			flex: 1 0 auto;
+			text-align: center;
+
+			&:active {
+				top: 0;
+			}
+
+			&:not(.active) {
+				opacity: 0.33;
+				pointer-events: none;
+			}
+
+			&.previous {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			&.active {
+				pointer-events: none;
+				// border: 1px solid #000;
+				font-weight: bold;
+				border-radius: 0.25rem;
+				// background: white;
+				color: black;
+			}
+		}
+	}
+}
