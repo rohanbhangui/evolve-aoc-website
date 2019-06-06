@@ -75,19 +75,7 @@ export default class ProductDetails extends React.Component {
 
     let { product } = this.props.location.state;
 
-    let { selectedSize, selectedVariantId, sizeRequiredError, inventoryCounts } = this.state;
-
-    let selectedVariantInfo = product.variants.find(variant => variant.variantId === this.state.selectedVariantId);
-
-    let productCartPayload = {
-      name: product.name,
-      image: selectedVariantInfo.image,
-      id: product.productId,
-      variant: selectedVariantId,
-      color: selectedVariantInfo.color.string,
-      price: selectedVariantInfo.price,
-      size: selectedSize
-    }
+    let { selectedVariantId } = this.state;
 
     document.title = `${PROJECT_NAME} - ${product.name}`;
 
@@ -104,7 +92,7 @@ export default class ProductDetails extends React.Component {
 
       // Feature detect
       if ("AbortController" in window) {
-        controller = new AbortController;
+        controller = new AbortController();
         signal = controller.signal;
       }
     }

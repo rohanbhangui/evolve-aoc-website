@@ -28,7 +28,7 @@ class Catalog extends React.Component {
   }
 
   componentDidMount() {
-    if( this.props.match.path != "/") {
+    if( this.props.match.path !== "/") {
       document.title = `${PROJECT_NAME} - Catalog`;
     }
     else  {
