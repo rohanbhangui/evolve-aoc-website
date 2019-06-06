@@ -4,6 +4,8 @@ import groupBy from 'lodash.groupby';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
+import { PROJECT_NAME } from '../../utility/variables';
+
 import { ProductCard } from '../../components/product-search-card/product-search-card';
 import './catalog.scss';
 
@@ -26,6 +28,13 @@ class Catalog extends React.Component {
   }
 
   componentDidMount() {
+    if( this.props.match.path != "/") {
+      document.title = `${PROJECT_NAME} - Catalog`;
+    }
+    else  {
+      document.title = `${PROJECT_NAME}`;
+    }
+    
 
     window.scrollTo(0,0);
 

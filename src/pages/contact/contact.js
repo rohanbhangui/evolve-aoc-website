@@ -1,8 +1,14 @@
 import React from 'react';
 
+import { PROJECT_NAME } from '../../utility/variables';
+
 import './contact.scss';
 
 class Contact extends React.Component {
+
+  componentDidMount() {
+    document.title = `${PROJECT_NAME} - Contact`;
+  }
 
   render() {
 

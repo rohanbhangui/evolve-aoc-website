@@ -1,9 +1,15 @@
 import React from 'react';
 
+import { PROJECT_NAME } from '../../utility/variables';
+
 import './about.scss';
 import About1 from '../../assets/images/about-1.jpg';
 
 class Contact extends React.Component {
+  
+  componentDidMount() {
+    document.title = `${PROJECT_NAME} - About`;
+  }
 
   render() {
 

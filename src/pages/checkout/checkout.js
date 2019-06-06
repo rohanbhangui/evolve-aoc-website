@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { PROJECT_NAME } from '../../utility/variables';
+
 import './checkout.scss';
 
 class Checkout extends React.Component {
@@ -12,6 +14,12 @@ class Checkout extends React.Component {
       shipping: {},
       order: {}
     }
+  }
+
+  componentDidMount() {
+    let { match: { params: { step }} } = this.props;
+
+    document.title = `${PROJECT_NAME} - Checkout - ${step}`;
   }
 
   render() {
