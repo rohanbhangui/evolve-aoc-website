@@ -2,6 +2,8 @@ import React from 'react';
 
 import { PROJECT_NAME } from '../../utility/variables';
 
+import AddressForm from '../../components/address-form/address-form';
+
 import './checkout.scss';
 
 class Checkout extends React.Component {
@@ -35,6 +37,13 @@ class Checkout extends React.Component {
         	<div className={`pagination button ${ step === "shipping" ? 'active' : '' } ${ step === "order" ? 'previous' : '' }`}>Shipping Details</div>
         	<div className={`pagination button ${ step === "order" ? 'active' : '' }`}>Final Confirmation</div>
         </div>
+
+        { step === "billing" ? (
+          <div id="billing-step-content">
+            <AddressForm />
+          </div> 
+        ) : ''}
+        
       </div>
     )
   }
