@@ -42,66 +42,64 @@ class TopBar extends React.Component {
     const { cart } = this.props;
 
     return (
-      <header>
-        <div className="header-container">
-          <div id="logo">
-            <Link to="/">
-              <img src={logo} className="App-logo" alt="logo" />
-            </Link>
-          </div>
-          <div id="main-links">
-            <NavLink to="/catalog" activeClassName="selected">Catalog</NavLink>
-            <NavLink to="/about" activeClassName="selected">About</NavLink>
-            <NavLink to="/contact" activeClassName="selected">Contact</NavLink>
-          </div>
-          <div id="cart">
-            <span className={`shopping-cart-icon-container fa-stack fa-2x has-badge ${ cart.length === 0 ? 'display-none' : ''}`} data-count={ cart.length > 0 ? this.totalQuantity(cart) : 0 }>
-              <i className="p3 fa fa-shopping-cart fa-stack-1x xfa-inverse" data-count="4b"></i>
-            </span>
-            <div id="cart-list">
-              <div id="cart-header">
-                <h5 id="cart-title">Cart</h5>
-                { cart.length <= 0 &&
-                  <div id="empty-text">Cart is Empty</div>
-                }
-              </div>
-              <div id="cart-items">
-                { cart && cart.map((item, i) =>
+      <div className="header-container">
+        <div id="logo">
+          <Link to="/">
+            <img src={logo} className="App-logo" alt="logo" />
+          </Link>
+        </div>
+        <div id="main-links">
+          <NavLink to="/catalog" activeClassName="selected">Catalog</NavLink>
+          <NavLink to="/about" activeClassName="selected">About</NavLink>
+          <NavLink to="/contact" activeClassName="selected">Contact</NavLink>
+        </div>
+        <div id="cart">
+          <span className={`shopping-cart-icon-container fa-stack fa-2x has-badge ${ cart.length === 0 ? 'display-none' : ''}`} data-count={ cart.length > 0 ? this.totalQuantity(cart) : 0 }>
+            <i className="p3 fa fa-shopping-cart fa-stack-1x xfa-inverse" data-count="4b"></i>
+          </span>
+          <div id="cart-list">
+            <div id="cart-header">
+              <h5 id="cart-title">Cart</h5>
+              { cart.length <= 0 &&
+                <div id="empty-text">Cart is Empty</div>
+              }
+            </div>
+            <div id="cart-items">
+              { cart && cart.map((item, i) =>
 
-                  <div className={`cart-item ${ i > 0 ? 'border-top' : ''}`} key={i} data-id={ item.id } data-variant={ item.variant }>
-                    <div className="item-image"> <img src={ item.image } alt={ `${ item.name } - ${ item.color }`} /></div>
-                    <div className="item-content">
-                      <div className="vertical-flex-container">
-                        <div className="flex-item">
-                          <div className="horizontal-flex-container">
-                            <div className="flex-item">
-                              <div>{ item.name } - { item.color } ({item.size})</div>
-                            </div>
-                            <div className="flex-item">
-                              <div>{ item.qty } &times; { `$${item.price}` || "$0.00" }</div>
-                            </div>
+                <div className={`cart-item ${ i > 0 ? 'border-top' : ''}`} key={i} data-id={ item.id } data-variant={ item.variant }>
+                  <div className="item-image"> <img src={ item.image } alt={ `${ item.name } - ${ item.color }`} /></div>
+                  <div className="item-content">
+                    <div className="vertical-flex-container">
+                      <div className="flex-item">
+                        <div className="horizontal-flex-container">
+                          <div className="flex-item">
+                            <div>{ item.name } - { item.color } ({item.size})</div>
+                          </div>
+                          <div className="flex-item">
+                            <div>{ item.qty } &times; { `$${item.price}` || "$0.00" }</div>
                           </div>
                         </div>
-                        <div className="flex-item">
-                          <div className="item-remove">
-                            <button className="link" onClick={ this.removeItem({ id: item.id, variant: item.variant, size: item.size})}>Remove</button>
-                          </div>
+                      </div>
+                      <div className="flex-item">
+                        <div className="item-remove">
+                          <button className="link" onClick={ this.removeItem({ id: item.id, variant: item.variant, size: item.size})}>Remove</button>
                         </div>
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
+            </div>
 
-              <div id="cart-footer">
-                { cart.length > 0 &&
-                  <button id="checkout-button">Checkout | ${this.totalCart(cart)}</button>
-                }
-              </div>
+            <div id="cart-footer">
+              { cart.length > 0 &&
+                <button id="checkout-button">Checkout | ${this.totalCart(cart)}</button>
+              }
             </div>
           </div>
         </div>
-      </header>
+      </div>
     )
   }
 }

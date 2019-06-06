@@ -20,7 +20,11 @@ header {
 
 		#main-links {
 			line-height: 2.7rem;
-			margin-right: 1rem;
+			margin-right: 0rem;
+
+			@include small {
+				margin-right: 1rem;
+			}
 
 			a {
 				padding: 0.3rem 0.4rem;
