@@ -14,11 +14,14 @@ class Checkout extends React.Component {
     this.state = {
       billing: {},
       shipping: {},
-      order: {}
+      order: {},
+      sameAddress: false
     }
 
     this.billingFormSubmitEventHandler = this.billingFormSubmitEventHandler.bind(this);
     this.shippingFormSubmitEventHandler = this.shippingFormSubmitEventHandler.bind(this);
+
+    this.toggleSameAddress = this.toggleSameAddress.bind(this);
   }
 
   componentDidMount() {
@@ -72,9 +75,23 @@ class Checkout extends React.Component {
     }
   }
 
+  toggleSameAddress() {
+    let component = this;
+    return (e) => {
+      component.setState( prevState => {
+        return {
+          sameAddress: !prevState.sameAddress
+        }
+      });
+    }
+  }
+
   render() {
 
     let { match: { params: { step }} } = this.props;
+    let { sameAddress } = this.state;
+
+    console.log(sameAddress);
 
     return (
       <div id="Checkout">
@@ -85,16 +102,19 @@ class Checkout extends React.Component {
         </div>
 
         <div id="pages">
-          { step === "shipping" ? (
+          { step === "shipping" && (
             <div id="shipping-step-content">
               <AddressForm submitEventHandler={ this.shippingFormSubmitEventHandler } />
             </div> 
-          ) : ''}
-          { step === "billing" ? (
+          )}
+          { step === "billing" && (
             <div id="billing-step-content">
-              <AddressForm submitEventHandler={ this.shippingFormSubmitEventHandler } />
+              <label><input type="checkbox" value={sameAddress} onChange={ this.toggleSameAddress } /> Use shipping address</label>
+              { sameAddress && (
+                <AddressForm submitEventHandler={ this.shippingFormSubmitEventHandler } />
+              )}
             </div> 
-          ) : ''}
+          )}
         </div>
         
       </div>
