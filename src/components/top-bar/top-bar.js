@@ -54,9 +54,11 @@ class TopBar extends React.Component {
           <NavLink to="/contact" activeClassName="selected">Contact</NavLink>
         </div>
         <div id="cart">
-          <span className={`shopping-cart-icon-container fa-stack fa-2x has-badge ${ cart.length === 0 ? 'display-none' : ''}`} data-count={ cart.length > 0 ? this.totalQuantity(cart) : 0 }>
-            <i className="p3 fa fa-shopping-cart fa-stack-1x xfa-inverse" data-count="4b"></i>
-          </span>
+          <Link to="/cart">
+            <span className={`shopping-cart-icon-container fa-stack fa-2x has-badge ${ cart.length === 0 ? 'display-none' : ''}`} data-count={ cart.length > 0 ? this.totalQuantity(cart) : 0 }>
+              <i className="p3 fa fa-shopping-cart fa-stack-1x xfa-inverse" data-count="4b"></i>
+            </span>
+          </Link>
           <div id="cart-list">
             <div id="cart-header">
               <h5 id="cart-title">Cart</h5>
@@ -94,7 +96,7 @@ class TopBar extends React.Component {
 
             <div id="cart-footer" className={ cart.length === 0 ? 'empty' : ''}>
               { cart.length > 0 &&
-                <Link to="/checkout/shipping" className="button" id="checkout-button">Checkout | ${this.totalCart(cart)}</Link>
+                <Link to="/cart" className="button" id="checkout-button">Checkout | ${this.totalCart(cart)}</Link>
               }
             </div>
           </div>

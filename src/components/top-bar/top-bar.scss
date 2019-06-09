@@ -63,6 +63,12 @@ header {
 				}
 			}
 
+			a {
+				span {
+					color: black;
+				}
+			}
+
 			&:before {
 				display: none;
 				content: '';

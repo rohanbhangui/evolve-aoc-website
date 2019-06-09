@@ -75,15 +75,12 @@ class Checkout extends React.Component {
     }
   }
 
-  toggleSameAddress() {
-    let component = this;
-    return (e) => {
-      component.setState( prevState => {
-        return {
-          sameAddress: !prevState.sameAddress
-        }
-      });
-    }
+  toggleSameAddress(e) {
+    this.setState( prevState => {
+      return {
+        sameAddress: !prevState.sameAddress
+      }
+    });
   }
 
   render() {
@@ -110,7 +107,7 @@ class Checkout extends React.Component {
           { step === "billing" && (
             <div id="billing-step-content">
               <label><input type="checkbox" value={sameAddress} onChange={ this.toggleSameAddress } /> Use shipping address</label>
-              { sameAddress && (
+              { !sameAddress && (
                 <AddressForm submitEventHandler={ this.shippingFormSubmitEventHandler } />
               )}
             </div> 
