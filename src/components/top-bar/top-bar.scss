@@ -55,7 +55,10 @@ header {
 
 			&:hover {
 				#cart-list {
-					display: inline-block;
+
+					@include medium {
+						display: inline-block;
+					}
 				}
 
 				&:before {
@@ -249,8 +252,6 @@ header {
 								}
 							}
 						}
-
-						
 					}
 				}
 			}

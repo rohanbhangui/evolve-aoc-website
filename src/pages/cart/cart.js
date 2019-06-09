@@ -109,9 +109,9 @@ class Cart extends React.Component {
                       <div className="flex-item">
                         <div className="horizontal-flex-container">
                           <div className="flex-item">
-                            <div><h5><strong>{ item.name }</strong></h5></div>
-                            <div><strong>Colour:</strong> { item.color }</div>
-                            <div><strong>Size:</strong> {SIZE_MAPPING[item.size]}</div>
+                            <div><h5>{ item.name }</h5></div>
+                            <div className="details">Colour: { item.color }</div>
+                            <div className="details">Size: {SIZE_MAPPING[item.size]}</div>
                           </div>
                           <div className="flex-item">
                             <input className="input" type="text" pattern="\d*" maxlength="2" defaultValue={item.qty} onKeyPress={this.validateNumber} onBlur={ this.changeQuantity({ id: item.id, variant: item.variant, size: item.size}) }/>
@@ -131,6 +131,7 @@ class Cart extends React.Component {
                 </div>
               )}
             </div>
+            <div id="cart-total"><strong>Subtotal:</strong> <h5>{ this.totalCart(cart) }</h5></div>
           </div>
         )}
 
