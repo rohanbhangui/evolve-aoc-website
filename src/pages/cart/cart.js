@@ -16,6 +16,7 @@ class Cart extends React.Component {
     this.removeItem = this.removeItem.bind(this);
     this.totalQuantity = this.totalQuantity.bind(this);
     this.validateNumber = this.validateNumber.bind(this);
+    this.pushToCheckout = this.pushToCheckout.bind(this);
   }
 
   totalCart(cart) {
@@ -82,6 +83,21 @@ class Cart extends React.Component {
     document.title = `${PROJECT_NAME} - Cart(${this.totalQuantity(cart)})`;
   }
 
+  pushToCheckout() {
+    return (e) => {
+      let { cart } = this.props;
+
+      fetch('/tax')
+      .then(function(resp) {
+        return resp.json();
+      })
+      .then(function(myJson) {
+        console.log(myJson);
+        return myJson;
+      });
+    }
+  }
+
   render() {
 
     let { cart } = this.props;
@@ -99,39 +115,55 @@ class Cart extends React.Component {
         <h4>Cart</h4>
         { cart.length > 0 && (
           <div id="cart-view">
+            { /*<div id="cart-item-header">
+              <div className="flex-item">Item</div>
+              <div className="flex-item" id="image-buffer">
+                <div className="filler"></div>
+              </div>
+              <div className="flex-item" id="text-buffer">
+                <div className="filler"></div>
+              </div>
+              <div className="flex-item">Qty</div>
+              <div className="flex-item">Price</div>
+            </div> */ }
             <div id="cart-items">
               { cart && cart.map((item, i) =>
 
-                <div className={`cart-item ${ i > 0 ? 'border-top' : ''}`} key={i} data-id={ item.id } data-variant={ item.variant }>
-                  <div className="item-image"> <img src={ item.image } alt={ `${ item.name } - ${ item.color }`} /></div>
-                  <div className="item-content">
-                    <div className="vertical-flex-container">
-                      <div className="flex-item">
-                        <div className="horizontal-flex-container">
-                          <div className="flex-item">
-                            <div><h5>{ item.name }</h5></div>
-                            <div className="details">Colour: { item.color }</div>
-                            <div className="details">Size: {SIZE_MAPPING[item.size]}</div>
-                          </div>
-                          <div className="flex-item">
-                            <input className="input" type="text" pattern="\d*" maxlength="2" defaultValue={item.qty} onKeyPress={this.validateNumber} onBlur={ this.changeQuantity({ id: item.id, variant: item.variant, size: item.size}) }/>
-                          </div>
-                          <div className="flex-item">
-                            <div>{ `$${(item.qty*item.price).toFixed(2)}` || "—" }</div>
-                          </div>
-                        </div>
-                      </div>
+                <div className={`cart-item ${ i === 0 ? 'border-top' : ''}`} key={i} data-id={ item.id } data-variant={ item.variant }>
+                  <div className="horizontal-flex-container">
+                    <div className="flex-item" id="remove">
+                      <button onClick={ this.removeItem({ id: item.id, variant: item.variant, size: item.size})}>&times;</button>
+                    </div>
+                    <div className="flex-item" id="image">
+                      <img src={ item.image } alt={ `${ item.name } - ${ item.color }`} />
+                    </div>
+                    <div className="flex-item">
+                      <h5>{ item.name }</h5>
+                      <div className="details">Colour: { item.color }</div>
+                      <div className="details">Size: {SIZE_MAPPING[item.size]}</div>
+                    </div>
+                    <div className="flex-item">
+                      <input className="input" type="text" pattern="\d*" maxLength="2" defaultValue={item.qty} onKeyPress={this.validateNumber} onBlur={ this.changeQuantity({ id: item.id, variant: item.variant, size: item.size}) }/>
+                    </div>
+                    <div className="flex-item">
+                      <div>{ `$${(item.qty*item.price).toFixed(2)}` || "—" }</div>
+                    </div>
+                  </div>
+                  { /*<div className="item-content">
                       <div className="flex-item">
                         <div className="item-remove">
                           <button className="link" onClick={ this.removeItem({ id: item.id, variant: item.variant, size: item.size})}>Remove</button>
                         </div>
-                      </div>
-                    </div>
-                  </div>
+                      </div> 
+                  </div>*/}
                 </div>
               )}
             </div>
             <div id="cart-total"><strong>Subtotal:</strong> <h5>{ this.totalCart(cart) }</h5></div>
+            <div id="checkout-container">
+              <button onClick={this.pushToCheckout()} className="button primary" id="checkout">Checkout</button>
+            </div>
+            
           </div>
         )}
 
