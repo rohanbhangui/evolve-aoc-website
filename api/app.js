@@ -55,26 +55,26 @@ app.get('/inventory', (req, res) => {
   });
 });
 
-app.get('/access', (req, res) => {
+// app.get('/access', (req, res) => {
 
-  var tokenApiInstance = new SquareConnect.OAuthApi();
+//   var tokenApiInstance = new SquareConnect.OAuthApi();
 
-  var body = new SquareConnect.ObtainTokenRequest(); // ObtainTokenRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
+//   var body = new SquareConnect.ObtainTokenRequest(); // ObtainTokenRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 
-  body = {
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
-    grant_type: 'authorization_code',
-    code: process.env.GUEST_USER_AUTHORIZATION_CODE
-  }
+//   body = {
+//     client_id: process.env.CLIENT_ID,
+//     client_secret: process.env.CLIENT_SECRET,
+//     grant_type: 'authorization_code',
+//     code: process.env.GUEST_USER_AUTHORIZATION_CODE
+//   }
 
-  tokenApiInstance.obtainToken(body).then(function(data) {
-    console.log(data);
-    res.send(data);
-  }, function(error) {
-    console.error(error);
-  });
-});
+//   tokenApiInstance.obtainToken(body).then(function(data) {
+//     console.log(data);
+//     res.send(data);
+//   }, function(error) {
+//     console.error(error);
+//   });
+// });
 
 app.get('/tax', (req, res) => {
 

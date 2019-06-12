@@ -63,13 +63,13 @@ class Catalog extends React.Component {
     //   console.log(myJson);
     // });
 
-    fetch('/access')
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(myJson) {
-      console.log(myJson);
-    });
+    // fetch('/access')
+    // .then(function(response) {
+    //   return response.json();
+    // })
+    // .then(function(myJson) {
+    //   console.log(myJson);
+    // });
     
     
   }
