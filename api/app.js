@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 require('dotenv').config();
 const port = process.env.SERVER_PORT;
+const request = require('request');
 
 // create a GET route
 const SquareConnect = require('square-connect');
@@ -72,6 +73,28 @@ app.get('/access', (req, res) => {
     res.send(data);
   }, function(error) {
     console.error(error);
+  });
+});
+
+app.get('/tax', (req, res) => {
+
+  let postal = req.query.postal;
+
+  request(`https://geocoder.ca/${postal}?json=1`, (err, resp, body) => {
+    if (!err && resp.statusCode == 200) {
+      console.log("DEBUG", JSON.parse(body), JSON.parse(body).standard.prov)
+      let bdy = JSON.parse(body);
+      if(!bdy.error && bdy.standard.prov && Object.keys(bdy.standard.prov).length > 0) {
+        request(`https://api.salestaxapi.ca/v2/province/${bdy.standard.prov}`, (e, r, b) => {
+          if (!e && r.statusCode == 200) {
+            res.send(JSON.parse(b));
+          }
+        });
+      }
+      else {
+        res.send({error: 'not a canadian postal code'})
+      }
+    }
   });
 });
 

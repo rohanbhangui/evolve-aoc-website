@@ -12,6 +12,10 @@ class Cart extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      postal: ''
+    }
+
     this.totalCart = this.totalCart.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.totalQuantity = this.totalQuantity.bind(this);
@@ -24,10 +28,6 @@ class Cart extends React.Component {
     const total = cart.map(item => item.qty*item.price).reduce((acc, cur) => acc + cur);
 
     return total.toFixed(2);
-  }
-
-  totalQuantity(cart) {
-    return cart.map(item => item.qty).reduce((acc, cur) => acc + cur);
   }
 
   removeItem(payload) {
@@ -83,19 +83,29 @@ class Cart extends React.Component {
     document.title = `${PROJECT_NAME} - Cart(${this.totalQuantity(cart)})`;
   }
 
-  pushToCheckout() {
-    return (e) => {
-      let { cart } = this.props;
+  pushToCheckout(e) {
+    let { cart } = this.props;
 
-      fetch('/tax')
-      .then(function(resp) {
-        return resp.json();
-      })
-      .then(function(myJson) {
-        console.log(myJson);
-        return myJson;
-      });
-    }
+    let component = this;
+
+    e.preventDefault();
+
+    let formData = new FormData(e.target);
+
+    let postal = formData.get("postal");
+
+    fetch(`/tax?postal=${postal}`)
+    .then(function(resp) {
+      return resp.json();
+    })
+    .then(function(myJson) {
+
+      let tax = (myJson.applicable * component.totalCart(cart)).toFixed(2);
+
+      console.log(tax);
+    });
+
+
   }
 
   render() {
@@ -161,7 +171,14 @@ class Cart extends React.Component {
             </div>
             <div id="cart-total"><strong>Subtotal:</strong> <h5>{ this.totalCart(cart) }</h5></div>
             <div id="checkout-container">
-              <button onClick={this.pushToCheckout()} className="button primary" id="checkout">Checkout</button>
+            <form onSubmit={ this.pushToCheckout }>
+              <input name="postal" className="input" type="text" placeholder="eg. A1A A1A" value={ this.state.postal } maxLength="10" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" onChange={ e => {
+                this.setState({
+                  postal: e.target.value
+                });
+              }}/>
+              <input type="submit" disabled={ !this.state.postal ? 'disabled' : ''} className={ `button primary ${!this.state.postal ? 'disabled' : ''}`} id="checkout" value="Checkout" />
+            </form>
             </div>
             
           </div>

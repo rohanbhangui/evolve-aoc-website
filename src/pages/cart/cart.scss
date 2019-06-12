@@ -150,5 +150,10 @@
 	#checkout-container {
 		margin: 2rem 1rem;
 		text-align: right;
+
+		input[type="text"] {
+			margin-right: 1rem;
+			width: 8rem;
+		}
 	}
 }

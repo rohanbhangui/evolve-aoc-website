@@ -17,6 +17,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
+    "request": "^2.88.0",
     "square-connect": "^2.20190508.0"
   },
   "scripts": {
