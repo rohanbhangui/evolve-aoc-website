@@ -21,6 +21,8 @@ class Cart extends React.Component {
     this.totalQuantity = this.totalQuantity.bind(this);
     this.validateNumber = this.validateNumber.bind(this);
     this.pushToCheckout = this.pushToCheckout.bind(this);
+    this.getTax = this.getTax.bind(this);
+    this.processValues = this.processValues.bind(this);
   }
 
   totalCart(cart) {
@@ -83,6 +85,19 @@ class Cart extends React.Component {
     document.title = `${PROJECT_NAME} - Cart(${this.totalQuantity(cart)})`;
   }
 
+  getTax(postal) {
+    let { cart } = this.props;
+    let component = this;
+
+    return fetch(`/tax?postal=${postal}`)
+    .then(function(resp) {
+      return resp.json();
+    })
+    .then(function(myJson) {
+      return (myJson.applicable * component.totalCart(cart)).toFixed(2);
+    });
+  }
+
   pushToCheckout(e) {
     let { cart } = this.props;
 
@@ -94,18 +109,51 @@ class Cart extends React.Component {
 
     let postal = formData.get("postal");
 
-    fetch(`/tax?postal=${postal}`)
-    .then(function(resp) {
-      return resp.json();
+    this.processValues(postal).then(([tax]) => {
+
+      // console.group("checkout items");
+      // console.log("tax", tax);
+      // console.log("total", this.totalCart(cart));
+      // console.log("cart", cart);
+
+      // let body = {
+      //   idempotency_key: 'xxxx',
+      //   order: {
+
+      //   },
+      //   ask_for_shipping_address: true,
+      //   merchant_support_email: 'support@evolveaoc.com',
+      //   redirect_url: 'https://localhost:3000/order-complete'
+      // }
+      // console.log("requestBody", body);
+      // console.groupEnd();
+
+      let data = {
+        tax,
+        cart,
+        support_email: 'support@evolveaoc.com',
+        total: this.totalCart(cart)
+      }
+
+      fetch('/checkout', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(myJson);
+      });
     })
-    .then(function(myJson) {
+  }
 
-      let tax = (myJson.applicable * component.totalCart(cart)).toFixed(2);
-
-      console.log(tax);
-    });
-
-
+  processValues(postal) {
+    return Promise.all([this.getTax(postal)]);
   }
 
   render() {
