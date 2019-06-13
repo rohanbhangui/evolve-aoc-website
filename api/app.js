@@ -133,12 +133,22 @@ app.post('/checkout', (req, res) => {
         location_id: locationId,
         line_items,
         state: 'OPEN',
+        taxes: [
+          { 
+            name: `Sales Tax (${tax.percentage}%)`,
+            percentage: `${tax.percentage}`,
+            applied_money: {
+              amount: tax.amount*100,
+              currency: 'CAD'
+            }
+          }
+        ],
         total_money: {
           amount: total*100,
           currency: 'CAD'
         },
         total_tax_money: {
-          amount: tax*100,
+          amount: tax.amount*100,
           currency: 'CAD'
         }
       },

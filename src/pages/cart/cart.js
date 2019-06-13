@@ -94,7 +94,7 @@ class Cart extends React.Component {
       return resp.json();
     })
     .then(function(myJson) {
-      return (myJson.applicable * component.totalCart(cart)).toFixed(2);
+      return { percentage: myJson.applicable*100, amount: (myJson.applicable * component.totalCart(cart)).toFixed(2)};
     });
   }
 
