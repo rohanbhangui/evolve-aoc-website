@@ -115,7 +115,7 @@ app.post('/checkout', (req, res) => {
         currency: 'CAD'
       },
       base_price_money: {
-        amount: parseFloat(item.price)*item.qty*100,
+        amount: parseFloat(item.price)*100,
         currency: 'CAD'
       }
     }
@@ -150,7 +150,6 @@ app.post('/checkout', (req, res) => {
   }
 
   checkoutApiInstance.createCheckout(locationId, body).then(function(data) {
-    console.log('API called successfully. Returned data: ' + data);
     res.send(data);
   }, function(error) {
     console.error(error);
