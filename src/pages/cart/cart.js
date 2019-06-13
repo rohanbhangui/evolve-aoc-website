@@ -110,24 +110,6 @@ class Cart extends React.Component {
     let postal = formData.get("postal");
 
     this.processValues(postal).then(([tax]) => {
-
-      // console.group("checkout items");
-      // console.log("tax", tax);
-      // console.log("total", this.totalCart(cart));
-      // console.log("cart", cart);
-
-      // let body = {
-      //   idempotency_key: 'xxxx',
-      //   order: {
-
-      //   },
-      //   ask_for_shipping_address: true,
-      //   merchant_support_email: 'support@evolveaoc.com',
-      //   redirect_url: 'https://localhost:3000/order-complete'
-      // }
-      // console.log("requestBody", body);
-      // console.groupEnd();
-
       let data = {
         tax,
         cart,
@@ -148,6 +130,7 @@ class Cart extends React.Component {
       })
       .then(function(myJson) {
         console.log(myJson);
+        window.open(myJson.checkout.checkout_page_url, '_blank');
       });
     })
   }
