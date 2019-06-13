@@ -103,13 +103,22 @@ app.get('/tax', (req, res) => {
   });
 });
 
+const SIZE_MAPPING = {
+  S: 'Small',
+  M: 'Medium',
+  L: 'Large',
+  XL: 'X-Large',
+  XXL: 'XX-Large'
+};
+
 app.post('/checkout', (req, res) => {
 
   let line_items = req.body.cart.map(item => {
     return {
       name: item.name,
       quantity: `${item.qty}`,
-      note: `${item.color}(${item.size})`,
+      variation_name: item.color,
+      note: `Size: ${SIZE_MAPPING[item.size]}`,
       total_money: {
         amount: parseFloat(item.price)*item.qty*100,
         currency: 'CAD'
