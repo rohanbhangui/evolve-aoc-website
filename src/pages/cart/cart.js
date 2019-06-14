@@ -13,7 +13,8 @@ class Cart extends React.Component {
     super(props);
 
     this.state = {
-      postal: ''
+      postal: '',
+      processing: false
     }
 
     this.totalCart = this.totalCart.bind(this);
@@ -105,6 +106,10 @@ class Cart extends React.Component {
 
     e.preventDefault();
 
+    component.setState({
+      processing: true
+    })
+
     let formData = new FormData(e.target);
 
     let postal = formData.get("postal");
@@ -129,8 +134,7 @@ class Cart extends React.Component {
         return response.json();
       })
       .then(function(myJson) {
-        console.log(myJson);
-        window.open(myJson.checkout.checkout_page_url, '_blank');
+        window.location.href=myJson.checkout.checkout_page_url;
       });
     })
   }
@@ -208,7 +212,7 @@ class Cart extends React.Component {
                   postal: e.target.value
                 });
               }}/>
-              <input type="submit" disabled={ !this.state.postal ? 'disabled' : ''} className={ `button primary ${!this.state.postal ? 'disabled' : ''}`} id="checkout" value="Checkout" />
+              <input type="submit" disabled={ !this.state.postal || this.state.processing ? 'disabled' : ''} className={ `button primary ${!this.state.postal || this.state.processing ? 'disabled' : ''}`} id="checkout" value={ this.state.processing ? 'Processing...' : 'Checkout' } />
             </form>
             </div>
             
