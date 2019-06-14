@@ -1,0 +1,44 @@
+@import '../../assets/styles/_variables.scss';
+
+#Checkout {
+	margin: 6rem 0;
+
+	#paginator {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		max-width: 1080px;
+		width: 100%;
+		margin: 0 auto;
+
+		.pagination {
+			flex: 1 0 auto;
+			text-align: center;
+			opacity: 0.33;
+			pointer-events: none;
+
+			&:active {
+				top: 0;
+			}
+
+			&.previous {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			&.active {
+				opacity: 1;
+				pointer-events: none;
+				font-weight: bold;
+				color: black;
+			}
+		}
+	}
+
+	#pages {
+		max-width: 1080px;
+		width: 100%;
+		margin: 4rem auto 0;
+		display: block;
+	}
+}

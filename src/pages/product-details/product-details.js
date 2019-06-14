@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { PROJECT_NAME } from '../../utility/variables';
+
 import { VariantSelector } from '../../components/variant-selector/variant-selector';
 import { SizeSelector } from '../../components/size-selector/size-selector';
 import AddToCart from '../../components/add-to-cart/add-to-cart';
@@ -71,7 +73,11 @@ export default class ProductDetails extends React.Component {
 
   componentDidMount() {
 
-    const { selectedVariantId } = this.state;
+    let { product } = this.props.location.state;
+
+    let { selectedVariantId } = this.state;
+
+    document.title = `${PROJECT_NAME} - ${product.name}`;
 
     this.retrieveInventory(selectedVariantId, true);
   }
@@ -86,7 +92,7 @@ export default class ProductDetails extends React.Component {
 
       // Feature detect
       if ("AbortController" in window) {
-        controller = new AbortController;
+        controller = new AbortController();
         signal = controller.signal;
       }
     }
@@ -151,13 +157,13 @@ export default class ProductDetails extends React.Component {
   }
   
   render() {
-    const { product } = this.props.location.state;
+    let { product } = this.props.location.state;
 
-    const { selectedSize, selectedVariantId, sizeRequiredError, inventoryCounts } = this.state;
+    let { selectedSize, selectedVariantId, sizeRequiredError, inventoryCounts } = this.state;
 
-    const selectedVariantInfo = product.variants.find(variant => variant.variantId === this.state.selectedVariantId);
+    let selectedVariantInfo = product.variants.find(variant => variant.variantId === this.state.selectedVariantId);
 
-    const productCartPayload = {
+    let productCartPayload = {
       name: product.name,
       image: selectedVariantInfo.image,
       id: product.productId,

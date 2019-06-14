@@ -9,10 +9,14 @@ header {
 
 	.header-container {
 		display: flex;
-		padding: 1rem 0.8rem;
+		padding: 0.3rem 0.8rem;
 		width: 100%;
 		max-width: 85.375rem;
 		margin: 0 auto;
+
+		@include small {
+			padding: 1rem 0.8rem;
+		}
 
 		#logo {
 			flex: 1 0 auto;
@@ -51,11 +55,20 @@ header {
 
 			&:hover {
 				#cart-list {
-					display: inline-block;
+
+					@include medium {
+						display: inline-block;
+					}
 				}
 
 				&:before {
 					display: block;
+				}
+			}
+
+			a {
+				span {
+					color: black;
 				}
 			}
 
@@ -133,6 +146,11 @@ header {
 					padding-bottom: 0.8rem;
 					padding-top: 0.8rem;
 
+					&.empty {
+						padding-top: 0;
+						padding-bottom: 0;
+					}
+
 					#checkout-button {
 						display: block;
 						width: 100%;
@@ -153,6 +171,9 @@ header {
 
 				#empty-text {
 					padding: 0.25rem 0;
+					line-height: 7;
+					text-align: center;
+					font-style: italic;
 				}
 
 				#cart-items {
@@ -231,8 +252,6 @@ header {
 								}
 							}
 						}
-
-						
 					}
 				}
 			}

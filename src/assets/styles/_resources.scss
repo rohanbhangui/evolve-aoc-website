@@ -10,11 +10,18 @@
 	letter-spacing: 1px;
 	cursor: pointer;
 	text-align: center;
+	border-radius: 0.25rem;
 
 	&.primary {
 		background: $color-primary;
 		border: 2px solid $color-primary;
 		color: #fff;
+		font-weight: bold;
+
+		&.disabled {
+			background: #999;
+			border: 2px solid #999;
+		}
 	}
 
 	&.secondary {
@@ -49,6 +56,22 @@
 	&:active {
 		position: relative;
 		top: 1px;
+	}
+}
+
+.input {
+	text-decoration: none;
+	padding: 15px;
+	font-family: $font-secondary;
+	font-size: 13px;
+	letter-spacing: 1px;
+	cursor: pointer;
+	border-radius: .25rem;
+	border: 1px solid #ccc;
+	outline: none;
+
+	&:focus {
+		border: 1px solid black;
 	}
 }
 
