@@ -4,8 +4,8 @@ const cors = require('cors');
 require('dotenv').config();
 const port = process.env.SERVER_PORT;
 const request = require('request');
-var bodyParser = require("body-parser");
-var rand = require("random-key");
+let bodyParser = require("body-parser");
+let rand = require("random-key");
 
 // create a GET route
 const SquareConnect = require('square-connect');
@@ -13,7 +13,8 @@ const defaultClient = SquareConnect.ApiClient.instance;
 // Configure OAuth2 access token for authorization: oauth2
 const oauth2 = defaultClient.authentications['oauth2'];
 
-oauth2.accessToken = process.env.ACCESS_TOKEN;
+// oauth2.accessToken = process.env.ACCESS_TOKEN;
+oauth2.accessToken = 'EAAAEO7XD4SPCAuUfoiFU2Bmc6kBabXm3O_JbfP3MmXbKsavR3wQLCa3nlIFIuZu';
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,13 +23,15 @@ app.use(bodyParser.json());
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-var catalogApiInstance = new SquareConnect.CatalogApi();
-var inventoryApiInstance = new SquareConnect.InventoryApi();
-var checkoutApiInstance = new SquareConnect.CheckoutApi();
+let catalogApiInstance = new SquareConnect.CatalogApi();
+let inventoryApiInstance = new SquareConnect.InventoryApi();
+let checkoutApiInstance = new SquareConnect.CheckoutApi();
+let transactionApiInstance = new SquareConnect.TransactionsApi();
+let ordersApiInstance = new SquareConnect.OrdersApi();
 
 app.get('/catalog', (req, res) => {
 
-  var body = new SquareConnect.SearchCatalogObjectsRequest();
+  let body = new SquareConnect.SearchCatalogObjectsRequest();
 
   body.object_types=['ITEM_VARIATION'];
   body.query = {
@@ -47,7 +50,7 @@ app.get('/catalog', (req, res) => {
 });
 
 app.get('/inventory', (req, res) => {
-  var body = new SquareConnect.BatchRetrieveInventoryCountsRequest();
+  let body = new SquareConnect.BatchRetrieveInventoryCountsRequest();
 
   body.object_types=['ITEM_VARIATION'];
   body.catalog_object_ids = req.query.objIds.split(",");
@@ -62,9 +65,9 @@ app.get('/inventory', (req, res) => {
 
 app.get('/access', (req, res) => {
 
-  var tokenApiInstance = new SquareConnect.OAuthApi();
+  let tokenApiInstance = new SquareConnect.OAuthApi();
 
-  var body = new SquareConnect.ObtainTokenRequest(); // ObtainTokenRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
+  let body = new SquareConnect.ObtainTokenRequest(); // ObtainTokenRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 
   body = {
     client_id: process.env.CLIENT_ID,
@@ -133,7 +136,8 @@ app.post('/checkout', (req, res) => {
   let total = req.body.total;
   let merchant_support_email = req.body.support_email;
 
-  let locationId = 'E43ARJ0X4W03V'; //default for online sales
+  // let locationId = 'E43ARJ0X4W03V'; //default for online sales
+  let locationId = 'CBASEIvIWIWItCV5AHaNUONdZ7EgAQ';
 
   let body = {
     idempotency_key: rand.generate(),
@@ -173,7 +177,38 @@ app.post('/checkout', (req, res) => {
   }, function(error) {
     console.error(error);
   });
+});
 
+app.get('/verifyTransaction', (req, res) => {
+  let checkoutId = req.query.checkoutId;
+  let transactionId = req.query.transactionId;
+
+  let locationId = 'CBASEIvIWIWItCV5AHaNUONdZ7EgAQ';
+
+  transactionApiInstance.retrieveTransaction(locationId, transactionId).then(function(data) {
+    console.log('API called successfully. Returned data: ' + data);
+    res.send(data.transaction);
+  }, function(error) {
+    console.error(error);
+  });
+});
+
+app.get('/retrieveOrder', (req, res) => {
+  let orderId = req.query.orderId;
+
+  let locationId = 'CBASEIvIWIWItCV5AHaNUONdZ7EgAQ';
+
+  let body = {
+    order_ids: [orderId]
+  }
+
+  ordersApiInstance.batchRetrieveOrders(locationId, body).then(function(data) {
+    console.log('API called successfully. Returned data: ' + data);
+    res.send(data);
+    res.send(data.transaction);
+  }, function(error) {
+    console.error(error);
+  });
 });
 
 

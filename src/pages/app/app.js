@@ -10,6 +10,7 @@ import Cart from '../cart/cart';
 import TopBar from '../../components/top-bar/top-bar';
 import Footer from '../../components/footer/footer';
 import Checkout from '../checkout/checkout';
+import OrderComplete from '../order-complete/order-complete';
 
 import ScrollToTop from '../../components/scrollToTop/scrollToTop';
 
@@ -31,7 +32,8 @@ class App extends React.Component {
             <Route path="/about" component={About} />
             <Route path="/product-details" component={ProductDetails} />
             <Route path="/cart" component={Cart} />
-            <Route path="/checkout/:step" component={Checkout} />
+            <Route path="/order-complete" component={OrderComplete} />
+            {/*<Route path="/checkout/:step" component={Checkout} />*/}
             <footer>
               <Footer></Footer>
             </footer>
