@@ -206,14 +206,14 @@ class Cart extends React.Component {
             </div>
             <div id="cart-total"><strong>Subtotal:</strong> <h5>{ this.totalCart(cart) }</h5></div>
             <div id="checkout-container">
-            <form onSubmit={ this.pushToCheckout }>
-              <input name="postal" className="input" type="text" placeholder="eg. A1A A1A" value={ this.state.postal } maxLength="10" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" onChange={ e => {
-                this.setState({
-                  postal: e.target.value
-                });
-              }}/>
-              <input type="submit" disabled={ !this.state.postal || this.state.processing ? 'disabled' : ''} className={ `button primary ${!this.state.postal || this.state.processing ? 'disabled' : ''}`} id="checkout" value={ this.state.processing ? 'Processing...' : 'Checkout' } />
-            </form>
+              <form onSubmit={ this.pushToCheckout }>
+                <input name="postal" className="input" type="text" placeholder="eg. A1A A1A" value={ this.state.postal } maxLength="10" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" onChange={ e => {
+                  this.setState({
+                    postal: e.target.value
+                  });
+                }}/>
+                <input type="submit" disabled={ !this.state.postal || this.state.processing ? 'disabled' : ''} className={ `button primary ${!this.state.postal || this.state.processing ? 'disabled' : ''}`} id="checkout" value={ this.state.processing ? 'Processing...' : 'Checkout' } />
+              </form>
             </div>
             
           </div>

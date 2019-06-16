@@ -180,13 +180,11 @@ app.post('/checkout', (req, res) => {
 });
 
 app.get('/verifyTransaction', (req, res) => {
-  let checkoutId = req.query.checkoutId;
   let transactionId = req.query.transactionId;
 
   let locationId = 'CBASEIvIWIWItCV5AHaNUONdZ7EgAQ';
 
   transactionApiInstance.retrieveTransaction(locationId, transactionId).then(function(data) {
-    console.log('API called successfully. Returned data: ' + data);
     res.send(data.transaction);
   }, function(error) {
     console.error(error);
@@ -196,6 +194,8 @@ app.get('/verifyTransaction', (req, res) => {
 app.get('/retrieveOrder', (req, res) => {
   let orderId = req.query.orderId;
 
+  console.log(req.query.orderId);
+
   let locationId = 'CBASEIvIWIWItCV5AHaNUONdZ7EgAQ';
 
   let body = {
@@ -203,9 +203,7 @@ app.get('/retrieveOrder', (req, res) => {
   }
 
   ordersApiInstance.batchRetrieveOrders(locationId, body).then(function(data) {
-    console.log('API called successfully. Returned data: ' + data);
     res.send(data);
-    res.send(data.transaction);
   }, function(error) {
     console.error(error);
   });
