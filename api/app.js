@@ -4,8 +4,8 @@ const cors = require('cors');
 require('dotenv').config();
 const port = process.env.SERVER_PORT;
 const request = require('request');
-var bodyParser = require("body-parser");
-var rand = require("random-key");
+let bodyParser = require("body-parser");
+let rand = require("random-key");
 
 // create a GET route
 const SquareConnect = require('square-connect');
@@ -14,6 +14,7 @@ const defaultClient = SquareConnect.ApiClient.instance;
 const oauth2 = defaultClient.authentications['oauth2'];
 
 oauth2.accessToken = process.env.ACCESS_TOKEN;
+//oauth2.accessToken = 'EAAAEO7XD4SPCAuUfoiFU2Bmc6kBabXm3O_JbfP3MmXbKsavR3wQLCa3nlIFIuZu';
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,13 +23,16 @@ app.use(bodyParser.json());
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-var catalogApiInstance = new SquareConnect.CatalogApi();
-var inventoryApiInstance = new SquareConnect.InventoryApi();
-var checkoutApiInstance = new SquareConnect.CheckoutApi();
+let catalogApiInstance = new SquareConnect.CatalogApi();
+let inventoryApiInstance = new SquareConnect.InventoryApi();
+let checkoutApiInstance = new SquareConnect.CheckoutApi();
+let transactionApiInstance = new SquareConnect.TransactionsApi();
+let ordersApiInstance = new SquareConnect.OrdersApi();
+let customerApiInstance = new SquareConnect.CustomersApi();
 
 app.get('/catalog', (req, res) => {
 
-  var body = new SquareConnect.SearchCatalogObjectsRequest();
+  let body = new SquareConnect.SearchCatalogObjectsRequest();
 
   body.object_types=['ITEM_VARIATION'];
   body.query = {
@@ -47,7 +51,7 @@ app.get('/catalog', (req, res) => {
 });
 
 app.get('/inventory', (req, res) => {
-  var body = new SquareConnect.BatchRetrieveInventoryCountsRequest();
+  let body = new SquareConnect.BatchRetrieveInventoryCountsRequest();
 
   body.object_types=['ITEM_VARIATION'];
   body.catalog_object_ids = req.query.objIds.split(",");
@@ -62,9 +66,9 @@ app.get('/inventory', (req, res) => {
 
 app.get('/access', (req, res) => {
 
-  var tokenApiInstance = new SquareConnect.OAuthApi();
+  let tokenApiInstance = new SquareConnect.OAuthApi();
 
-  var body = new SquareConnect.ObtainTokenRequest(); // ObtainTokenRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
+  let body = new SquareConnect.ObtainTokenRequest(); // ObtainTokenRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 
   body = {
     client_id: process.env.CLIENT_ID,
@@ -111,6 +115,8 @@ const SIZE_MAPPING = {
   XXL: 'XX-Large'
 };
 
+const LOCATION_ID = 'E43ARJ0X4W03V';
+
 app.post('/checkout', (req, res) => {
 
   let line_items = req.body.cart.map(item => {
@@ -133,13 +139,11 @@ app.post('/checkout', (req, res) => {
   let total = req.body.total;
   let merchant_support_email = req.body.support_email;
 
-  let locationId = 'E43ARJ0X4W03V'; //default for online sales
-
   let body = {
     idempotency_key: rand.generate(),
     order: {
       order: {
-        location_id: locationId,
+        location_id: LOCATION_ID,
         line_items,
         state: 'OPEN',
         taxes: [
@@ -151,15 +155,7 @@ app.post('/checkout', (req, res) => {
               currency: 'CAD'
             }
           }
-        ],
-        total_money: {
-          amount: total*100,
-          currency: 'CAD'
-        },
-        total_tax_money: {
-          amount: tax.amount*100,
-          currency: 'CAD'
-        }
+        ]
       },
       idempotency_key: rand.generate(),
     },
@@ -168,12 +164,45 @@ app.post('/checkout', (req, res) => {
     redirect_url: 'https://localhost:3000/order-complete',
   }
 
-  checkoutApiInstance.createCheckout(locationId, body).then(function(data) {
+  checkoutApiInstance.createCheckout(LOCATION_ID, body).then(function(data) {
     res.send(data);
   }, function(error) {
     console.error(error);
   });
-
 });
 
+app.get('/verifyTransaction', (req, res) => {
+  let transactionId = req.query.transactionId;
+
+  transactionApiInstance.retrieveTransaction(LOCATION_ID, transactionId).then(function(data) {
+    res.send(data.transaction);
+  }, function(error) {
+    console.error(error);
+  });
+});
+
+app.get('/retrieveOrder', (req, res) => {
+  let orderId = req.query.orderId;
+
+  console.log(req.query.orderId);
+
+  let body = {
+    order_ids: [orderId]
+  }
+
+  ordersApiInstance.batchRetrieveOrders(LOCATION_ID, body).then(function(data) {
+    res.send(data);
+  }, function(error) {
+    console.error(error);
+  });
+});
+
+app.get('/retrieveCustomer', (req, res) => {
+
+  customerApiInstance.retrieveCustomer(req.query.customerId).then(function(data) {
+    res.send(data);
+  }, function(error) {
+    console.error(error);
+  });
+});
 
