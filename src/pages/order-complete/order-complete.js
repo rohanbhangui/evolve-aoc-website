@@ -63,7 +63,7 @@ class OrderComplete extends React.Component {
       });
     });
 
-    document.title = `${PROJECT_NAME} - Order Completed!}`;
+    document.title = `${PROJECT_NAME} - Order Completed!`;
 
   }
 

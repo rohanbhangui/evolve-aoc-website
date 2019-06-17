@@ -122,15 +122,15 @@ app.post('/checkout', (req, res) => {
   let line_items = req.body.cart.map(item => {
     return {
       name: item.name,
-      quantity: `${item.qty*0+1}`,
+      quantity: `${item.qty}`,
       variation_name: item.color,
       note: `Size: ${SIZE_MAPPING[item.size]}`,
       total_money: {
-        amount: parseFloat(item.price)*item.qty*100*0+100,
+        amount: parseFloat(item.price)*item.qty*100,
         currency: 'CAD'
       },
       base_price_money: {
-        amount: parseFloat(item.price)*100*0+100,
+        amount: parseFloat(item.price)*100,
         currency: 'CAD'
       }
     }
@@ -149,9 +149,9 @@ app.post('/checkout', (req, res) => {
         taxes: [
           { 
             name: `Sales Tax (${tax.percentage}%)`,
-            percentage: `${tax.percentage*0}`,
+            percentage: `${tax.percentage}`,
             applied_money: {
-              amount: tax.amount*100*0,
+              amount: tax.amount*100,
               currency: 'CAD'
             }
           }
