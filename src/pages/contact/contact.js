@@ -24,13 +24,13 @@ class Contact extends React.Component {
           <div className="flex-item">
             <div className="text-container">
               <h4>Business Inquiries</h4>
-              <a class="h5" href="mailto:business@evolveaoc.com">business@evolveaoc.com</a>
+              <a className="h5" href="mailto:business@evolveaoc.com">business@evolveaoc.com</a>
             </div>
           </div>
           <div className="flex-item">
             <div className="text-container">
               <h4>Support</h4>
-              <a class="h5" href="mailto:support@gmail.com">support@evolveaoc.com</a>
+              <a className="h5" href="mailto:support@gmail.com">support@evolveaoc.com</a>
             </div>
           </div>
           <div className="flex-item">
