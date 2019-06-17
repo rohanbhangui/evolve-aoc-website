@@ -137,11 +137,10 @@ class OrderComplete extends React.Component {
                       <h5>${(order.total_money.amount/100).toFixed(2) }<br/><span>{transaction.tenders[0].card_details.card.card_brand} ending in {transaction.tenders[0].card_details.card.last_4}</span></h5>
                     </div>
                   </div>
+                  <div id="order-number">Order ID: { order && order.id }</div>
                 </div>
               )}
             </div>
-            
-            <div id="order-number">Order ID: { order && order.id }</div>
           </>
         )}
       </div>

@@ -196,7 +196,7 @@ class Cart extends React.Component {
                 </div>
               )}
             </div>
-            <div id="cart-total"><strong>Subtotal:</strong> <h5>{ this.totalCart(cart) }</h5></div>
+            <div id="cart-total"><strong>Subtotal:</strong> <h5>${ this.totalCart(cart) }</h5></div>
             <div id="checkout-container">
               <form onSubmit={ this.pushToCheckout }>
                 <input name="postal" className="input" type="text" placeholder="eg. A1A A1A" value={ this.state.postal } maxLength="10" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" onChange={ e => {
