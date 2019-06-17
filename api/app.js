@@ -13,8 +13,8 @@ const defaultClient = SquareConnect.ApiClient.instance;
 // Configure OAuth2 access token for authorization: oauth2
 const oauth2 = defaultClient.authentications['oauth2'];
 
-// oauth2.accessToken = process.env.ACCESS_TOKEN;
-oauth2.accessToken = 'EAAAEO7XD4SPCAuUfoiFU2Bmc6kBabXm3O_JbfP3MmXbKsavR3wQLCa3nlIFIuZu';
+oauth2.accessToken = process.env.ACCESS_TOKEN;
+//oauth2.accessToken = 'EAAAEO7XD4SPCAuUfoiFU2Bmc6kBabXm3O_JbfP3MmXbKsavR3wQLCa3nlIFIuZu';
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,6 +28,7 @@ let inventoryApiInstance = new SquareConnect.InventoryApi();
 let checkoutApiInstance = new SquareConnect.CheckoutApi();
 let transactionApiInstance = new SquareConnect.TransactionsApi();
 let ordersApiInstance = new SquareConnect.OrdersApi();
+let customerApiInstance = new SquareConnect.CustomersApi();
 
 app.get('/catalog', (req, res) => {
 
@@ -114,20 +115,22 @@ const SIZE_MAPPING = {
   XXL: 'XX-Large'
 };
 
+const LOCATION_ID = 'E43ARJ0X4W03V';
+
 app.post('/checkout', (req, res) => {
 
   let line_items = req.body.cart.map(item => {
     return {
       name: item.name,
-      quantity: `${item.qty}`,
+      quantity: `${item.qty*0+1}`,
       variation_name: item.color,
       note: `Size: ${SIZE_MAPPING[item.size]}`,
       total_money: {
-        amount: parseFloat(item.price)*item.qty*100,
+        amount: parseFloat(item.price)*item.qty*100*0+100,
         currency: 'CAD'
       },
       base_price_money: {
-        amount: parseFloat(item.price)*100,
+        amount: parseFloat(item.price)*100*0+100,
         currency: 'CAD'
       }
     }
@@ -136,34 +139,23 @@ app.post('/checkout', (req, res) => {
   let total = req.body.total;
   let merchant_support_email = req.body.support_email;
 
-  // let locationId = 'E43ARJ0X4W03V'; //default for online sales
-  let locationId = 'CBASEIvIWIWItCV5AHaNUONdZ7EgAQ';
-
   let body = {
     idempotency_key: rand.generate(),
     order: {
       order: {
-        location_id: locationId,
+        location_id: LOCATION_ID,
         line_items,
         state: 'OPEN',
         taxes: [
           { 
             name: `Sales Tax (${tax.percentage}%)`,
-            percentage: `${tax.percentage}`,
+            percentage: `${tax.percentage*0}`,
             applied_money: {
-              amount: tax.amount*100,
+              amount: tax.amount*100*0,
               currency: 'CAD'
             }
           }
-        ],
-        total_money: {
-          amount: total*100,
-          currency: 'CAD'
-        },
-        total_tax_money: {
-          amount: tax.amount*100,
-          currency: 'CAD'
-        }
+        ]
       },
       idempotency_key: rand.generate(),
     },
@@ -172,7 +164,7 @@ app.post('/checkout', (req, res) => {
     redirect_url: 'https://localhost:3000/order-complete',
   }
 
-  checkoutApiInstance.createCheckout(locationId, body).then(function(data) {
+  checkoutApiInstance.createCheckout(LOCATION_ID, body).then(function(data) {
     res.send(data);
   }, function(error) {
     console.error(error);
@@ -182,9 +174,7 @@ app.post('/checkout', (req, res) => {
 app.get('/verifyTransaction', (req, res) => {
   let transactionId = req.query.transactionId;
 
-  let locationId = 'CBASEIvIWIWItCV5AHaNUONdZ7EgAQ';
-
-  transactionApiInstance.retrieveTransaction(locationId, transactionId).then(function(data) {
+  transactionApiInstance.retrieveTransaction(LOCATION_ID, transactionId).then(function(data) {
     res.send(data.transaction);
   }, function(error) {
     console.error(error);
@@ -196,17 +186,23 @@ app.get('/retrieveOrder', (req, res) => {
 
   console.log(req.query.orderId);
 
-  let locationId = 'CBASEIvIWIWItCV5AHaNUONdZ7EgAQ';
-
   let body = {
     order_ids: [orderId]
   }
 
-  ordersApiInstance.batchRetrieveOrders(locationId, body).then(function(data) {
+  ordersApiInstance.batchRetrieveOrders(LOCATION_ID, body).then(function(data) {
     res.send(data);
   }, function(error) {
     console.error(error);
   });
 });
 
+app.get('/retrieveCustomer', (req, res) => {
+
+  customerApiInstance.retrieveCustomer(req.query.customerId).then(function(data) {
+    res.send(data);
+  }, function(error) {
+    console.error(error);
+  });
+});
 

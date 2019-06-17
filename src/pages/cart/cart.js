@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { removeFromCart } from '../../redux/actions/actions';
 import { changeQuantity } from '../../redux/actions/actions';
 
-import { PROJECT_NAME } from '../../utility/variables';
+import { PROJECT_NAME, SIZE_MAPPING } from '../../utility/variables';
 
 
 import './cart.scss';
@@ -146,14 +146,6 @@ class Cart extends React.Component {
   render() {
 
     let { cart } = this.props;
-
-    const SIZE_MAPPING = {
-      S: 'Small',
-      M: 'Medium',
-      L: 'Large',
-      XL: 'X-Large',
-      XXL: 'XX-Large'
-    };
 
     return (
       <div id="Cart">
