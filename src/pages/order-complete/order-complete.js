@@ -90,7 +90,8 @@ class OrderComplete extends React.Component {
               { customer && customer.address && (
                 <div id="address-info">
                   <h5>Shipping Address</h5>
-                  { customer.address.first_name && (<span>{ customer.address.first_name }</span>) } { customer.address.last_name && (<span>{ customer.address.last_name }</span>) }
+                  { customer.given_name && (<span>{ customer.given_name }</span>) } { customer.family_name && (<span>{ customer.family_name }</span>) }
+                  { customer.email_address && (<p>{ customer.email_address }</p>) }
                   { customer.address.organization && (<p>{ customer.address.organization }</p>) }
                   { customer.address.address_line_1 && (<p>{ customer.address.address_line_1 }</p>) }
                   { customer.address.address_line_2 && (<p>{ customer.address.address_line_2 }</p>) }

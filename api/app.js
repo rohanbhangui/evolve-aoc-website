@@ -6,6 +6,8 @@ const port = process.env.SERVER_PORT;
 const request = require('request');
 let bodyParser = require("body-parser");
 let rand = require("random-key");
+let moment = require('moment');
+const RFC_3339 = 'YYYY-MM-DDTHH:mm:ss';
 
 // create a GET route
 const SquareConnect = require('square-connect');
@@ -146,12 +148,25 @@ app.post('/checkout', (req, res) => {
         location_id: LOCATION_ID,
         line_items,
         state: 'OPEN',
+        fulfillments: [
+          {
+            type: 'PICKUP',
+            state: 'PROPOSED',
+            pickup_details: {
+              schedule_type: 'ASAP',
+              recipient: {
+                display_name: 'Customer',
+              },
+              pickup_at: moment.utc().format(RFC_3339)
+            }
+          }
+        ],
         taxes: [
           { 
             name: `Sales Tax (${tax.percentage}%)`,
             percentage: `${tax.percentage}`,
             applied_money: {
-              amount: tax.amount*100,
+              amount: parseInt(tax.amount*100),
               currency: 'CAD'
             }
           }
