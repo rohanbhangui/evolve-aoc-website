@@ -221,3 +221,16 @@ app.get('/retrieveCustomer', (req, res) => {
   });
 });
 
+app.get('/admin/listTransactions', (req, res) => {
+  let body = {
+    sortOrder: 'DESC',
+  }
+
+  transactionApiInstance.listTransactions(LOCATION_ID, body).then(function(data) {
+    console.log(data);
+    res.send(data);
+  }, function(error) {
+    console.error(error);
+  });
+})
+

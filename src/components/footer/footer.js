@@ -75,7 +75,7 @@ class Footer extends React.Component {
         <div id="bottom-content">
           <h6>Proudly Made in Canada</h6>
           <p>1900 North Sheridan Way, Mississauga, Ontario, Canada | 123.456.7890</p>
-          <p>&copy; 2019 Evolve AOC. All rights reserved.</p>
+          <p>&copy; 2019 Evolve AOC. All rights reserved. <Link to="/admin"><i className="fa fa-cogs"></i></Link></p>
         </div>
       </div>
     )

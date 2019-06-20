@@ -32,6 +32,9 @@ class OrderComplete extends React.Component {
       return response.json();
     })
     .then(function(transaction) {
+
+      console.log("DEBUG", transaction);
+
       component.setState({
         transaction
       });
@@ -54,6 +57,7 @@ class OrderComplete extends React.Component {
         return resp.json();
       })
       .then(function(json) {
+        console.log("DEBUG", json.orders[0]);
 
         let order = json.orders[0];
 

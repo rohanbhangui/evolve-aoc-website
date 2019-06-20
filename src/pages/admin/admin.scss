@@ -1,0 +1,15 @@
+#Admin {
+
+	max-width: 1280px;
+	width: 100%;
+	margin: 0 auto;
+
+	table {
+		border-collapse: collapse;
+		width: 100%;
+		
+		th, td {
+			border: 1px solid #ccc;
+		}
+	}
+}
