@@ -7,3 +7,11 @@ export const SIZE_MAPPING = {
   XL: 'X-Large',
   XXL: 'XX-Large'
 };
+
+export const SHIPPING_STATUS = {
+	received: "Received",
+	confirmed: "Confirmed",
+	processing: "Processing",
+	shipping: "Shipping",
+	shipped: "Shipped"
+}

@@ -232,5 +232,5 @@ app.get('/admin/listTransactions', (req, res) => {
   }, function(error) {
     console.error(error);
   });
-})
+});
 
