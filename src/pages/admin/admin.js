@@ -120,7 +120,7 @@ class Admin extends React.Component {
         Filter: ({ filter, onChange }) =>
           <select
             onChange={event => onChange(event.target.value)}
-            style={{ width: "100%" }}
+            style={{ width: "100%", height: "100%" }}
             value={filter ? filter.value : "all"}
           >
             <option value="all">All</option>
@@ -159,7 +159,7 @@ class Admin extends React.Component {
           className="-striped -highlight"
           SubComponent={(row) => {
             return (
-              <SubComponent customerId={row.original.customer_id} orderId={row.original.order_id} transaction={row.original} firebaseTransaction={row.original.firebaseTransactionInfo} />
+              <SubComponent transaction={row.original} />
             )}
           }
         />

@@ -2,7 +2,7 @@ import React from 'react';
 
 import './adminSubComponent.scss';
 
-import SHIPPING_STATUS from '../../../utility/variables';
+import { SHIPPING_STATUS } from '../../../utility/variables';
 
 class SubComponent extends React.Component {
 
@@ -17,7 +17,9 @@ class SubComponent extends React.Component {
 
   componentDidMount() {
 
-    let { customerId, orderId } = this.props;
+    let { transaction } = this.props;
+
+    let { customer_id: customerId, order_id: orderId } = transaction;
 
     let component = this;
 
@@ -75,7 +77,7 @@ class SubComponent extends React.Component {
               </div>
               <div id="order-status">
                 <strong>Order Status: </strong>
-                <span></span>
+                <span>{ transaction.firebaseTransactionInfo && transaction.firebaseTransactionInfo.status ? SHIPPING_STATUS[transaction.firebaseTransactionInfo.status] : ""}</span>
               </div>
             </div>
           )}
