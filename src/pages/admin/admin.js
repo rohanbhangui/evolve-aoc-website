@@ -8,11 +8,7 @@ import 'react-table/react-table.css';
 import SubComponent from './adminSubComponent/adminSubComponent';
 import ReactTable from 'react-table';
 
-// firebase.initializeApp({
-//   apiKey: "AIzaSyD9Ymp-2H6xWhjdXrVH9AjSJcPMCQvE8ow",
-//   authDomain: "evolve-aoc-landing.firebaseapp.com",
-//   projectId: "evolve-aoc-landing",
-// });
+import { SHIPPING_STATUS } from '../../utility/variables';
 
 let db = firebase.firestore();
 
@@ -97,17 +93,42 @@ class Admin extends React.Component {
       {
         Header: "Date Created",
         accessor: "created_at",
-        width: 200
+        width: 200,
+        filterMethod: (filter, row) => {
+          return row[filter.id].toLowerCase().includes(filter.value);
+        }
       },
       {
         Header: "Transaction ID",
         accessor: "id",
+        filterMethod: (filter, row) => {
+          return row[filter.id].toLowerCase().includes(filter.value);
+        }
       },
       {
         Header: "Order Status",
         accessor: "firebaseTransactionInfo.status",
-        width: 200
-      },
+        width: 200,
+        id: "status",
+        filterMethod: (filter, row) => {
+          if (filter.value === "all") {
+            return true;
+          }
+
+          return row[filter.id] === filter.value;
+        },
+        Filter: ({ filter, onChange }) =>
+          <select
+            onChange={event => onChange(event.target.value)}
+            style={{ width: "100%" }}
+            value={filter ? filter.value : "all"}
+          >
+            <option value="all">All</option>
+            { Object.keys(SHIPPING_STATUS).map((key, i) => (
+              <option value={key} key={i}>{SHIPPING_STATUS[key]}</option>
+            ))}
+          </select>
+      }
       // {
       //   Header: "Amount (¢)",
       //   accessor: "amount",
@@ -126,6 +147,8 @@ class Admin extends React.Component {
         <ReactTable
           data={transactions}
           columns={COLUMNS}
+          filterable
+          defaultFilterMethod={(filter, row) => String(row[filter.id]) === filter.value}
           defaultPageSize={10}
           defaultSorted={[
             {
