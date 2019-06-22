@@ -28,12 +28,13 @@ class OrderComplete extends React.Component {
     let {
       location: {
         search
-      }
+      },
+      match
     } = this.props;
 
     let component = this;
 
-    let transactionId = new URLSearchParams(search).get('transactionId');
+    let transactionId = new URLSearchParams(search).get('transactionId') || match.params.id;
     let transactionsdb = db.collection("transactions");
 
     let firebaseTransactionInfo = transactionsdb.where("id", "==", `${transactionId}`)
@@ -48,6 +49,8 @@ class OrderComplete extends React.Component {
           firebaseTransactionInfo: records[0]
         })
       } else {
+
+        // debugger;
         transactionsdb.doc(transactionId).set({
           id: transactionId,
           status: "received",
@@ -61,7 +64,7 @@ class OrderComplete extends React.Component {
       }
     });
 
-    fetch(`/verifyTransaction${search}`)
+    fetch(`/verifyTransaction?transactionId=${transactionId}`)
     .then(function(response) {
       return response.json();
     })
@@ -167,7 +170,7 @@ class OrderComplete extends React.Component {
                       { firebaseTransactionInfo.status !== "refunded" && firebaseTransactionInfo.status !== "cancelled" && Object.keys(SHIPPING_STATUS)
                         .filter(status => status !== "refunded" && status !== "cancelled")
                         .map((status, i) => (
-                          <p id={status} className={`${status===firebaseTransactionInfo.status ? 'active' : ''}`}>{SHIPPING_STATUS[status]}</p>
+                          <p id={status} className={`${status===firebaseTransactionInfo.status ? 'active' : ''}`} key={i}>{SHIPPING_STATUS[status]}</p>
                         )
                       )}
                     </div>
