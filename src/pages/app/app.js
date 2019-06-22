@@ -33,7 +33,7 @@ class App extends React.Component {
             <Route path="/about" component={About} />
             <Route path="/product-details" component={ProductDetails} />
             <Route path="/cart" component={Cart} />
-            <Route path="/checkout/:step(shipping|billing|order)" component={Checkout} />
+            <Route exact path="/checkout" component={Checkout} />
             <Route path="/order-complete" component={OrderComplete} />
             <Route path="/admin" component={Admin} />
             <footer>
