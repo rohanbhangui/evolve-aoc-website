@@ -32,10 +32,10 @@ class App extends React.Component {
             <Route path="/contact" component={Contact} />
             <Route path="/about" component={About} />
             <Route path="/product-details" component={ProductDetails} />
-            <Route path="/cart" component={Cart} />
+            <Route exact path="/cart" component={Cart} />
             <Route exact path="/checkout" component={Checkout} />
-            <Route path="/order-complete" component={OrderComplete} />
-            <Route path="/admin" component={Admin} />
+            <Route exact path="/order-complete" component={OrderComplete} />
+            <Route exact path="/admin" component={Admin} />
             <footer>
               <Footer></Footer>
             </footer>
