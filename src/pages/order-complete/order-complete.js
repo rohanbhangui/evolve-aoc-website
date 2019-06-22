@@ -154,14 +154,6 @@ class OrderComplete extends React.Component {
                     { customer.address.postal_code && (<p>{ customer.address.postal_code }</p>) }
                   </div>
                   <br/>
-                  {/* { firebaseTransactionInfo && firebaseTransactionInfo.status && ( */}
-                  {/*   <div id="order-status"> */}
-                  {/*     <h5>Order Status</h5> */}
-                  {/*     { console.log("TRANSACTION", firebaseTransactionInfo, firebaseTransactionInfo.status)} */}
-                  {/*     <span>{ SHIPPING_STATUS[firebaseTransactionInfo.status] || ""}</span> */}
-                  {/*   </div> */}
-                  {/* )} */}
-
                   { firebaseTransactionInfo && firebaseTransactionInfo.status && (
                     <div id="order-status">
                       <h5>Order Status</h5>
