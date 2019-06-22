@@ -48,6 +48,8 @@ class Checkout extends React.Component {
           postalCode: formData.get("postalCode")
         }
       });
+
+      this.props.history.push('/checkout/order');
     }
   }
 
@@ -59,7 +61,7 @@ class Checkout extends React.Component {
       let formData = new FormData(e.target);
 
       component.setState({
-        billing: {
+        shipping: {
           fullName: formData.get("fullName"),
           addressOne: formData.get("addressOne"),
           addressTwo: formData.get("addressTwo"),
@@ -70,7 +72,6 @@ class Checkout extends React.Component {
         }
       });
 
-      //TODO: verify if best practice
       this.props.history.push('/checkout/billing');
     }
   }
@@ -78,7 +79,8 @@ class Checkout extends React.Component {
   toggleSameAddress(e) {
     this.setState( prevState => {
       return {
-        sameAddress: !prevState.sameAddress
+        sameAddress: !prevState.sameAddress,
+        billing: !prevState.sameAddress ? prevState.shipping : {}
       }
     });
   }
@@ -87,8 +89,6 @@ class Checkout extends React.Component {
 
     let { match: { params: { step }} } = this.props;
     let { sameAddress } = this.state;
-
-    console.log(sameAddress);
 
     return (
       <div id="Checkout">
@@ -109,6 +109,9 @@ class Checkout extends React.Component {
               <label><input type="checkbox" value={sameAddress} onChange={ this.toggleSameAddress } /> Use shipping address</label>
               { !sameAddress && (
                 <AddressForm submitEventHandler={ this.shippingFormSubmitEventHandler } />
+              )}
+              { sameAddress && (
+                <button className="button primary" onClick={ this.billingFormSubmitEventHandler }/>
               )}
             </div> 
           )}

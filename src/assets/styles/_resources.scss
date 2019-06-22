@@ -75,6 +75,21 @@
 	}
 }
 
+.select {
+	padding: 15px;
+	font-family: $font-secondary;
+	font-size: 13px;
+	letter-spacing: 1px;
+	cursor: pointer;
+	border-radius: .25rem;
+	border: 1px solid #ccc;
+	outline: none;
+
+	&:focus {
+		border: 1px solid black;
+	}
+}
+
 
 .badge {
 	background: #1d1d1d;

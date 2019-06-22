@@ -1,12 +1,16 @@
 #AddressForm {
+
+	$input-width: 25rem;
+
 	.field {
 		display: flex;
 
 		label {
 			display: inline-block;
 			margin: .4rem auto;
+			width: 25rem;
 
-			span {
+			> span {
 				display: inline-block;
 				width: 7.3125rem;
 				text-align: right;
@@ -25,6 +29,10 @@
 			margin: .4rem auto 0;
 			width: 100%;
 			max-width: $input-width;
+		}
+
+		&.display-none {
+			display: none;
 		}
 	}
 }
