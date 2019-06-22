@@ -29,7 +29,7 @@ class AddressForm extends React.Component {
     ];
 
     const COUNTRIES = [
-      { label: 'Canada', value: 'canada'}
+      { label: 'Canada', value: 'CA'}
     ];
 
     return (
