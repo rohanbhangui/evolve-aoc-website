@@ -15,3 +15,19 @@ export const SHIPPING_STATUS = {
 	shipping: "Shipping",
 	shipped: "Shipped"
 }
+
+export const SELECT_STYLES = {
+	control: (base, state) => ({
+	  ...base,
+	  padding: '.4rem',
+	  boxShadow: "none",
+	  fontFamily: `'aktiv-grotesk', Nimbus Sans, 'nimbus-sans', 'Helvetica Neue', Helvetica, Arial, sans-serif`,
+	  fontSize: '13px',
+	  letterSpacing: '1px',
+	  borderRadius: '.25rem',
+	  borderColor: state.isFocused ? 'black' : '#ccc',
+	  '&:hover': {
+	  	borderColor: state.isFocused ? 'black' : '#ccc'
+	  },
+	})
+}

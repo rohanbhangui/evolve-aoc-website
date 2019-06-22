@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { removeFromCart } from '../../redux/actions/actions';
 import { changeQuantity } from '../../redux/actions/actions';
+import { Link } from 'react-router-dom';
 
 import { PROJECT_NAME, SIZE_MAPPING } from '../../utility/variables';
 
@@ -21,9 +22,6 @@ class Cart extends React.Component {
     this.removeItem = this.removeItem.bind(this);
     this.totalQuantity = this.totalQuantity.bind(this);
     this.validateNumber = this.validateNumber.bind(this);
-    this.pushToCheckout = this.pushToCheckout.bind(this);
-    this.getTax = this.getTax.bind(this);
-    this.processValues = this.processValues.bind(this);
   }
 
   totalCart(cart) {
@@ -86,63 +84,6 @@ class Cart extends React.Component {
     document.title = `${PROJECT_NAME} - Cart(${this.totalQuantity(cart)})`;
   }
 
-  getTax(postal) {
-    let { cart } = this.props;
-    let component = this;
-
-    return fetch(`/tax?postal=${postal}`)
-    .then(function(resp) {
-      return resp.json();
-    })
-    .then(function(myJson) {
-      return { percentage: myJson.applicable*100, amount: (myJson.applicable * component.totalCart(cart)).toFixed(2)};
-    });
-  }
-
-  pushToCheckout(e) {
-    let { cart } = this.props;
-
-    let component = this;
-
-    e.preventDefault();
-
-    component.setState({
-      processing: true
-    })
-
-    let formData = new FormData(e.target);
-
-    let postal = formData.get("postal");
-
-    this.processValues(postal).then(([tax]) => {
-      let data = {
-        tax,
-        cart,
-        support_email: 'support@evolveaoc.com',
-        total: this.totalCart(cart)
-      }
-
-      fetch('/checkout', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(myJson) {
-        window.location.href=myJson.checkout.checkout_page_url;
-      });
-    })
-  }
-
-  processValues(postal) {
-    return Promise.all([this.getTax(postal)]);
-  }
-
   render() {
 
     let { cart } = this.props;
@@ -152,17 +93,6 @@ class Cart extends React.Component {
         <h4>Cart</h4>
         { cart.length > 0 && (
           <div id="cart-view">
-            { /*<div id="cart-item-header">
-              <div className="flex-item">Item</div>
-              <div className="flex-item" id="image-buffer">
-                <div className="filler"></div>
-              </div>
-              <div className="flex-item" id="text-buffer">
-                <div className="filler"></div>
-              </div>
-              <div className="flex-item">Qty</div>
-              <div className="flex-item">Price</div>
-            </div> */ }
             <div id="cart-items">
               { cart && cart.map((item, i) =>
 
@@ -186,26 +116,20 @@ class Cart extends React.Component {
                       <div>{ `$${(item.qty*item.price).toFixed(2)}` || "—" }</div>
                     </div>
                   </div>
-                  { /*<div className="item-content">
-                      <div className="flex-item">
-                        <div className="item-remove">
-                          <button className="link" onClick={ this.removeItem({ id: item.id, variant: item.variant, size: item.size})}>Remove</button>
-                        </div>
-                      </div> 
-                  </div>*/}
                 </div>
               )}
             </div>
             <div id="cart-total"><strong>Subtotal:</strong> <h5>${ this.totalCart(cart) }</h5></div>
             <div id="checkout-container">
-              <form onSubmit={ this.pushToCheckout }>
-                <input name="postal" className="input" type="text" placeholder="eg. A1A A1A" value={ this.state.postal } maxLength="10" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" onChange={ e => {
-                  this.setState({
-                    postal: e.target.value
-                  });
-                }}/>
-                <input type="submit" disabled={ !this.state.postal || this.state.processing ? 'disabled' : ''} className={ `button primary ${!this.state.postal || this.state.processing ? 'disabled' : ''}`} id="checkout" value={ this.state.processing ? 'Processing...' : 'Checkout' } />
-              </form>
+              {/* <form onSubmit={ this.pushToCheckout }> */}
+              {/*   <input name="postal" className="input" type="text" placeholder="eg. A1A A1A" value={ this.state.postal } maxLength="10" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" onChange={ e => { */}
+              {/*     this.setState({ */}
+              {/*       postal: e.target.value */}
+              {/*     }); */}
+              {/*   }}/> */}
+              {/*   <input type="submit" disabled={ !this.state.postal || this.state.processing ? 'disabled' : ''} className={ `button primary ${!this.state.postal || this.state.processing ? 'disabled' : ''}`} id="checkout" value={ this.state.processing ? 'Processing...' : 'Checkout' } /> */}
+              {/* </form> */}
+              <Link to="/checkout/shipping" className="button primary">Checkout</Link>
             </div>
             
           </div>

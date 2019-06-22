@@ -11,6 +11,7 @@ import TopBar from '../../components/top-bar/top-bar';
 import Footer from '../../components/footer/footer';
 import OrderComplete from '../order-complete/order-complete';
 import Admin from '../admin/admin';
+import Checkout from '../checkout/checkout'
 
 import ScrollToTop from '../../components/scrollToTop/scrollToTop';
 
@@ -31,9 +32,10 @@ class App extends React.Component {
             <Route path="/contact" component={Contact} />
             <Route path="/about" component={About} />
             <Route path="/product-details" component={ProductDetails} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/order-complete" component={OrderComplete} />
-            <Route path="/admin" component={Admin} />
+            <Route exact path="/cart" component={Cart} />
+            <Route exact path="/checkout" component={Checkout} />
+            <Route exact path="/order-complete" component={OrderComplete} />
+            <Route exact path="/admin" component={Admin} />
             <footer>
               <Footer></Footer>
             </footer>

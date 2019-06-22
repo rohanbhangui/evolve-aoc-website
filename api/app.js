@@ -140,6 +140,7 @@ app.post('/checkout', (req, res) => {
   let tax = req.body.tax;
   let total = req.body.total;
   let merchant_support_email = req.body.support_email;
+  let pre_populate_shipping_address = req.body.pre_populate_shipping_address;
 
   let body = {
     idempotency_key: rand.generate(),
@@ -176,6 +177,7 @@ app.post('/checkout', (req, res) => {
     },
     ask_for_shipping_address: true,
     merchant_support_email,
+    pre_populate_shipping_address,
     redirect_url: 'https://localhost:3000/order-complete',
   }
 
