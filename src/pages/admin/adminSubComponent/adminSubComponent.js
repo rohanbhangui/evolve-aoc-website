@@ -75,8 +75,9 @@ class SubComponent extends React.Component {
                 { customer.address.country && (<span>{ customer.address.country }</span>) }
                 { customer.address.postal_code && (<p>{ customer.address.postal_code }</p>) }
               </div>
+              <br/>
               <div id="order-status">
-                <strong>Order Status: </strong>
+                <h5>Order Status</h5>
                 <span>{ transaction.firebaseTransactionInfo && transaction.firebaseTransactionInfo.status ? SHIPPING_STATUS[transaction.firebaseTransactionInfo.status] : ""}</span>
               </div>
             </div>

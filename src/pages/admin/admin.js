@@ -27,7 +27,8 @@ class Admin extends React.Component {
     let component = this;
 
     let transactionsdb = db.collection("transactions");
-    let listTransactions = fetch(`/admin/listTransactions`)
+    
+    fetch(`/admin/listTransactions`)
     .then(function(resp){
       return resp.json()
     })
@@ -73,21 +74,6 @@ class Admin extends React.Component {
   render() {
 
     let { transactions } = this.state;
-// 
-//     const TRANSACTION_HEADERS = [
-//       {
-//         label: 'ID', name: 'id'
-//       },
-//       {
-//         label: 'Date Created', name: 'created_at'
-//       },
-//       {
-//         label: 'Amount (¢)', name: 'amount'
-//       },
-//       {
-//         label: 'Currency', name: 'currency'
-//       }
-//     ];
 
     const COLUMNS = [
       {
