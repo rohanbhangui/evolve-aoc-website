@@ -9,6 +9,8 @@ export const SIZE_MAPPING = {
 };
 
 export const SHIPPING_STATUS = {
+	refunded: "Refunded",
+	cancelled: "Cancelled",
 	received: "Received",
 	confirmed: "Confirmed",
 	processing: "Processing",

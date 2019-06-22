@@ -11,6 +11,10 @@
 		padding-bottom: 2rem;
 		margin: 0 2rem;
 		text-align: center;
+
+		span {
+			color: #ccc;
+		}
 	}
 
 	#thank-you-content {
@@ -32,10 +36,7 @@
 		margin: 0 1rem;
 		border-top: 1px solid #ccc;
 
-		#address-info {
-			width: 16rem;
-			padding-top: 2rem; 
-
+		#customer-info {
 			h5 {
 				margin-bottom: 0.5rem;
 				font-weight: 500;
@@ -45,8 +46,35 @@
 				font-size: .875rem;
 				color: #666;
 			}
-		}
 
+			#address-info {
+				width: 16rem;
+				padding-top: 2rem; 
+			}
+
+			#order-status {
+				p {
+					margin: 0.1rem 0;
+
+					&.active {
+						font-weight: bold;
+						color: black;
+					}
+
+					&#refunded, &#shipped {
+						&.active {
+							color: #00E676;
+						}
+					}
+
+					&#cancelled {
+						&.active {
+							color: #F44336;
+						}
+					}
+				}
+			}
+		}
 
 		#cart-view {
 			flex: 1 0  auto;

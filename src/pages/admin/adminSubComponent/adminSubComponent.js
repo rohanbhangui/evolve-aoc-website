@@ -76,10 +76,24 @@ class SubComponent extends React.Component {
                 { customer.address.postal_code && (<p>{ customer.address.postal_code }</p>) }
               </div>
               <br/>
-              <div id="order-status">
-                <h5>Order Status</h5>
-                <span>{ transaction.firebaseTransactionInfo && transaction.firebaseTransactionInfo.status ? SHIPPING_STATUS[transaction.firebaseTransactionInfo.status] : ""}</span>
-              </div>
+              { transaction.firebaseTransactionInfo && transaction.firebaseTransactionInfo.status && (
+                <div id="order-status">
+                  <h5>Order Status</h5>
+
+                  { transaction.firebaseTransactionInfo.status === "refunded" && (
+                    <p id="refunded" className={`active`}>{SHIPPING_STATUS["refunded"]}</p>
+                  )}
+                  { transaction.firebaseTransactionInfo.status === "cancelled" && (
+                    <p id="cancelled" className={`active`}>{SHIPPING_STATUS["cancelled"]}</p>
+                  )}
+                  { transaction.firebaseTransactionInfo.status !== "refunded" && transaction.firebaseTransactionInfo.status !== "cancelled" && Object.keys(SHIPPING_STATUS)
+                    .filter(status => status !== "refunded" && status !== "cancelled")
+                    .map((status, i) => (
+                      <p id={status} className={`${status===transaction.firebaseTransactionInfo.status ? 'active' : ''}`}>{SHIPPING_STATUS[status]}</p>
+                    )
+                  )}
+                </div>
+              )}
             </div>
           )}
           { order && order.line_items && order.line_items.length > 0 && (

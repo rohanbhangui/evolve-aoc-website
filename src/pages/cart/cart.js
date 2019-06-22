@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 import { PROJECT_NAME, SIZE_MAPPING } from '../../utility/variables';
 
-
 import './cart.scss';
 
 class Cart extends React.Component {

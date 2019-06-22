@@ -1,8 +1,12 @@
 import React from 'react';
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 
-import { PROJECT_NAME } from '../../utility/variables';
+import { PROJECT_NAME, SHIPPING_STATUS } from '../../utility/variables';
 
 import './order-complete.scss';
+
+let db = firebase.firestore();
 
 class OrderComplete extends React.Component {
 
@@ -12,7 +16,9 @@ class OrderComplete extends React.Component {
     this.state = {
       order: undefined,
       transaction: undefined,
-      customer: undefined
+      customer: undefined,
+      firebaseTransactionInfo: undefined,
+      newOrder: false,
     }
 
     this.totalCart = this.totalCart.bind(this);
@@ -26,6 +32,34 @@ class OrderComplete extends React.Component {
     } = this.props;
 
     let component = this;
+
+    let transactionId = new URLSearchParams(search).get('transactionId');
+    let transactionsdb = db.collection("transactions");
+
+    let firebaseTransactionInfo = transactionsdb.where("id", "==", `${transactionId}`)
+    .get()
+    .then( querySnapshot => {
+      return querySnapshot.docs.map(item => item.data());
+    });
+
+    Promise.all([firebaseTransactionInfo]).then(([records]) => {
+      if(records.length > 0) {
+        this.setState({
+          firebaseTransactionInfo: records[0]
+        })
+      } else {
+        transactionsdb.doc(transactionId).set({
+          id: transactionId,
+          status: "received",
+          tracking_number: '',
+          tracking_url: ''
+        });
+
+        this.setState({
+          newOrder: true,
+        });
+      }
+    });
 
     fetch(`/verifyTransaction${search}`)
     .then(function(response) {
@@ -76,35 +110,76 @@ class OrderComplete extends React.Component {
 
   render() {
 
-    let { order, transaction, customer } = this.state;
+    let { order, transaction, customer, firebaseTransactionInfo, newOrder } = this.state;
 
     return (
       <div id="OrderComplete">
         { order && transaction && customer && (
           <>
-            <h4>Order Complete!</h4>
-            <div id="thank-you-content">
-              <p>Thank you for your order. An email confirmation was sent to you at { customer && (<strong>{customer.email_address}</strong>)}. If you have any questions about your order, please contact us at <a href="mailto:support@evolveaoc.com">support@evolveaoc.com</a>.</p>
-            </div>
+            { newOrder && (
+              <>
+                <h4>Order Complete!</h4>
+                <div id="thank-you-content">
+                  <p>Thank you for your order. An email confirmation was sent to you at { customer && (<strong>{customer.email_address}</strong>)}. If you have any questions about your order, please contact us at <a href="mailto:support@evolveaoc.com">support@evolveaoc.com</a>.</p>
+                </div>
+              </>
+            )}
+            { !newOrder && (
+              <>
+                <h4>Order Confirmation</h4>
+                <div id="thank-you-content">
+                  <p>If you have any questions about your order, please contact us at <a href="mailto:support@evolveaoc.com">support@evolveaoc.com</a>.</p>
+                </div>
+              </>
+            )}
             <div id="cart-info">
               { customer && customer.address && (
-                <div id="address-info">
-                  <h5>Shipping Address</h5>
-                  { customer.given_name && (<span>{ customer.given_name }</span>) } { customer.family_name && (<span>{ customer.family_name }</span>) }
-                  { customer.email_address && (<p>{ customer.email_address }</p>) }
-                  { customer.address.organization && (<p>{ customer.address.organization }</p>) }
-                  { customer.address.address_line_1 && (<p>{ customer.address.address_line_1 }</p>) }
-                  { customer.address.address_line_2 && (<p>{ customer.address.address_line_2 }</p>) }
-                  { customer.address.address_line_3 && (<p>{ customer.address.address_line_3 }</p>) }
-                  { customer.address.locality && (<span>{ customer.address.locality }, </span>) }
-                  { customer.address.sublocality && (<span>{ customer.address.sublocality }, </span>) }
-                  { customer.address.sublocality_2 && (<span>{ customer.address.sublocality_2 }, </span>) }
-                  { customer.address.sublocality_3 && (<span>{ customer.address.sublocality_3 }, </span>) }
-                  { customer.address.administrative_district_level_3 && (<span>{ customer.address.administrative_district_level_3 }, </span>) }
-                  { customer.address.administrative_district_level_2 && (<span>{ customer.address.administrative_district_level_2 }, </span>) }
-                  { customer.address.administrative_district_level_1 && (<span>{ customer.address.administrative_district_level_1 }, </span>) }
-                  { customer.address.country && (<span>{ customer.address.country }</span>) }
-                  { customer.address.postal_code && (<p>{ customer.address.postal_code }</p>) }
+                <div id="customer-info">
+                  <div id="address-info">
+                    <h5>Shipping Address</h5>
+                    { customer.given_name && (<span>{ customer.given_name }</span>) } { customer.family_name && (<span>{ customer.family_name }</span>) }
+                    { customer.email_address && (<p>{ customer.email_address }</p>) }
+                    { customer.address.organization && (<p>{ customer.address.organization }</p>) }
+                    { customer.address.address_line_1 && (<p>{ customer.address.address_line_1 }</p>) }
+                    { customer.address.address_line_2 && (<p>{ customer.address.address_line_2 }</p>) }
+                    { customer.address.address_line_3 && (<p>{ customer.address.address_line_3 }</p>) }
+                    { customer.address.locality && (<span>{ customer.address.locality }, </span>) }
+                    { customer.address.sublocality && (<span>{ customer.address.sublocality }, </span>) }
+                    { customer.address.sublocality_2 && (<span>{ customer.address.sublocality_2 }, </span>) }
+                    { customer.address.sublocality_3 && (<span>{ customer.address.sublocality_3 }, </span>) }
+                    { customer.address.administrative_district_level_3 && (<span>{ customer.address.administrative_district_level_3 }, </span>) }
+                    { customer.address.administrative_district_level_2 && (<span>{ customer.address.administrative_district_level_2 }, </span>) }
+                    { customer.address.administrative_district_level_1 && (<span>{ customer.address.administrative_district_level_1 }, </span>) }
+                    { customer.address.country && (<span>{ customer.address.country }</span>) }
+                    { customer.address.postal_code && (<p>{ customer.address.postal_code }</p>) }
+                  </div>
+                  <br/>
+                  {/* { firebaseTransactionInfo && firebaseTransactionInfo.status && ( */}
+                  {/*   <div id="order-status"> */}
+                  {/*     <h5>Order Status</h5> */}
+                  {/*     { console.log("TRANSACTION", firebaseTransactionInfo, firebaseTransactionInfo.status)} */}
+                  {/*     <span>{ SHIPPING_STATUS[firebaseTransactionInfo.status] || ""}</span> */}
+                  {/*   </div> */}
+                  {/* )} */}
+
+                  { firebaseTransactionInfo && firebaseTransactionInfo.status && (
+                    <div id="order-status">
+                      <h5>Order Status</h5>
+
+                      { firebaseTransactionInfo.status === "refunded" && (
+                        <p id="refunded" className={`active`}>{SHIPPING_STATUS["refunded"]}</p>
+                      )}
+                      { firebaseTransactionInfo.status === "cancelled" && (
+                        <p id="cancelled" className={`active`}>{SHIPPING_STATUS["cancelled"]}</p>
+                      )}
+                      { firebaseTransactionInfo.status !== "refunded" && firebaseTransactionInfo.status !== "cancelled" && Object.keys(SHIPPING_STATUS)
+                        .filter(status => status !== "refunded" && status !== "cancelled")
+                        .map((status, i) => (
+                          <p id={status} className={`${status===firebaseTransactionInfo.status ? 'active' : ''}`}>{SHIPPING_STATUS[status]}</p>
+                        )
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
               { order && order.line_items && order.line_items.length > 0 && (
