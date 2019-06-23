@@ -87,7 +87,7 @@ class AddressForm extends React.Component {
             <input required className="input" placeholder="Postal Code *" type="text" name="postalCode" maxLength="10" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" />
       		</label>
       	</div>
-      	<input className="button primary" type="submit" value="Next"/>
+      	<input className="button primary" type="submit" value="Checkout"/>
       </form>
     )
   }
