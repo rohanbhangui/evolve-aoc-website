@@ -18,8 +18,11 @@ class Admin extends React.Component {
     super(props);
 
     this.state = {
-      transactions: []
+      transactions: [],
+      authenticated: false
     }
+
+    this.submitHandler = this.submitHandler.bind(this);
   }
 
   componentDidMount() {
@@ -71,9 +74,31 @@ class Admin extends React.Component {
     });
   }
 
+  submitHandler(e) {
+    e.preventDefault();
+
+    let formData = new FormData(e.target);
+
+    fetch(`admin/authenticate?key=${formData.get('authKey')}`)
+    .then(resp => {
+      return resp.json();
+    })
+    .then(json => {
+      if(json.authentication) {
+        this.setState({
+          authenticated: json.authentication
+        });
+      }
+      else {
+        alert("Authorization Failed");
+      }
+    });
+
+  }
+
   render() {
 
-    let { transactions } = this.state;
+    let { transactions, authenticated } = this.state;
 
     const COLUMNS = [
       {
@@ -93,7 +118,14 @@ class Admin extends React.Component {
       },
       {
         Header: "Order Status",
-        accessor: "firebaseTransactionInfo.status",
+        id: 'status',
+        accessor: d => {
+          if(d.firebaseTransactionInfo) {
+            return SHIPPING_STATUS[d.firebaseTransactionInfo.status];
+          }
+
+          return '';
+        },
         width: 200,
         id: "status",
         filterMethod: (filter, row) => {
@@ -115,40 +147,37 @@ class Admin extends React.Component {
             ))}
           </select>
       }
-      // {
-      //   Header: "Amount (¢)",
-      //   accessor: "amount",
-      //   width: 100
-      // },
-      // {
-      //   Header: "Currency",
-      //   accessor: "currency",
-      //   width: 100
-      // }
-    ]
-    // prompt('Enter Admin Password');
+    ];
 
     return (
       <div id="Admin">
-        <ReactTable
-          data={transactions}
-          columns={COLUMNS}
-          filterable
-          defaultFilterMethod={(filter, row) => String(row[filter.id]) === filter.value}
-          defaultPageSize={10}
-          defaultSorted={[
-            {
-              id: "created_at",
-              desc: true
+        { !authenticated && (
+          <form onSubmit={this.submitHandler}>
+            <input type="text" name="authKey" className="input" placeholder="Admin Authetication Key" required />
+            <input type="submit" value="Submit" className="button primary" />
+          </form>
+        )}
+        { authenticated && (
+          <ReactTable
+            data={transactions}
+            columns={COLUMNS}
+            filterable
+            defaultFilterMethod={(filter, row) => String(row[filter.id]) === filter.value}
+            defaultPageSize={10}
+            defaultSorted={[
+              {
+                id: "created_at",
+                desc: true
+              }
+            ]}
+            className="-striped -highlight"
+            SubComponent={(row) => {
+              return (
+                <SubComponent transaction={row.original} />
+              )}
             }
-          ]}
-          className="-striped -highlight"
-          SubComponent={(row) => {
-            return (
-              <SubComponent transaction={row.original} />
-            )}
-          }
-        />
+          />
+        )}
       </div>
     )
   }

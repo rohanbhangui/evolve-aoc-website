@@ -128,7 +128,7 @@ class Cart extends React.Component {
               {/*   }}/> */}
               {/*   <input type="submit" disabled={ !this.state.postal || this.state.processing ? 'disabled' : ''} className={ `button primary ${!this.state.postal || this.state.processing ? 'disabled' : ''}`} id="checkout" value={ this.state.processing ? 'Processing...' : 'Checkout' } /> */}
               {/* </form> */}
-              <Link to="/checkout/shipping" className="button primary">Checkout</Link>
+              <Link to="/checkout/" className="button primary">Checkout</Link>
             </div>
             
           </div>

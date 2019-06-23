@@ -12,4 +12,15 @@
 			border: 1px solid #ccc;
 		}
 	}
+
+	form {
+		margin: 4rem 0;
+		
+		input {
+			max-width: 25rem;
+			width: 100%;
+			display: block;
+			margin: 1rem auto;
+		}
+	}
 }

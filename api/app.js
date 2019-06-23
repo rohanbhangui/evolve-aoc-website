@@ -236,3 +236,13 @@ app.get('/admin/listTransactions', (req, res) => {
   });
 });
 
+app.get('/admin/authenticate', (req, res) => {
+  let key = req.query.key;
+
+  if(key===process.env.ADMIN_KEY) {
+    res.send({ authentication: true });
+  }
+
+  res.send({ authentication: false })
+});
+
