@@ -161,7 +161,7 @@ export default class ProductDetails extends React.Component {
 
     let { selectedSize, selectedVariantId, sizeRequiredError, inventoryCounts } = this.state;
 
-    let selectedVariantInfo = product.variants.find(variant => variant.variantId === this.state.selectedVariantId);
+    let selectedVariantInfo = product.variants.find(variant => variant.variantId === selectedVariantId);
 
     let productCartPayload = {
       name: product.name,

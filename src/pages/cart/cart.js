@@ -5,6 +5,8 @@ import { changeQuantity } from '../../redux/actions/actions';
 import { Link } from 'react-router-dom';
 
 import { PROJECT_NAME, SIZE_MAPPING } from '../../utility/variables';
+import { totalCart } from '../../utility/func';
+
 
 import './cart.scss';
 
@@ -13,25 +15,16 @@ class Cart extends React.Component {
     super(props);
 
     this.state = {
-      postal: '',
       processing: false
     }
 
-    this.totalCart = this.totalCart.bind(this);
+    this.totalCart = totalCart.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.totalQuantity = this.totalQuantity.bind(this);
     this.validateNumber = this.validateNumber.bind(this);
   }
 
-  totalCart(cart) {
-
-    const total = cart.map(item => item.qty*item.price).reduce((acc, cur) => acc + cur);
-
-    return total.toFixed(2);
-  }
-
   removeItem(payload) {
-
     const { removeFromCart } = this.props;
     
     return (e) => {
@@ -84,7 +77,6 @@ class Cart extends React.Component {
   }
 
   render() {
-
     let { cart } = this.props;
 
     return (
@@ -120,17 +112,8 @@ class Cart extends React.Component {
             </div>
             <div id="cart-total"><strong>Subtotal:</strong> <h5>${ this.totalCart(cart) }</h5></div>
             <div id="checkout-container">
-              {/* <form onSubmit={ this.pushToCheckout }> */}
-              {/*   <input name="postal" className="input" type="text" placeholder="eg. A1A A1A" value={ this.state.postal } maxLength="10" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" onChange={ e => { */}
-              {/*     this.setState({ */}
-              {/*       postal: e.target.value */}
-              {/*     }); */}
-              {/*   }}/> */}
-              {/*   <input type="submit" disabled={ !this.state.postal || this.state.processing ? 'disabled' : ''} className={ `button primary ${!this.state.postal || this.state.processing ? 'disabled' : ''}`} id="checkout" value={ this.state.processing ? 'Processing...' : 'Checkout' } /> */}
-              {/* </form> */}
               <Link to="/checkout/" className="button primary">Checkout</Link>
-            </div>
-            
+            </div>  
           </div>
         )}
 

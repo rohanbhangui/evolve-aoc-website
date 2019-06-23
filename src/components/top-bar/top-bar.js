@@ -7,25 +7,22 @@ import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/images/logo.svg';
 import './top-bar.scss';
 
+import { totalCart } from '../../utility/func';
+
 class TopBar extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.totalCart = this.totalCart.bind(this);
+    this.totalCart = totalCart.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.totalQuantity = this.totalQuantity.bind(this);
   }
 
-  totalCart(cart) {
-
-    const total = cart.map(item => item.qty*item.price).reduce((acc, cur) => acc + cur);
-
-    return total.toFixed(2);
-  }
-
   totalQuantity(cart) {
-    return cart.map(item => item.qty).reduce((acc, cur) => acc + cur);
+    return cart
+    .map(item => item.qty)
+    .reduce((acc, cur) => acc + cur);
   }
 
   removeItem(payload) {
@@ -62,13 +59,12 @@ class TopBar extends React.Component {
           <div id="cart-list">
             <div id="cart-header">
               <h5 id="cart-title">Cart</h5>
-              { cart.length <= 0 &&
+              { cart.length <= 0 && (
                 <div id="empty-text">Cart is Empty</div>
-              }
+              )}
             </div>
             <div id="cart-items">
               { cart && cart.map((item, i) =>
-
                 <div className={`cart-item ${ i > 0 ? 'border-top' : ''}`} key={i} data-id={ item.id } data-variant={ item.variant }>
                   <div className="item-image"> <img src={ item.image } alt={ `${ item.name } - ${ item.color }`} /></div>
                   <div className="item-content">
@@ -107,7 +103,6 @@ class TopBar extends React.Component {
 }
 
 const mapStateToProps = state => {
-
   const {cart} = state;
   
   return { cart };

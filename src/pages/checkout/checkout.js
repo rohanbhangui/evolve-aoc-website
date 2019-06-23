@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 
 import { PROJECT_NAME } from '../../utility/variables';
+import { totalCart } from '../../utility/func';
 
 import AddressForm from '../../components/address-form/address-form';
 
@@ -16,7 +17,7 @@ class Checkout extends React.Component {
     this.pushToCheckout = this.pushToCheckout.bind(this);
     this.getTax = this.getTax.bind(this);
     this.processValues = this.processValues.bind(this);
-    this.totalCart = this.totalCart.bind(this);
+    this.totalCart = totalCart.bind(this);
   }
 
   componentDidMount() {
@@ -41,13 +42,6 @@ class Checkout extends React.Component {
         postalCode: formData.get("postalCode")
       });
     }
-  }
-
-  totalCart(cart) {
-
-    const total = cart.map(item => item.qty*item.price).reduce((acc, cur) => acc + cur);
-
-    return total.toFixed(2);
   }
 
   getTax(postal) {

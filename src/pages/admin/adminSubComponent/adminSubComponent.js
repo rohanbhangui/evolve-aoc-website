@@ -24,7 +24,7 @@ class SubComponent extends React.Component {
     let component = this;
 
     fetch(`/retrieveCustomer?customerId=${customerId}`)
-    .then(function(resp) {
+    .then(resp => {
       return resp.json();
     })
     .then(function(json) {
@@ -35,10 +35,10 @@ class SubComponent extends React.Component {
     });
 
     fetch(`/retrieveOrder?orderId=${orderId}`)
-    .then(function(resp) {
+    .then(resp => {
       return resp.json();
     })
-    .then(function(json) {
+    .then(json => {
 
       component.setState({
         order: json.orders[0]

@@ -3,6 +3,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
 import { PROJECT_NAME, SHIPPING_STATUS } from '../../utility/variables';
+import { totalCart } from '../../utility/func';
 
 import './order-complete.scss';
 
@@ -21,7 +22,7 @@ class OrderComplete extends React.Component {
       newOrder: false,
     }
 
-    this.totalCart = this.totalCart.bind(this);
+    this.totalCart = totalCart.bind(this);
   }
 
   componentDidMount() {
@@ -49,8 +50,6 @@ class OrderComplete extends React.Component {
           firebaseTransactionInfo: records[0]
         })
       } else {
-
-        // debugger;
         transactionsdb.doc(transactionId).set({
           id: transactionId,
           status: "received",
@@ -65,20 +64,20 @@ class OrderComplete extends React.Component {
     });
 
     fetch(`/verifyTransaction?transactionId=${transactionId}`)
-    .then(function(response) {
+    .then(response => {
       return response.json();
     })
-    .then(function(transaction) {
+    .then(transaction => {
 
       component.setState({
         transaction
       });
 
       fetch(`/retrieveCustomer?customerId=${transaction.tenders[0].customer_id}`)
-      .then(function(resp) {
+      .then(resp => {
         return resp.json();
       })
-      .then(function(json) {
+      .then(json => {
 
         let customer = json.customer;
 
@@ -88,10 +87,10 @@ class OrderComplete extends React.Component {
       });
 
       fetch(`/retrieveOrder?orderId=${transaction.order_id}`)
-      .then(function(resp) {
+      .then(resp => {
         return resp.json();
       })
-      .then(function(json) {
+      .then(json => {
         let order = json.orders[0];
 
         component.setState({
@@ -102,13 +101,6 @@ class OrderComplete extends React.Component {
 
     document.title = `${PROJECT_NAME} - Order Completed!`;
 
-  }
-
-  totalCart(items) {
-
-    const total = items.map(item => item.qty*item.price).reduce((acc, cur) => acc + cur);
-
-    return total.toFixed(2);
   }
 
   render() {
