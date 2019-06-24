@@ -9,6 +9,7 @@ import { PROJECT_NAME } from '../../utility/variables';
 import { ProductCard } from '../../components/product-search-card/product-search-card';
 import './catalog.scss';
 
+
 firebase.initializeApp({
   apiKey: "AIzaSyD9Ymp-2H6xWhjdXrVH9AjSJcPMCQvE8ow",
   authDomain: "evolve-aoc-landing.firebaseapp.com",

@@ -7,6 +7,8 @@ import { totalCart } from '../../utility/func';
 
 import './order-complete.scss';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 let db = firebase.firestore();
 
 class OrderComplete extends React.Component {
@@ -162,7 +164,7 @@ class OrderComplete extends React.Component {
                       { firebaseTransactionInfo.status !== "refunded" && firebaseTransactionInfo.status !== "cancelled" && Object.keys(SHIPPING_STATUS)
                         .filter(status => status !== "refunded" && status !== "cancelled")
                         .map((status, i) => (
-                          <p id={status} className={`${status===firebaseTransactionInfo.status ? 'active' : ''}`} key={i}>{SHIPPING_STATUS[status]}</p>
+                          <p id={status} key={i} className={`${status===firebaseTransactionInfo.status ? 'active' : ''}`}><FontAwesomeIcon icon="check" />{SHIPPING_STATUS[status]}</p>
                         )
                       )}
                     </div>

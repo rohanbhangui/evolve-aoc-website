@@ -18,6 +18,10 @@ class Checkout extends React.Component {
     this.getTax = this.getTax.bind(this);
     this.processValues = this.processValues.bind(this);
     this.totalCart = totalCart.bind(this);
+
+    this.state = {
+      isProcessing: false
+    }
   }
 
   componentDidMount() {
@@ -26,7 +30,6 @@ class Checkout extends React.Component {
   }
 
   shippingFormSubmitEventHandler(formData) {
-    let component = this;
     return (e) => {
       e.preventDefault();
 
@@ -63,7 +66,7 @@ class Checkout extends React.Component {
     let component = this;
 
     component.setState({
-      processing: true
+      isProcessing: true
     });
 
     let { addressOne, addressTwo, city, region, postalCode, country, fullName } = address;
@@ -110,11 +113,13 @@ class Checkout extends React.Component {
 
   render() {
 
+    let { isProcessing } = this.state;
+
     return (
       <div id="Checkout">
         <h4>Shipping Details</h4>
         <div id="pages">
-          <AddressForm submitEventHandler={ this.shippingFormSubmitEventHandler } />
+          <AddressForm submitEventHandler={ this.shippingFormSubmitEventHandler } isProcessing={isProcessing} />
         </div>
       </div>
     )

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Select from 'react-select';
 
 import { SELECT_STYLES } from '../../utility/variables';
@@ -6,13 +6,10 @@ import { SELECT_STYLES } from '../../utility/variables';
 import './address-form.scss';
 
 class AddressForm extends React.Component {
-	constructor(props) {
-    super(props);
-  }
 
   render() {
 
-    const { submitEventHandler } = this.props;
+    const { submitEventHandler, isProcessing } = this.props;
 
     const PROVINCES = [
       { label: 'Alberta', value: 'alberta'},
@@ -87,7 +84,7 @@ class AddressForm extends React.Component {
             <input required className="input" placeholder="Postal Code *" type="text" name="postalCode" maxLength="10" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" />
       		</label>
       	</div>
-      	<input className="button primary" type="submit" value="Checkout"/>
+      	<input className={`button primary ${isProcessing ? 'disabled' : ''}`} disabled={isProcessing ? 'disabled' : ''} type="submit" value={isProcessing ? 'Processing...' : 'Checkout'}/>
       </form>
     )
   }

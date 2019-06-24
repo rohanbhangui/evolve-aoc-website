@@ -15,6 +15,14 @@ import Checkout from '../checkout/checkout'
 
 import ScrollToTop from '../../components/scrollToTop/scrollToTop';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCogs, faCheck } from '@fortawesome/free-solid-svg-icons'
+
+library.add(
+  faCogs,
+  faCheck
+);
+
 class App extends React.Component {
 	render() {
 

@@ -50,6 +50,14 @@
 			#address-info {
 				width: 16rem;
 				padding-top: 2rem; 
+
+				strong {
+					user-select: none;
+				}
+
+				span, p {
+					margin: 0.1rem 0;
+				}
 			}
 
 			#order-status {
@@ -59,18 +67,28 @@
 					&.active {
 						font-weight: bold;
 						color: black;
+
+						svg {
+							opacity: 1;
+						}
 					}
 
 					&#refunded, &#shipped {
 						&.active {
-							color: #00E676;
+							color: $color-success;
 						}
 					}
 
 					&#cancelled {
 						&.active {
-							color: #F44336;
+							color: $color-failed;
 						}
+					}
+
+					svg {
+						opacity: 0;
+						color: $color-success;
+						margin-right: 0.3rem;
 					}
 				}
 			}

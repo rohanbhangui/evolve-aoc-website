@@ -2,6 +2,8 @@ import React from 'react';
 import footerLogo from '../../assets/images/footer-logo.svg';
 import { Link } from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import './footer.scss';
 
 class Footer extends React.Component {
@@ -75,7 +77,7 @@ class Footer extends React.Component {
         <div id="bottom-content">
           <h6>Proudly Made in Canada</h6>
           <p>1900 North Sheridan Way, Mississauga, Ontario, Canada | 123.456.7890</p>
-          <p>&copy; 2019 Evolve AOC. All rights reserved. <Link to="/admin"><i className="fa fa-cogs"></i></Link></p>
+          <p>&copy; 2019 Evolve AOC. All rights reserved. <Link to="/admin"><FontAwesomeIcon icon="cogs" /></Link></p>
         </div>
       </div>
     )

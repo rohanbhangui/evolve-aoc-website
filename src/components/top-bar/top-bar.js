@@ -9,6 +9,28 @@ import './top-bar.scss';
 
 import { totalCart } from '../../utility/func';
 
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
+firebase.auth().signInAnonymously().catch(function(error) {
+  var errorCode = error.code;
+  var errorMessage = error.message;
+
+  console.error("ERROR", errorCode, errorMessage);
+});
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    var isAnonymous = user.isAnonymous;
+    var uid = user.uid;
+  } else {
+    // User is signed out.
+    // ...
+  }
+  // ...
+});
+
 class TopBar extends React.Component {
 
   constructor(props) {

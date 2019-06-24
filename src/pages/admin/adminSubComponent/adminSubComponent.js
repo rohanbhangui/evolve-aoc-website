@@ -3,6 +3,7 @@ import React from 'react';
 import './adminSubComponent.scss';
 
 import { SHIPPING_STATUS } from '../../../utility/variables';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class SubComponent extends React.Component {
 
@@ -89,7 +90,7 @@ class SubComponent extends React.Component {
                   { transaction.firebaseTransactionInfo.status !== "refunded" && transaction.firebaseTransactionInfo.status !== "cancelled" && Object.keys(SHIPPING_STATUS)
                     .filter(status => status !== "refunded" && status !== "cancelled")
                     .map((status, i) => (
-                      <p id={status} className={`${status===transaction.firebaseTransactionInfo.status ? 'active' : ''}`}>{SHIPPING_STATUS[status]}</p>
+                      <p id={status} key={i} className={`${status===transaction.firebaseTransactionInfo.status ? 'active' : ''}`}><FontAwesomeIcon icon="check" />{SHIPPING_STATUS[status]}</p>
                     )
                   )}
                 </div>

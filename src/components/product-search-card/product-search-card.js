@@ -72,9 +72,15 @@ export class ProductCard extends React.Component {
 
   componentDidMount() {
 
+    this.mounted = true;
+
     const { selectedVariantId } = this.state;
 
     this.retrieveInventory(selectedVariantId, true);
+  }
+
+  componentWillUnmount(){
+    this.mounted = false;
   }
 
   retrieveInventory(selectedVariantId, onMount=false) {
@@ -105,9 +111,11 @@ export class ProductCard extends React.Component {
         }
       })
 
-      this.setState({
-        catalogObjs
-      });
+      if(this.mounted) {
+        this.setState({
+          catalogObjs
+        });
+      }
     
       return fetch(`/inventory?objIds=${data.map(item => item.id).join(",")}`, {signal});
     })
@@ -144,9 +152,11 @@ export class ProductCard extends React.Component {
         inventoryCounts = Object.assign({}, ...inventoryCountsArr);
       }
 
-      this.setState({
-        inventoryCounts
-      });
+      if(this.mounted) {
+        this.setState({
+          inventoryCounts
+        });
+      }
     });
   }
 

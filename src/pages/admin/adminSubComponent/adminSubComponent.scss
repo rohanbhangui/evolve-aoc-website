@@ -1,3 +1,5 @@
+@import '../../../assets/styles/_variables.scss';
+
 #adminSubComponent {
 	padding: 2rem;
 
@@ -20,15 +22,47 @@
 			#address-info {
 				width: 16rem;
 				padding-top: 2rem; 
+
+				strong {
+					user-select: none;
+				}
+
+				span, p {
+					margin: 0.1rem 0;
+				}
 			}
 
 			#order-status {
 				margin-top: 1rem;
 
 				p {
+					margin: 0.1rem 0;
+
 					&.active {
 						font-weight: bold;
 						color: black;
+
+						svg {
+							opacity: 1;
+						}
+					}
+
+					&#refunded, &#shipped {
+						&.active {
+							color: $color-success;
+						}
+					}
+
+					&#cancelled {
+						&.active {
+							color: $color-failed;
+						}
+					}
+
+					svg {
+						opacity: 0;
+						color: $color-success;
+						margin-right: 0.3rem;
 					}
 				}
 			}
