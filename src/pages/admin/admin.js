@@ -165,7 +165,7 @@ class Admin extends React.Component {
         },
         Filter: ({ filter, onChange }) =>
           <select
-            onChange={event => onChange(event.target.value)}
+            onChange={event => onChange(SHIPPING_STATUS[event.target.value])}
             style={{ width: "100%", height: "100%" }}
             value={filter ? filter.value : "all"}
           >
