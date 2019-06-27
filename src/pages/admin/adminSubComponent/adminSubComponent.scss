@@ -3,6 +3,14 @@
 #adminSubComponent {
 	padding: 2rem;
 
+	#fulfillment-info {
+		display: flex;
+
+		> * {
+			flex: 1 0 auto;
+		}
+	}
+
 	#cart-info {
 		display: flex;
 		margin: 0 1rem;
@@ -67,85 +75,88 @@
 				}
 			}
 		}
-
-
-		#cart-view {
+		
+		#sales-info {
 			flex: 1 0 auto;
 
-			#cart-items {
-				margin: 0 0 0 1rem;
+			#cart-view {
+				width: 100%;
 
-				.cart-item {
-					padding: 2rem 0;
+				#cart-items {
+					margin: 0 0 0 1rem;
 
-					.horizontal-flex-container {
-						display: flex;
-						flex-direction: row;
-						align-items: center;
-					    height: 100%;
-					    width: 100%;
+					.cart-item {
+						padding: 2rem 0;
 
-						> .flex-item {
-							flex: 1 0 auto;
+						.horizontal-flex-container {
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+						    height: 100%;
+						    width: 100%;
 
-							h5 {
-								font-weight: 500;
-								margin-left: 1rem;
-							}
+							> .flex-item {
+								flex: 1 0 auto;
 
-							&#image {
-								max-width: 9.375rem;
-								flex: 1 1 auto;
-
-								img {
-									width: 100%;
-									max-width: 9.375rem;
+								h5 {
+									font-weight: 500;
+									margin-left: 1rem;
 								}
-							}
 
-							.details {
-								opacity: 0.66;
-								font-size: .875rem;
-								margin-left: 1rem;
-							}
+								&#image {
+									max-width: 9.375rem;
+									flex: 1 1 auto;
 
-							&:last-child {
-								text-align: right;
-								margin-right: 1rem;
-							}
+									img {
+										width: 100%;
+										max-width: 9.375rem;
+									}
+								}
 
-							&:nth-of-type(4) {
-								flex: 0 0 auto;
+								.details {
+									opacity: 0.66;
+									font-size: .875rem;
+									margin-left: 1rem;
+								}
+
+								&:last-child {
+									text-align: right;
+									margin-right: 1rem;
+								}
+
+								&:nth-of-type(4) {
+									flex: 0 0 auto;
+								}
 							}
 						}
 					}
 				}
-			}
 
-			.subtotals {
-				border-top: 1px solid #ccc;
-				margin: 0 0 0 1rem;
-				padding-bottom: 2rem;
+				.subtotals {
+					border-top: 1px solid #ccc;
+					margin: 0 0 0 1rem;
+					padding-bottom: 2rem;
 
-				.cart-totals {
-					text-align: right;
-					margin: 2rem 1rem 0;
-					display: flex;
-					justify-content: space-between;
-
-					span {
-
-						h4 {
-							font-weight: 500;
-						}
-					}
-
-					h5 {
-						display: inline-block;
+					.cart-totals {
+						text-align: right;
+						margin: 2rem 1rem 0;
+						display: flex;
+						justify-content: space-between;
 
 						span {
-							font-size: 0.75rem;
-							color: #666;
+
+							h4 {
+								font-weight: 500;
+							}
+						}
+
+						h5 {
+							display: inline-block;
+
+							span {
+								font-size: 0.75rem;
+								color: #666;
+							}
 						}
 					}
 				}

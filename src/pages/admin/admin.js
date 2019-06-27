@@ -11,6 +11,7 @@ import ReactTable from 'react-table';
 import { SHIPPING_STATUS } from '../../utility/variables';
 
 let db = firebase.firestore();
+let transactionsdb = db.collection("transactions");
 
 class Admin extends React.Component {
 
@@ -19,17 +20,17 @@ class Admin extends React.Component {
 
     this.state = {
       transactions: [],
-      authenticated: false
+      authenticated: false,
+      isRefreshed: false
     }
 
     this.submitHandler = this.submitHandler.bind(this);
+    this.onShippingChange = this.onShippingChange.bind(this);
   }
 
   componentDidMount() {
 
     let component = this;
-
-    let transactionsdb = db.collection("transactions");
     
     fetch(`/admin/listTransactions`)
     .then(function(resp){
@@ -45,8 +46,6 @@ class Admin extends React.Component {
           return querySnapshot.docs.map(item => item.data())[0] || null; 
         });
 
-        
-
         let newObj = Promise.all([firebaseTransactionInfo])
         .then(([firebaseTransaction]) => {
           return {
@@ -57,7 +56,8 @@ class Admin extends React.Component {
             currency: transaction.tenders[0].amount_money.currency,
             customer_id: transaction.tenders[0].customer_id,
             card_details: transaction.tenders[0].card_details,
-            firebaseTransactionInfo: firebaseTransaction
+            firebaseTransactionInfo: firebaseTransaction,
+            index: i
           }
         });
 
@@ -93,7 +93,35 @@ class Admin extends React.Component {
         alert("Authorization Failed");
       }
     });
+  }
 
+  onShippingChange(id, value) {
+
+    let component = this;
+
+    component.setState({
+      isRefreshed: true
+    });
+
+    component.setState(prevState => {
+      const newTransactions = prevState.transactions.map(transaction => {
+        if (transaction.id !== id) {
+          return transaction;
+        }
+
+        return {
+          ...transaction,
+          firebaseTransactionInfo: {
+            ...transaction.firebaseTransactionInfo,
+            status: value
+          } 
+        };
+      });
+
+      return {
+        transactions: newTransactions
+      };
+    });
   }
 
   render() {
@@ -173,7 +201,7 @@ class Admin extends React.Component {
             className="-striped -highlight"
             SubComponent={(row) => {
               return (
-                <SubComponent transaction={row.original} />
+                <SubComponent isRefreshed={true} transaction={row.original} onShippingChange={this.onShippingChange} />
               )}
             }
           />
