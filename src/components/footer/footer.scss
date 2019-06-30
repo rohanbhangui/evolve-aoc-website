@@ -7,7 +7,7 @@
 	#footer-image {
 		padding: 4rem 1rem 2rem; 
 
-		@media medium {
+		@include medium {
 			padding: 6rem 1rem;
 		}
 
