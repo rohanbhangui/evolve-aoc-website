@@ -21,13 +21,13 @@ class Footer extends React.Component {
             <h6>Catalog</h6>
             <ul>
               <li>
-                <Link to="/#Hoodies">Hoodies</Link>
+                <Link to="catalog/#Hoodies">Hoodies</Link>
               </li>
               <li>
-                <Link to="/#Shirts">Shirts</Link>
+                <Link to="catalog/#Shirts">Shirts</Link>
               </li>
               <li>
-                <Link to="/">Pullovers</Link>
+                <Link to="catalog/">Pullovers</Link>
               </li>
             </ul>
           </div>

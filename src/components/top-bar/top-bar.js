@@ -12,6 +12,8 @@ import { totalCart } from '../../utility/func';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 firebase.auth().signInAnonymously().catch(function(error) {
   var errorCode = error.code;
   var errorMessage = error.message;
@@ -74,8 +76,9 @@ class TopBar extends React.Component {
         </div>
         <div id="cart">
           <Link to="/cart">
-            <span className={`shopping-cart-icon-container fa-stack fa-2x has-badge ${ cart.length === 0 ? 'display-none' : ''}`} data-count={ cart.length > 0 ? this.totalQuantity(cart) : 0 }>
-              <i className="p3 fa fa-shopping-cart fa-stack-1x xfa-inverse" data-count="4b"></i>
+            <span className={`shopping-cart-icon-container fa-layers fa-2x has-badge ${ cart.length === 0 ? 'display-none' : ''}`} data-count={ cart.length > 0 ? this.totalQuantity(cart) : 0 }>
+              {/* <i className="p3 fa fa-shopping-cart fa-stack-1x xfa-inverse" data-count="4b"></i> */}
+              <FontAwesomeIcon icon="shopping-cart" size="xs" />
             </span>
           </Link>
           <div id="cart-list">
